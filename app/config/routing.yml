@@ -1,0 +1,32 @@
+api:
+    resource: "@ApiBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
+administration:
+    resource: "@AdministrationBundle/Controller/"
+    type:     annotation
+    prefix:   /administration
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+    prefix:   /app
+
+front:
+    resource: "@FrontBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+# necessary routes for login
+administration_login_check:
+    path:   /administration/login_check
+
+administration_logout:
+    path:   /administration/logout
+
+app_login_check:
+    path:   /app/login_check
+
+app_logout:
+    path:   /app/logout

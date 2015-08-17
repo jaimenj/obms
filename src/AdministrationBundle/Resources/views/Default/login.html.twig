@@ -1,0 +1,39 @@
+{% extends 'AdministrationBundle::layout.html.twig' %}
+
+{% block mainarea %}
+
+    <div class="panel panel-default">
+        <div class="panel-body text-centered">
+            <h2>Access control</h2>
+
+			<p>Access for administrator: <b>adminitrator</b>, password <b>thepass</b>.</p>
+
+            {% if error %}
+                <div style="font-size: 150%; color: red;">{{ error.message }}</div>
+            {% endif %}
+
+            <form name="form" method="post" action="/app_dev.php/administration/login_check" class="form-horizontal">
+            <fieldset>
+            	<div  class="form-group">
+            		<label for="form__username" class=" control-label col-lg-3 control-label required">Username</label>
+            		<div class="col-lg-9">
+            			<input type="text" id="form__username" name="form[_username]" required="required" class=" form-control" value="administrator" />
+            		</div>
+            	</div>
+            	<div  class="form-group">
+            		<label for="form__password" class=" control-label col-lg-3 control-label required">Password</label>
+            		<div class="col-lg-9">
+            			<input type="password" id="form__password" name="form[_password]" required="required" class=" form-control" value="thepass" />
+            		</div>
+            	</div>
+            	<div>
+            		<button type="submit" id="form_submit" name="form[submit]" class="btn btn-default">Login</button>
+            	</div>
+            	<input type="hidden" id="form__token" name="form[_token]" class=" form-control" value="{{ csrf_token('authenticate') }}" />
+            </fieldset>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

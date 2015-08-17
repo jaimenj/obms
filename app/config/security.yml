@@ -1,0 +1,56 @@
+security:
+    providers:
+        in_memory:
+            memory: ~
+        administration_provider:
+            entity: { class: AdministrationBundle\Entity\Administrator, property: username }
+        app_provider:
+            entity: { class: AdministrationBundle\Entity\User, property: username }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt|error)|css|images|img|js|lib)/
+            security: false
+
+        administration:
+            pattern:    ^/administration
+            form_login:
+                provider: administration_provider
+                csrf_provider: form.csrf_provider
+                default_target_path: /
+                always_use_default_target_path: true
+                check_path: /administration/login_check
+                login_path: /administration/login
+            logout:
+                path:   /administration/logout
+                target: /
+            anonymous:    true
+
+        app:
+            pattern:    ^/app
+            form_login:
+                provider: app_provider
+                csrf_provider: form.csrf_provider
+                default_target_path: /
+                always_use_default_target_path: true
+                check_path: /app/login_check
+                login_path: /app/login
+            logout:
+                path:   /app/logout
+                target: /
+            anonymous:    true
+
+        default:
+            anonymous: ~
+
+    encoders:
+        MainBundle\Entity\Administrator:
+            algorithm: bcrypt
+            cost:      12
+
+    access_control:
+        - { path: ^/administration/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/administration/, role: ROLE_MASTER }
+        - { path: ^/app/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/app/, role: ROLE_USER }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
