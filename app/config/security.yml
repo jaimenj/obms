@@ -11,9 +11,12 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt|error)|css|images|img|js|lib)/
             security: false
-
+        api:
+            pattern:    ^/api/
+            http_basic: ~
+            provider: app_provider
         administration:
-            pattern:    ^/administration
+            pattern:    ^/administration/
             form_login:
                 provider: administration_provider
                 csrf_provider: form.csrf_provider
@@ -25,7 +28,6 @@ security:
                 path:   /administration/logout
                 target: /
             anonymous:    true
-
         app:
             pattern:    ^/app
             form_login:
@@ -39,7 +41,6 @@ security:
                 path:   /app/logout
                 target: /
             anonymous:    true
-
         default:
             anonymous: ~
 
@@ -49,8 +50,9 @@ security:
             cost:      12
 
     access_control:
-        - { path: ^/administration/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/administration/, role: ROLE_MASTER }
-        - { path: ^/app/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/app/, role: ROLE_USER }
-        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/, role: ROLE_USER, requires_channel: https }
+        - { path: ^/administration/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/administration/, role: ROLE_MASTER, requires_channel: https }
+        - { path: ^/app/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/app/, role: ROLE_USER, requires_channel: https }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
