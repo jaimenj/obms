@@ -1,5 +1,6 @@
 <?php
-namespace AdministratorBundle\Entity;
+
+namespace AdministrationBundle\Entity;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +13,6 @@ use AdministratorBundle\Entity;
  */
 class Role implements RoleInterface
 {
-
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id()
@@ -31,7 +31,7 @@ class Role implements RoleInterface
     private $role;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="roles")
+     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\User", mappedBy="roles")
      */
     private $users;
 
@@ -41,7 +41,6 @@ class Role implements RoleInterface
     }
 
     /**
-     *
      * @see RoleInterface
      */
     public function getRole()
@@ -50,9 +49,9 @@ class Role implements RoleInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -60,9 +59,10 @@ class Role implements RoleInterface
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Role
      */
     public function setName($name)
@@ -73,7 +73,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -83,9 +83,10 @@ class Role implements RoleInterface
     }
 
     /**
-     * Set role
+     * Set role.
      *
      * @param string $role
+     *
      * @return Role
      */
     public function setRole($role)
@@ -96,9 +97,10 @@ class Role implements RoleInterface
     }
 
     /**
-     * Add users
+     * Add users.
      *
      * @param \PedidosBundle\Entity\Usuario $users
+     *
      * @return Role
      */
     public function addUsuario(Usuario $users)
@@ -109,7 +111,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Remove users
+     * Remove users.
      *
      * @param \PedidosBundle\Entity\Usuario $users
      */
@@ -119,7 +121,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

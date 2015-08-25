@@ -1,6 +1,6 @@
 <?php
 
-namespace AdministratorBundle\Entity;
+namespace AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -51,7 +51,7 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\Role", inversedBy="users")
      */
     private $roles;
 
@@ -60,15 +60,8 @@ class User implements UserInterface, \Serializable
      */
     private $active = true;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="MainBundle\Entity\Producto")
-     */
     private $favoritos;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="MainBundle\Entity\Producto",
-     * inversedBy="pedidopor")
-     */
     private $pedido;
 
     public function __construct()

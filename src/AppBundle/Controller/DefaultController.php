@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,14 +10,12 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class DefaultController extends Controller
 {
-
     /**
      * @Route("/", name="app_home")
      * @Template
      */
     public function indexAction()
     {
-        
         return array();
     }
 
@@ -42,7 +41,7 @@ class DefaultController extends Controller
 
         return array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error' => $error
+            'error' => $error,
         );
     }
 }
