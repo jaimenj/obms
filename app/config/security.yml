@@ -48,11 +48,14 @@ security:
         AdministrationBundle\Entity\Administrator:
             algorithm: bcrypt
             cost:      12
+        AdministrationBundle\Entity\User:
+            algorithm: bcrypt
+            cost:      12
 
     access_control:
         - { path: ^/api/, role: ROLE_USER, requires_channel: https }
         - { path: ^/administration/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/administration/, role: ROLE_MASTER, requires_channel: https }
+        - { path: ^/administration/, role: ROLE_ADMIN, requires_channel: https }
         - { path: ^/app/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/app/, role: ROLE_USER, requires_channel: https }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

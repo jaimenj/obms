@@ -9,10 +9,12 @@ use AdministrationBundle\Entity\Administrator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * It only fills database with an administration account for the adminsitration panel.
+ */
 class AdministratorFix extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
-     *
      * @var ContainerInterface
      */
     private $container;
