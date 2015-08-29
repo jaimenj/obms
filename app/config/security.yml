@@ -19,8 +19,8 @@ security:
             pattern:    ^/administration/
             form_login:
                 provider: administration_provider
-                csrf_provider: form.csrf_provider
-                default_target_path: /
+                csrf_provider: security.csrf.token_manager
+                default_target_path: /administration/
                 always_use_default_target_path: true
                 check_path: /administration/login_check
                 login_path: /administration/login
@@ -32,8 +32,8 @@ security:
             pattern:    ^/app
             form_login:
                 provider: app_provider
-                csrf_provider: form.csrf_provider
-                default_target_path: /
+                csrf_provider: security.csrf.token_manager
+                default_target_path: /app/
                 always_use_default_target_path: true
                 check_path: /app/login_check
                 login_path: /app/login
@@ -51,11 +51,13 @@ security:
         AdministrationBundle\Entity\User:
             algorithm: bcrypt
             cost:      12
+        FOSUserBundle\Model\UserInterface: bcrypt
+        Symfony\Component\Security\Core\User\User: plaintext
 
     access_control:
-        - { path: ^/api/, role: ROLE_USER, requires_channel: https }
-        - { path: ^/administration/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/administration/, role: ROLE_ADMIN, requires_channel: https }
-        - { path: ^/app/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/app/, role: ROLE_USER, requires_channel: https }
-        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/api/, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/administration/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/administration/, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: ^/app/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/app/, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

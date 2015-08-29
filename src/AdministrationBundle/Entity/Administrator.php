@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AdministrationBundle\Entity\AdministratorRepository")
  */
-class Administrator implements UserInterface
+class Administrator implements UserInterface, \Serializable
 {
     /**
      * @var int @ORM\Column(type="integer")
@@ -169,5 +169,29 @@ class Administrator implements UserInterface
         $this->salt = $salt;
 
         return $this;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
     }
 }
