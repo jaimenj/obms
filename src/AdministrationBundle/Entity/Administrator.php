@@ -1,45 +1,40 @@
 <?php
+
 namespace AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Administrator
+ * Administrator.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AdministrationBundle\Entity\AdministratorRepository")
  */
-class Administrator implements UserInterface
+class Administrator implements UserInterface, \Serializable
 {
-
     /**
-     *
-     * @var integer @ORM\Column(type="integer")
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="AUTO")
+     * @var int @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     *
      * @var string @ORM\Column(type="string",
-     *      length=255)
+     *             length=255)
      */
     private $username;
 
     /**
-     *
      * @var string @ORM\Column(type="string",
-     *      length=255)
+     *             length=255)
      */
     private $email;
 
     /**
-     *
      * @var string @ORM\Column(type="string",
-     *      length=255)
+     *             length=255)
      */
     private $password;
 
@@ -52,12 +47,13 @@ class Administrator implements UserInterface
      * Constructor de la clase.
      */
     public function __construct()
-    {}
+    {
+    }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -65,9 +61,10 @@ class Administrator implements UserInterface
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
+     *
      * @return Administrador
      */
     public function setUsername($username)
@@ -78,7 +75,7 @@ class Administrator implements UserInterface
     }
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string
      */
@@ -88,9 +85,10 @@ class Administrator implements UserInterface
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
+     *
      * @return Administrador
      */
     public function setEmail($email)
@@ -101,7 +99,7 @@ class Administrator implements UserInterface
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -111,9 +109,10 @@ class Administrator implements UserInterface
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
+     *
      * @return Administrador
      */
     public function setPassword($password)
@@ -124,7 +123,7 @@ class Administrator implements UserInterface
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string
      */
@@ -147,7 +146,7 @@ class Administrator implements UserInterface
     public function getRoles()
     {
         return array(
-            'ROLE_MASTER'
+            'ROLE_ADMIN',
         );
     }
 
@@ -155,12 +154,14 @@ class Administrator implements UserInterface
      * @inheritDoc
      */
     public function eraseCredentials()
-    {}
+    {
+    }
 
     /**
-     * Set salt
+     * Set salt.
      *
      * @param string $salt
+     *
      * @return Administrador
      */
     public function setSalt($salt)
@@ -168,5 +169,29 @@ class Administrator implements UserInterface
         $this->salt = $salt;
 
         return $this;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
     }
 }

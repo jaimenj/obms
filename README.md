@@ -1,7 +1,7 @@
 # Online Business Management System
 
 Web application based on Symfony 2.7 LTS for on-line business management.
-NOT FUNCTIONAL!!!
+It's a simple ERP, or a project of ERP.
 
 ## Development Requirements
 
