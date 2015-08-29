@@ -45,7 +45,7 @@ security:
             anonymous: ~
 
     encoders:
-        MainBundle\Entity\Administrator:
+        AdministrationBundle\Entity\Administrator:
             algorithm: bcrypt
             cost:      12
 
