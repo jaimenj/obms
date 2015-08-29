@@ -29,19 +29,18 @@ class DefaultController extends Controller
      */
     public function loginAction(Request $request)
     {
-        $session = $request->getSession();
+        $authenticationUtils = $this->get('security.authentication_utils');
 
         // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         return array(
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error' => $error,
+            // last username entered by the user
+            'last_username' => $lastUsername,
+            'error'         => $error,
         );
     }
 }
