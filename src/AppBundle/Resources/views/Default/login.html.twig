@@ -6,13 +6,13 @@
         <div class="panel-body text-centered">
             <h2>Access control</h2>
 
-			<p>Access for administrator: <b>user</b>, password <b>thepass</b>.</p>
+			<p>Access for administrator: <b>user1</b>, password <b>thepass</b>.</p>
 
             {% if error %}
                 <div style="font-size: 150%; color: red;">{{ error.message }}</div>
             {% endif %}
 
-            <form name="form" method="post" action="/app_dev.php/app/login_check" class="form-horizontal">
+            <form name="form" method="post" action="{{ path('app_login_check') }}" class="form-horizontal">
             <fieldset>
             	<div  class="form-group">
             		<label for="form__username" class=" control-label col-lg-3 control-label required">Username</label>
