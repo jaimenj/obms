@@ -2,11 +2,19 @@
 
 {% block mainarea %}
 
-<h1>Online Business Management System</h1>
+<img src="{{ asset('img/amanecer2560.jpg') }}" class="img-responsive img-rounded img-thumbnail">
+
 <p>An idea, a project, and a decission to work on it..</p>
 
-<a href="{{ path('app_home') }}" class="btn btn-default">Application</a>
-<a href="{{ path('administration_home') }}" class="btn btn-default">Administration</a>
-<a href="{{ path('api_home') }}" class="btn btn-default">API</a>
+<a class="btn btn-default" href="{{ path('app_home') }}">Go to the main application zone</a>
+<a class="btn btn-default" href="{{ path('administration_home') }}">Go to the administration panel</a>
+<a class="btn btn-default" href="{{ path('api_home') }}">API</a>
+
+<h2>Contributions</h2>
+<p>All contributions will be welcome forking from
+	<a href="https://github.com/jaimenj/obms">Github</a>.</p>
+<ul>
+	<li>Jaime Niñoles-Manzanera Jimeno: project manager, analyst programmer.</li>
+</ul>
 
 {% endblock %}
