@@ -22,7 +22,7 @@ The main features of the application will be here.
 
 REST API development.
 
-### AdministracionBundle
+### AdministrationBundle
 
 Here is where access to the application is managed. Administrators may create
 other administrator, as well as users.
