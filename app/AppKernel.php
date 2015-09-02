@@ -1,10 +1,10 @@
 <?php
+
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-
     public function registerBundles()
     {
         $bundles = array(
@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
 
             new AppBundle\AppBundle(),
             new FrontBundle\FrontBundle(),
@@ -28,7 +29,7 @@ class AppKernel extends Kernel
 
         if (in_array($this->getEnvironment(), array(
             'dev',
-            'test'
+            'test',
         ))) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
@@ -42,7 +43,7 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(
-            $this->getRootDir() . '/config/config_' . $this->getEnvironment() .
+            $this->getRootDir().'/config/config_'.$this->getEnvironment().
                  '.yml');
     }
 }
