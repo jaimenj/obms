@@ -2,6 +2,11 @@
 
 {% block mainarea %}
 
+<div style="text-align: center;">
+<img src="{{ asset('apple-touch-icon.png') }}">
+<h1>Online Business Management System</h1>
+</div>
+
     <div class="panel panel-default">
         <div class="panel-body text-centered">
             <h2>Access control</h2>
@@ -17,17 +22,17 @@
             	<div  class="form-group">
             		<label for="form__username" class=" control-label col-lg-3 control-label required">Username</label>
             		<div class="col-lg-9">
-            			<input type="text" id="username" name="_username" required="required" class=" form-control" value="{{ not last_username ? 'user1' }}" />
+            			<input type="text" id="username" name="_username" required="required" class="form-control" value="{{ not last_username ? 'user1' }}" />
             		</div>
             	</div>
             	<div  class="form-group">
             		<label for="form__password" class=" control-label col-lg-3 control-label required">Password</label>
             		<div class="col-lg-9">
-            			<input type="password" id="password" name="_password" required="required" class=" form-control" value="thepass" />
+            			<input type="password" id="password" name="_password" required="required" class="form-control" value="thepass" />
             		</div>
             	</div>
             	<div>
-            		<button type="submit" id="form_submit" name="form[submit]" class="btn btn-default">Login</button>
+            		<button type="submit" id="login_submit" name="login_submit" class="btn btn-default">Login</button>
             	</div>
                 <input type="hidden" name="_csrf_token"
 					value="{{ csrf_token('authenticate') }}">

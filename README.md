@@ -22,7 +22,7 @@ The main features of the application will be here.
 
 REST API development.
 
-### AdministracionBundle
+### AdministrationBundle
 
 Here is where access to the application is managed. Administrators may create
 other administrator, as well as users.
@@ -31,39 +31,28 @@ other administrator, as well as users.
 
 You need to install globally Composer and Bower for libraries management, both client and server libraries.
 
-Download the project, and execute this:
+Download the project cloneing it, and execute this:
 
+	$ git clone git@github.com:jaimenj/obms.git
 	$ composer install --prefer-dist
 	$ bower update
 	$ php app/console doctrine:database:create
 	$ php app/console doctrine:schema:create
 	$ php app/console doctrine:fixtures:load
 
-You can arbitrary execute this for local development, it will create example data:
+You can arbitrary execute this for local development, it will create sample data:
 
-	$ php app/console example:data
+	$ php app/console sample:data
 
 ## Tests
 
-Execute for tests before pushing:
+Execute for tests:
 
-	$ phpunit -c app/phpunit.xml
+	$ phpunit -c app/
 
 It needs phpunit command.
 
-You can manually execute the tests with full configuration doing:
-
-	$ phpunit -c app/phpunit.full.xml
-
 Very important: Do not execute in production environment. It will delete original data stored in linked database in development/test environment.
-
-# Builds
-
-It's required Ant for building, just execute ant in project directory to build all.
-
-	$ ant
-
-This may be executed for nightly builds.
 
 ## More
 
