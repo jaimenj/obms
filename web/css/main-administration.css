@@ -7,3 +7,12 @@
 	display: inline;
 	height: 60px;
 }
+h1 {
+	margin-top: 0px;
+}
+.pagination {
+	margin-top: 0px;
+}
+label.required:before {
+	content: "* ";
+}

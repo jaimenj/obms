@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AdministrationBundle\Entity\User;
 use AdministrationBundle\Form\UserType;
+use AdministrationBundle\Form\ListUsersType;
 
 /**
  * User controller.
@@ -17,28 +18,53 @@ use AdministrationBundle\Form\UserType;
  */
 class UserController extends Controller
 {
-
     /**
      * Lists all User entities.
      *
      * @Route("/", name="user")
-     * @Method("GET")
+     *
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AdministrationBundle:User')->findAll();
+        $querybuilder = $manager->createQueryBuilder()
+            ->select('u')
+            ->from('AdministrationBundle:User', 'u');
+
+        $paginator = $this->get('knp_paginator');
+        $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
+
+        $formListUsers = $this->createForm(new ListUsersType($paginator));
+
+        if ($request->getMethod() == 'POST') {
+            $formListUsers->handleRequest($request);
+            if ($formListUsers->isValid()) {
+                foreach ($paginator as $user) {
+                    $user->setUsername($formListUsers[$user->getId().'username']->getData());
+                    $user->setEmail($formListUsers[$user->getId().'email']->getData());
+                    $manager->persist($user);
+                }
+                $manager->flush();
+
+                $this->addFlash('info', 'Data saved.');
+            } else {
+                $this->addFlash('danger', 'ERROR: '.$formListUsers->getErrorsAsString());
+            }
+        }
 
         return array(
-            'entities' => $entities,
+            'paginator' => $paginator,
+            'formListUsers' => $formListUsers->createView(),
         );
     }
     /**
      * Creates a new User entity.
      *
-     * @Route("/", name="user_create")
+     * @Route("/new", name="user_create")
+     *
      * @Method("POST")
      * @Template("AdministrationBundle:User:new.html.twig")
      */
@@ -85,6 +111,7 @@ class UserController extends Controller
      * Displays a form to create a new User entity.
      *
      * @Route("/new", name="user_new")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -103,6 +130,7 @@ class UserController extends Controller
      * Finds and displays a User entity.
      *
      * @Route("/{id}", name="user_show")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -128,6 +156,7 @@ class UserController extends Controller
      * Displays a form to edit an existing User entity.
      *
      * @Route("/{id}/edit", name="user_edit")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -152,12 +181,12 @@ class UserController extends Controller
     }
 
     /**
-    * Creates a form to edit a User entity.
-    *
-    * @param User $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a User entity.
+     *
+     * @param User $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(User $entity)
     {
         $form = $this->createForm(new UserType(), $entity, array(
@@ -173,6 +202,7 @@ class UserController extends Controller
      * Edits an existing User entity.
      *
      * @Route("/{id}", name="user_update")
+     *
      * @Method("PUT")
      * @Template("AdministrationBundle:User:edit.html.twig")
      */
@@ -206,6 +236,7 @@ class UserController extends Controller
      * Deletes a User entity.
      *
      * @Route("/{id}", name="user_delete")
+     *
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

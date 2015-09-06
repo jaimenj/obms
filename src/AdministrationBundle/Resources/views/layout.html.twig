@@ -45,7 +45,16 @@
 
 {% endif %}
 
-<div class="container">
+{% for label, flashes in app.session.flashbag.all %}
+	{% for flash in flashes %}
+		<div class="alert alert-{{ label }}">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			{{ flash }}
+		</div>
+	{% endfor %}
+{% endfor %}
+
+<div class="container-fluid">
 	{% block mainarea %}{% endblock %}
 </div>
 
