@@ -10,25 +10,33 @@ class AdministratorType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('username')
-            ->add('email')
-            ->add('password')
-            ->add('salt')
+            ->add('email', 'email')
+            ->add('newpassword', 'password', array(
+                'mapped' => false,
+                'label' => 'New password',
+                'required' => false,
+            ))
+            ->add('newpassword2', 'password', array(
+                'mapped' => false,
+                'label' => 'Repeat the new password',
+                'required' => false,
+            ))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AdministrationBundle\Entity\Administrator'
+            'data_class' => 'AdministrationBundle\Entity\Administrator',
         ));
     }
 

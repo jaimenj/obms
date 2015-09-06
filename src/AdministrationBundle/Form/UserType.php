@@ -8,6 +8,27 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('username')
+            ->add('email', 'email')
+            ->add('newpassword', 'password', array(
+                'mapped' => false,
+                'label' => 'New password',
+                'required' => false,
+            ))
+            ->add('newpassword2', 'password', array(
+                'mapped' => false,
+                'label' => 'Repeat the new password',
+                'required' => false,
+            ))
+        ;
+    }
 
     /**
      * @param OptionsResolverInterface $resolver
@@ -15,7 +36,7 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AdministrationBundle\Entity\User'
+            'data_class' => 'AdministrationBundle\Entity\User',
         ));
     }
 

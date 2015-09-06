@@ -2,6 +2,11 @@
 
 {% block mainarea %}
 
-Welcome to the administration zone!
+<p>Welcome to the administration zone!</p>
+
+<ul>
+	<li>Administrators: {{ counters['nadministrators'] }}</li>
+	<li>Users: {{ counters['nusers'] }}</li>
+</ul>
 
 {% endblock %}

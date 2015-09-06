@@ -7,6 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
+use AdministrationBundle\Entity\Administrator;
+use AdministrationBundle\Entity\User;
 
 class SampleDataCommand extends ContainerAwareCommand
 {
@@ -29,9 +31,9 @@ class SampleDataCommand extends ContainerAwareCommand
 
         $loremipsumshort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in tempor risus. Morbi urna purus, consectetur in varius a, volutpat vel massa. Curabitur sit amet nibh porttitor, ornare nulla at, faucibus sem. In mollis semper massa, non tempor leo tristique in. Donec commodo justo scelerisque, elementum lectus gravida, aliquet neque. Morbi at mi tellus. Suspendisse elementum, felis a aliquet vehicula, nibh tellus ultricies dui, ac sagittis dui dui vel ante. Mauris eu accumsan velit. Aenean at ultricies massa, a dignissim dui. Suspendisse ut lectus fermentum, interdum lectus non, bibendum turpis.';
 
-        $manager = $this->getContainer()
-            ->get('doctrine')
-            ->getManager();
+        $manager = $this->getContainer()->get('doctrine')->getManager();
+
+        $factory = $this->getContainer()->get('security.encoder_factory');
 
         if ($argument == 'delete') {
             // only deleting sample data
@@ -40,6 +42,24 @@ class SampleDataCommand extends ContainerAwareCommand
             $this->deleteAll($manager, $output);
 
             $output->write('loading data.. ');
+
+            for ($i = 1; $i <= 10; $i ++) {
+                $administrator = new Administrator();
+                $administrator->setUsername('administrator'.$i);
+                $administrator->setEmail('administrator'.$i.'@thedomainobms.com');
+                $encoder = $factory->getEncoder($administrator);
+                $password = $encoder->encodePassword('thepass', $administrator->getSalt());
+                $administrator->setPassword($password);
+                $manager->persist($administrator);
+
+                $newuser = new User();
+                $newuser->setUsername('user'.$i);
+                $newuser->setEmail('user'.$i.'@thedomainobms.com');
+                $newuser->setEnabled(true);
+                $newuser->setPlainPassword('thepass');
+                $newuser->addRole('ROLE_USER');
+                $manager->persist($newuser);
+            }
         }
 
         $manager->flush();
@@ -50,6 +70,20 @@ class SampleDataCommand extends ContainerAwareCommand
     private function deleteAll(EntityManager $manager, OutputInterface $output)
     {
         $output->write('Deleting sample data.. ');
+
+        $administrators = $manager->getRepository('AdministrationBundle:Administrator')->findAll();
+        foreach ($administrators as $administrator) {
+            if ($administrator->getUsername() != 'administrator') {
+                $manager->remove($administrator);
+            }
+        }
+
+        $users = $manager->getRepository('AdministrationBundle:User')->findAll();
+        foreach ($users as $user) {
+            if ($user->getUsername() != 'user') {
+                $manager->remove($user);
+            }
+        }
 
         $manager->flush();
     }

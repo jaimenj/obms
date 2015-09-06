@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AdministrationBundle\Entity\User;
 use AdministrationBundle\Form\UserType;
+use AdministrationBundle\Form\ListUsersType;
 
 /**
  * User controller.
@@ -17,47 +18,93 @@ use AdministrationBundle\Form\UserType;
  */
 class UserController extends Controller
 {
-
     /**
      * Lists all User entities.
      *
      * @Route("/", name="user")
-     * @Method("GET")
+     *
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AdministrationBundle:User')->findAll();
+        $querybuilder = $manager->createQueryBuilder()
+            ->select('u')
+            ->from('AdministrationBundle:User', 'u');
+
+        $paginator = $this->get('knp_paginator');
+        $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
+
+        $formListUsers = $this->createForm(new ListUsersType($paginator));
+
+        if ($request->getMethod() == 'POST') {
+            $formListUsers->handleRequest($request);
+            if ($formListUsers->isValid()) {
+                foreach ($paginator as $user) {
+                    $user->setUsername($formListUsers[$user->getId().'username']->getData());
+                    $user->setEmail($formListUsers[$user->getId().'email']->getData());
+                    $manager->persist($user);
+                }
+                $manager->flush();
+
+                $this->addFlash('info', 'Data saved.');
+            } else {
+                $this->addFlash('danger', 'ERROR: '.$formListUsers->getErrorsAsString());
+            }
+        }
 
         return array(
-            'entities' => $entities,
+            'paginator' => $paginator,
+            'formListUsers' => $formListUsers->createView(),
         );
     }
     /**
      * Creates a new User entity.
      *
-     * @Route("/", name="user_create")
+     * @Route("/new", name="user_create")
+     *
      * @Method("POST")
      * @Template("AdministrationBundle:User:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new User();
-        $form = $this->createCreateForm($entity);
+        $user = new User();
+        $form = $this->createCreateForm($user);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $manager = $this->getDoctrine()->getManager();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
+            $newpassword = $form['newpassword']->getData();
+            $newpassword2 = $form['newpassword2']->getData();
+            if ($newpassword == ''  and $newpassword2 == '') {
+                $user->setPlainPassword('thepass');
+
+                $this->addFlash('info', 'User with default password.');
+            } else {
+                if ($newpassword == $newpassword2) {
+                    $user->setPlainPassword($newpassword);
+
+                    $this->addFlash('info', 'Password created.');
+                } else {
+                    $this->addFlash('danger', 'ERROR: Newpassword is not well repeated.');
+                    $user->setPlainPassword('thepass');
+                    $this->addFlash('info', 'User with default password.');
+                }
+            }
+
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash('info', 'Data saved.');
+
+            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $user,
             'form'   => $form->createView(),
         );
     }
@@ -65,13 +112,13 @@ class UserController extends Controller
     /**
      * Creates a form to create a User entity.
      *
-     * @param User $entity The entity
+     * @param User $user The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(User $entity)
+    private function createCreateForm(User $user)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
+        $form = $this->createForm(new UserType(), $user, array(
             'action' => $this->generateUrl('user_create'),
             'method' => 'POST',
         ));
@@ -85,16 +132,17 @@ class UserController extends Controller
      * Displays a form to create a new User entity.
      *
      * @Route("/new", name="user_new")
+     *
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new User();
-        $form   = $this->createCreateForm($entity);
+        $user = new User();
+        $form   = $this->createCreateForm($user);
 
         return array(
-            'entity' => $entity,
+            'entity' => $user,
             'form'   => $form->createView(),
         );
     }
@@ -103,23 +151,24 @@ class UserController extends Controller
      * Finds and displays a User entity.
      *
      * @Route("/{id}", name="user_show")
+     *
      * @Method("GET")
      * @Template()
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+        $user = $manager->getRepository('AdministrationBundle:User')->find($id);
 
-        if (!$entity) {
+        if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $user,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -128,40 +177,41 @@ class UserController extends Controller
      * Displays a form to edit an existing User entity.
      *
      * @Route("/{id}/edit", name="user_edit")
+     *
      * @Method("GET")
      * @Template()
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+        $user = $manager->getRepository('AdministrationBundle:User')->find($id);
 
-        if (!$entity) {
+        if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($user);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $user,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a User entity.
-    *
-    * @param User $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(User $entity)
+     * Creates a form to edit a User entity.
+     *
+     * @param User $user The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(User $user)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new UserType(), $user, array(
+            'action' => $this->generateUrl('user_update', array('id' => $user->getId())),
             'method' => 'PUT',
         ));
 
@@ -173,31 +223,44 @@ class UserController extends Controller
      * Edits an existing User entity.
      *
      * @Route("/{id}", name="user_update")
+     *
      * @Method("PUT")
      * @Template("AdministrationBundle:User:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+        $user = $manager->getRepository('AdministrationBundle:User')->find($id);
 
-        if (!$entity) {
+        if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($user);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+            $newpassword = $editForm['newpassword']->getData();
+            $newpassword2 = $editForm['newpassword2']->getData();
+            if ($newpassword == $newpassword2 and $newpassword != '') {
+                $user->setPlainPassword($newpassword);
+
+                $this->addFlash('info', 'Password changed.');
+            } elseif ($newpassword != '') {
+                $this->addFlash('danger', 'ERROR: Newpassword is not well repeated.');
+            }
+
+            $manager->flush();
+
+            $this->addFlash('info', 'Data saved.');
 
             return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $user,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -206,6 +269,7 @@ class UserController extends Controller
      * Deletes a User entity.
      *
      * @Route("/{id}", name="user_delete")
+     *
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -214,15 +278,17 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+            $manager = $this->getDoctrine()->getManager();
+            $user = $manager->getRepository('AdministrationBundle:User')->find($id);
 
-            if (!$entity) {
+            if (!$user) {
                 throw $this->createNotFoundException('Unable to find User entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+            $manager->remove($user);
+            $manager->flush();
+
+            $this->addFlash('info', 'User deleted.');
         }
 
         return $this->redirect($this->generateUrl('user'));

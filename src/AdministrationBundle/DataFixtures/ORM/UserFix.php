@@ -14,16 +14,14 @@ class UserFix extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 3; $i ++) {
-            $newuser = new User();
-            $newuser->setUsername('user'.$i);
-            $newuser->setEmail('user'.$i.'@thedomainobms.com');
-            $newuser->setEnabled(true);
-            $newuser->setPlainPassword('thepass');
-            $newuser->addRole('ROLE_USER');
+        $newuser = new User();
+        $newuser->setUsername('user');
+        $newuser->setEmail('user@thedomainobms.com');
+        $newuser->setEnabled(true);
+        $newuser->setPlainPassword('thepass');
+        $newuser->addRole('ROLE_USER');
 
-            $manager->persist($newuser);
-        }
+        $manager->persist($newuser);
 
         $manager->flush();
     }

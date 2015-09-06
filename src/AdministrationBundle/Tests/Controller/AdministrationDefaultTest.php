@@ -4,11 +4,12 @@ namespace AdministrationBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AdministrationControllerTest extends WebTestCase
+class AdministrationDefaultTest extends WebTestCase
 {
     public function setUp()
     {
         exec('php app/console doctrine:fixtures:load --no-interaction --env=test');
+        exec('php app/console sample:data --env=test');
     }
 
     public function testIndex()
