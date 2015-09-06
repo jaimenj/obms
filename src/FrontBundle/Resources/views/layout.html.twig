@@ -3,12 +3,14 @@
 {% block body %}
 
 <div style="text-align: center;">
-<img src="{{ asset('apple-touch-icon.png') }}">
-<h1>Online Business Management System</h1>
+	<a href="{{ path('front_home') }}">
+		<img src="{{ asset('apple-touch-icon.png') }}">
+	</a>
+	<h1>Online Business Management System</h1>
 </div>
 
 <div class="container">
-{% block mainarea %}{% endblock %}
+	{% block mainarea %}{% endblock %}
 </div>
 
 {% endblock %}

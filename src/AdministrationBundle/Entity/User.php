@@ -22,11 +22,6 @@ class User extends BaseUser
      */
     protected $id;
 
-    /*protected $username;
-
-    protected $email;
-*/
-
     /**
      * Constructor of the class.
      */

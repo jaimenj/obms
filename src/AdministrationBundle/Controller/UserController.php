@@ -75,9 +75,11 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($entity);
+            $manager->flush();
+
+            $this->addFlash('info', 'Data saved.');
 
             return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
         }
@@ -136,9 +138,9 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+        $entity = $manager->getRepository('AdministrationBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -162,9 +164,9 @@ class UserController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+        $entity = $manager->getRepository('AdministrationBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -208,26 +210,38 @@ class UserController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+        $user = $manager->getRepository('AdministrationBundle:User')->find($id);
 
-        if (!$entity) {
+        if (!$user) {
             throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($user);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+            $newpassword = $editForm['newpassword']->getData();
+            $newpassword2 = $editForm['newpassword2']->getData();
+            if ($newpassword == $newpassword2 and $newpassword != '') {
+                $user->setPlainPassword($newpassword);
+
+                $this->addFlash('info', 'Password changed.');
+            } elseif($newpassword != ''){
+                $this->addFlash('danger', 'ERROR: Newpassword is not well repeated.');
+            }
+
+            $manager->flush();
+
+            $this->addFlash('info', 'Data saved.');
 
             return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $user,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -245,15 +259,17 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AdministrationBundle:User')->find($id);
+            $manager = $this->getDoctrine()->getManager();
+            $entity = $manager->getRepository('AdministrationBundle:User')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find User entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+            $manager->remove($entity);
+            $manager->flush();
+
+            $this->addFlash('info', 'User deleted.');
         }
 
         return $this->redirect($this->generateUrl('user'));
