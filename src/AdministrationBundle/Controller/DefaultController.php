@@ -20,6 +20,12 @@ class DefaultController extends Controller
         $manager = $this->getDoctrine()->getManager();
 
         $counters = array();
+        $counters['nadministrators'] = $manager->createQuery(
+            'SELECT COUNT(a) FROM AdministrationBundle:Administrator a'
+            )->getSingleScalarResult();
+        $counters['nusers'] = $manager->createQuery(
+            'SELECT COUNT(u) FROM AdministrationBundle:User u'
+            )->getSingleScalarResult();
 
         return array(
             'counters' => $counters,
