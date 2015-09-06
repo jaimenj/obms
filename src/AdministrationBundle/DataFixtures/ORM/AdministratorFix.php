@@ -33,7 +33,7 @@ class AdministratorFix extends AbstractFixture implements OrderedFixtureInterfac
 
         $administrator = new Administrator();
         $administrator->setUsername('administrator');
-        $administrator->setEmail('admin@thedomainobms.com');
+        $administrator->setEmail('administrator@thedomainobms.com');
         $encoder = $factory->getEncoder($administrator);
         $password = $encoder->encodePassword('thepass', $administrator->getSalt());
         $administrator->setPassword($password);
