@@ -4,6 +4,7 @@ Web application based on Symfony 2.7 LTS for on-line business management.
 This is a simple ERP, or a project of ERP, a project presented as a final studies project.
 It's a too big project and a very ambicious one, I know, but it's been made like a code kata for mantaining myself updated in knowledge.
 Feel free to use, fork, clone, update, contribute, make pull requests, and call me for work if you have money ;)
+Licensed under the MIT license.
 
 ## Development Requirements
 

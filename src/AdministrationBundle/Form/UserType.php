@@ -16,7 +16,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('email')
+            ->add('email', 'email')
             ->add('newpassword', 'password', array(
                 'mapped' => false,
                 'label' => 'New password',
