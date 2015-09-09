@@ -30,7 +30,6 @@
 		"phpunit/php-code-coverage": "2.1.9",
 		"liip/functional-test-bundle": "dev-master",
 		"guzzlehttp/guzzle": "6.*",
-		"friendsofsymfony/user-bundle": "~2.0@dev",
 		"friendsofsymfony/rest-bundle": "^1.7"
 	},
 	"require-dev": {

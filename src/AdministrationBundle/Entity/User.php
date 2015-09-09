@@ -4,7 +4,7 @@ namespace AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User, entity for managing user accounts that can access to the hole app system.
@@ -13,7 +13,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Entity(repositoryClass="AdministrationBundle\Entity\UserRepository")
  * @UniqueEntity("email", message="Other user has the same email.")
  */
-class User extends BaseUser
+class User implements UserInterface, \Serializable
 {
     /**
      * @var int @ORM\Column(type="integer")
@@ -23,11 +23,40 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * Constructor of the class.
+     * @ORM\Column(type="string", length=25, unique=true)
      */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isEnabled = false;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $salt;
+
     public function __construct()
     {
-        parent::__construct();
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        $this->salt = md5(uniqid(null, true));
     }
 
     /**
@@ -51,36 +80,183 @@ class User extends BaseUser
     }
 
     /**
-     * Add roles.
+     * Set username.
      *
-     * @param \AdministrationBundle\Entity\Role $roles
+     * @param string $username
      *
-     * @return User
+     * @return Administrador
      */
-    public function addRole($role)
+    public function setUsername($username)
     {
-        $this->roles[] = $role;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Remove roles.
+     * Get username.
      *
-     * @param \AdministrationBundle\Entity\Role $roles
+     * @return string
      */
-    public function removeRole($role)
+    public function getUsername()
     {
-        $this->roles->removeElement($role);
+        return $this->username;
     }
 
     /**
-     * Get roles.
+     * Set email.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param string $email
+     *
+     * @return Administrador
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set password.
+     *
+     * @param string $password
+     *
+     * @return Administrador
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password.
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @inheritDoc
      */
     public function getRoles()
     {
-        return $this->roles;
+        return array(
+            'ROLE_USER',
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * Set salt.
+     *
+     * @param string $salt
+     *
+     * @return Administrador
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set isEnabled
+     *
+     * @param boolean $isEnabled
+     * @return User
+     */
+    public function setIsEnabled($isEnabled)
+    {
+        $this->isEnabled = $isEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnabled
+     *
+     * @return boolean
+     */
+    public function getIsEnabled()
+    {
+        return $this->isEnabled;
     }
 }

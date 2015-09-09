@@ -42,7 +42,7 @@
 				</td>
 				<td>{{ form_widget(formListUsers[entity.id ~ 'username'], {value:entity.username}) }}</td>
 				<td>{{ form_widget(formListUsers[entity.id ~ 'email'], {value:entity.email}) }}</td>
-				<td>{{ entity.enabled ? 'Yes' : 'No'}}</td>
+				<td>{{ entity.isenabled ? 'Yes' : 'No'}}</td>
 				<td>
 					<a class="btn btn-default" href="{{ path('user_show', { 'id': entity.id }) }}">
 						<i class="fa fa-eye"></i>

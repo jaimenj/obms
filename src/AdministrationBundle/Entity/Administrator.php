@@ -21,33 +21,35 @@ class Administrator implements UserInterface, \Serializable
     protected $id;
 
     /**
-     * @var string @ORM\Column(type="string",
-     *             length=255)
+     * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
 
     /**
-     * @var string @ORM\Column(type="string",
-     *             length=255)
-     */
-    private $email;
-
-    /**
-     * @var string @ORM\Column(type="string",
-     *             length=255)
+     * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=32, nullable=true)
+     * @ORM\Column(type="string", length=60, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="string")
      */
     private $salt;
 
-    /**
-     * Constructor de la clase.
-     */
     public function __construct()
     {
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        $this->salt = md5(uniqid(null, true));
     }
 
     /**
@@ -186,12 +188,36 @@ class Administrator implements UserInterface, \Serializable
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
-        list (
+        list(
             $this->id,
             $this->username,
             $this->password,
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+
+    /**
+     * Set isActive.
+     *
+     * @param bool $isActive
+     *
+     * @return Administrator
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive.
+     *
+     * @return bool
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

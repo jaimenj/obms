@@ -55,9 +55,9 @@ class SampleDataCommand extends ContainerAwareCommand
                 $newuser = new User();
                 $newuser->setUsername('user'.$i);
                 $newuser->setEmail('user'.$i.'@thedomainobms.com');
-                $newuser->setEnabled(true);
-                $newuser->setPlainPassword('thepass');
-                $newuser->addRole('ROLE_USER');
+                $encoder = $factory->getEncoder($newuser);
+                $password = $encoder->encodePassword('thepass', $newuser->getSalt());
+                $newuser->setPassword($password);
                 $manager->persist($newuser);
             }
         }

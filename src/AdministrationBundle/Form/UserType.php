@@ -27,6 +27,10 @@ class UserType extends AbstractType
                 'label' => 'Repeat the new password',
                 'required' => false,
             ))
+            ->add('isenabled', 'checkbox', array(
+                'label' => 'Is enabled.',
+                'required' => false,
+            ))
         ;
     }
 
