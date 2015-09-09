@@ -8,6 +8,16 @@
 	<div class="col-sm-3 col-md-2">
 
 		<div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
+
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab">
+					<h4 class="panel-title">
+						<a class="navbar-brand" href="{{ path('app_home') }}"><img src="{{ asset('apple-touch-icon.png') }}"></a>
+						OBMS
+					</h4>
+				</div>
+			</div>
+
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab">
 					<h4 class="panel-title">
@@ -256,19 +266,19 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab">
 					<h4 class="panel-title">
-						<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuSecurity" role="button">
-							Security
+						<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#" role="button">
+							My profile</a>
+					</h4>
+				</div>
+			</div>
+			<div class="panel panel-warning">
+				<div class="panel-heading" role="tab">
+					<h4 class="panel-title text-center">
+						<a href="{{ path('app_logout') }}">
+							<i class="fa fa-power-off"></i>
 						</a>
 					</h4>
 				</div>
-				<ul class="list-group panel-collapse collapse" id="menuSecurity" role="tabpanel">
-					<li class="list-group-item">
-						<a href="#">My profile</a>
-					</li>
-					<li class="list-group-item">
-						<a href="{{ path('app_logout') }}">Logout</a>
-					</li>
-				</ul>
 			</div>
 		</div>
 
