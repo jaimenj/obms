@@ -1,0 +1,13 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block mainarea -%}
+
+<h1>Third type creation</h1>
+
+{{ form(form) }}
+
+<a class="btn btn-default" href="{{ path('thirdtype') }}">
+	Back to the list
+</a>
+
+{% endblock %}
