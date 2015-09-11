@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * WorkerPayroll
+ * WorkerPayroll.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\WorkerPayrollRepository")
@@ -13,40 +13,44 @@ use Doctrine\ORM\Mapping as ORM;
 class WorkerPayroll
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="year", type="integer")
+     * @ORM\Column(type="integer")
      */
     private $year;
 
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="month", type="integer")
+     * @ORM\Column(type="integer")
      */
     private $month;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="decimal")
+     * @ORM\Column(type="decimal")
      */
     private $amount;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Worker", inversedBy="workerPayrolls")
+     */
+    private $worker;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -54,9 +58,10 @@ class WorkerPayroll
     }
 
     /**
-     * Set year
+     * Set year.
      *
-     * @param integer $year
+     * @param int $year
+     *
      * @return WorkerPayroll
      */
     public function setYear($year)
@@ -67,9 +72,9 @@ class WorkerPayroll
     }
 
     /**
-     * Get year
+     * Get year.
      *
-     * @return integer 
+     * @return int
      */
     public function getYear()
     {
@@ -77,9 +82,10 @@ class WorkerPayroll
     }
 
     /**
-     * Set month
+     * Set month.
      *
-     * @param integer $month
+     * @param int $month
+     *
      * @return WorkerPayroll
      */
     public function setMonth($month)
@@ -90,9 +96,9 @@ class WorkerPayroll
     }
 
     /**
-     * Get month
+     * Get month.
      *
-     * @return integer 
+     * @return int
      */
     public function getMonth()
     {
@@ -100,9 +106,10 @@ class WorkerPayroll
     }
 
     /**
-     * Set amount
+     * Set amount.
      *
      * @param string $amount
+     *
      * @return WorkerPayroll
      */
     public function setAmount($amount)
@@ -113,9 +120,9 @@ class WorkerPayroll
     }
 
     /**
-     * Get amount
+     * Get amount.
      *
-     * @return string 
+     * @return string
      */
     public function getAmount()
     {

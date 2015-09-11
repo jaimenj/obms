@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ThirdType.
+ * StorageStore.
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\ThirdTypeRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\StorageStoreRepository")
  */
-class ThirdType
+class StorageStore
 {
     /**
      * @var int
@@ -29,9 +29,18 @@ class ThirdType
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Third", mappedBy="thirdType")
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
      */
-    private $thirds;
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $address;
 
     /**
      * Get id.
@@ -48,7 +57,7 @@ class ThirdType
      *
      * @param string $name
      *
-     * @return ThirdType
+     * @return StoreWarehouse
      */
     public function setName($name)
     {
@@ -68,54 +77,50 @@ class ThirdType
     }
 
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->thirds = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add thirds.
+     * Set description.
      *
-     * @param \AppBundle\Entity\Third $thirds
+     * @param string $description
      *
-     * @return ThirdType
+     * @return StoreWarehouse
      */
-    public function addThird(\AppBundle\Entity\Third $thirds)
+    public function setDescription($description)
     {
-        $this->thirds[] = $thirds;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Remove thirds.
-     *
-     * @param \AppBundle\Entity\Third $thirds
-     */
-    public function removeThird(\AppBundle\Entity\Third $thirds)
-    {
-        $this->thirds->removeElement($thirds);
-    }
-
-    /**
-     * Get thirds.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getThirds()
-    {
-        return $this->thirds;
-    }
-
-    /**
-     * String operator.
+     * Get description.
      *
      * @return string
      */
-    public function __toString()
+    public function getDescription()
     {
-        return $this->name;
+        return $this->description;
+    }
+
+    /**
+     * Set address.
+     *
+     * @param string $address
+     *
+     * @return StoreWarehouse
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address.
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 }

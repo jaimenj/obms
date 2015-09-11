@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Third
+ * Third.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ThirdRepository")
@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Third
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,43 +24,47 @@ class Third
     /**
      * @var string
      *
-     * @ORM\Column(name="fullname", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $fullname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $telephone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="web", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $web;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ThirdType", inversedBy="thirds")
+     */
+    private $thirdType;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -68,9 +72,10 @@ class Third
     }
 
     /**
-     * Set fullname
+     * Set fullname.
      *
      * @param string $fullname
+     *
      * @return Third
      */
     public function setFullname($fullname)
@@ -81,9 +86,9 @@ class Third
     }
 
     /**
-     * Get fullname
+     * Get fullname.
      *
-     * @return string 
+     * @return string
      */
     public function getFullname()
     {
@@ -91,9 +96,10 @@ class Third
     }
 
     /**
-     * Set telephone
+     * Set telephone.
      *
      * @param string $telephone
+     *
      * @return Third
      */
     public function setTelephone($telephone)
@@ -104,9 +110,9 @@ class Third
     }
 
     /**
-     * Get telephone
+     * Get telephone.
      *
-     * @return string 
+     * @return string
      */
     public function getTelephone()
     {
@@ -114,9 +120,10 @@ class Third
     }
 
     /**
-     * Set address
+     * Set address.
      *
      * @param string $address
+     *
      * @return Third
      */
     public function setAddress($address)
@@ -127,9 +134,9 @@ class Third
     }
 
     /**
-     * Get address
+     * Get address.
      *
-     * @return string 
+     * @return string
      */
     public function getAddress()
     {
@@ -137,9 +144,10 @@ class Third
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
+     *
      * @return Third
      */
     public function setEmail($email)
@@ -150,9 +158,9 @@ class Third
     }
 
     /**
-     * Get email
+     * Get email.
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -160,9 +168,10 @@ class Third
     }
 
     /**
-     * Set web
+     * Set web.
      *
      * @param string $web
+     *
      * @return Third
      */
     public function setWeb($web)
@@ -173,12 +182,35 @@ class Third
     }
 
     /**
-     * Get web
+     * Get web.
      *
-     * @return string 
+     * @return string
      */
     public function getWeb()
     {
         return $this->web;
+    }
+
+    /**
+     * Set thirdType
+     *
+     * @param \AppBundle\Entity\ThirdType $thirdType
+     * @return Third
+     */
+    public function setThirdType(\AppBundle\Entity\ThirdType $thirdType = null)
+    {
+        $this->thirdType = $thirdType;
+
+        return $this;
+    }
+
+    /**
+     * Get thirdType
+     *
+     * @return \AppBundle\Entity\ThirdType 
+     */
+    public function getThirdType()
+    {
+        return $this->thirdType;
     }
 }

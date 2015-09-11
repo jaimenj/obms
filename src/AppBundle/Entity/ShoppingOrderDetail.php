@@ -5,15 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SalesNoteDetail
+ * ShoppingOrderDetail.
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesNoteDetailRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ShoppingOrderDetailRepository")
  */
-class SalesNoteDetail
+class ShoppingOrderDetail
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -42,11 +42,10 @@ class SalesNoteDetail
      */
     private $quantity;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -54,10 +53,11 @@ class SalesNoteDetail
     }
 
     /**
-     * Set concept
+     * Set concept.
      *
      * @param string $concept
-     * @return SalesNoteDetail
+     *
+     * @return ShoppingOrderDetail
      */
     public function setConcept($concept)
     {
@@ -67,7 +67,7 @@ class SalesNoteDetail
     }
 
     /**
-     * Get concept
+     * Get concept.
      *
      * @return string
      */
@@ -77,10 +77,11 @@ class SalesNoteDetail
     }
 
     /**
-     * Set price
+     * Set price.
      *
      * @param string $price
-     * @return SalesNoteDetail
+     *
+     * @return ShoppingOrderDetail
      */
     public function setPrice($price)
     {
@@ -90,7 +91,7 @@ class SalesNoteDetail
     }
 
     /**
-     * Get price
+     * Get price.
      *
      * @return string
      */
@@ -100,10 +101,11 @@ class SalesNoteDetail
     }
 
     /**
-     * Set quantity
+     * Set quantity.
      *
      * @param string $quantity
-     * @return SalesNoteDetail
+     *
+     * @return ShoppingOrderDetail
      */
     public function setQuantity($quantity)
     {
@@ -113,7 +115,7 @@ class SalesNoteDetail
     }
 
     /**
-     * Get quantity
+     * Get quantity.
      *
      * @return string
      */

@@ -5,15 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SalesNote.
+ * SalesInvoice
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesNoteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesInvoiceRepository")
  */
-class SalesNote
+class SalesInvoice
 {
     /**
-     * @var int
+     * @var integer
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -35,17 +35,11 @@ class SalesNote
      */
     private $date;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
 
     /**
-     * Get id.
+     * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -56,7 +50,7 @@ class SalesNote
      * Set reference
      *
      * @param string $reference
-     * @return SalesNote
+     * @return SalesInvoice
      */
     public function setReference($reference)
     {
@@ -68,7 +62,7 @@ class SalesNote
     /**
      * Get reference
      *
-     * @return string 
+     * @return string
      */
     public function getReference()
     {
@@ -79,7 +73,7 @@ class SalesNote
      * Set date
      *
      * @param \DateTime $date
-     * @return SalesNote
+     * @return SalesInvoice
      */
     public function setDate($date)
     {
@@ -91,33 +85,10 @@ class SalesNote
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return SalesNote
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 }

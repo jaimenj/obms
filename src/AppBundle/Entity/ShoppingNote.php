@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SalesNote.
+ * ShoppingNote.
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesNoteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ShoppingNoteRepository")
  */
-class SalesNote
+class ShoppingNote
 {
     /**
      * @var int
@@ -26,7 +26,7 @@ class SalesNote
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $reference;
+    private $sellerReference;
 
     /**
      * @var \DateTime
@@ -53,33 +53,33 @@ class SalesNote
     }
 
     /**
-     * Set reference
+     * Set sellerReference
      *
-     * @param string $reference
-     * @return SalesNote
+     * @param string $sellerReference
+     * @return ShoppingNote
      */
-    public function setReference($reference)
+    public function setSellerReference($sellerReference)
     {
-        $this->reference = $reference;
+        $this->sellerReference = $sellerReference;
 
         return $this;
     }
 
     /**
-     * Get reference
+     * Get sellerReference
      *
-     * @return string 
+     * @return string
      */
-    public function getReference()
+    public function getSellerReference()
     {
-        return $this->reference;
+        return $this->sellerReference;
     }
 
     /**
      * Set date
      *
      * @param \DateTime $date
-     * @return SalesNote
+     * @return ShoppingNote
      */
     public function setDate($date)
     {
@@ -91,7 +91,7 @@ class SalesNote
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -102,7 +102,7 @@ class SalesNote
      * Set description
      *
      * @param string $description
-     * @return SalesNote
+     * @return ShoppingNote
      */
     public function setDescription($description)
     {
@@ -114,7 +114,7 @@ class SalesNote
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Worker
+ * Worker.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\WorkerRepository")
@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Worker
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,29 +24,43 @@ class Worker
     /**
      * @var string
      *
-     * @ORM\Column(name="fullname", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $fullname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $telephone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity="WorkerDown", mappedBy="worker")
+     */
+    private $workerDowns;
 
     /**
-     * Get id
+     * @ORM\OneToMany(targetEntity="WorkerHolliday", mappedBy="worker")
+     */
+    private $workerHollidays;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WorkerPayroll", mappedBy="worker")
+     */
+    private $workerPayrolls;
+
+    /**
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -54,9 +68,10 @@ class Worker
     }
 
     /**
-     * Set fullname
+     * Set fullname.
      *
      * @param string $fullname
+     *
      * @return Worker
      */
     public function setFullname($fullname)
@@ -67,9 +82,9 @@ class Worker
     }
 
     /**
-     * Get fullname
+     * Get fullname.
      *
-     * @return string 
+     * @return string
      */
     public function getFullname()
     {
@@ -77,9 +92,10 @@ class Worker
     }
 
     /**
-     * Set telephone
+     * Set telephone.
      *
      * @param string $telephone
+     *
      * @return Worker
      */
     public function setTelephone($telephone)
@@ -90,9 +106,9 @@ class Worker
     }
 
     /**
-     * Get telephone
+     * Get telephone.
      *
-     * @return string 
+     * @return string
      */
     public function getTelephone()
     {
@@ -100,9 +116,10 @@ class Worker
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
+     *
      * @return Worker
      */
     public function setEmail($email)
@@ -113,9 +130,9 @@ class Worker
     }
 
     /**
-     * Get email
+     * Get email.
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {

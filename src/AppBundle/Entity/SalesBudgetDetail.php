@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SalesNoteDetail
+ * SalesBudgetDetail
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesNoteDetailRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesBudgetDetailRepository")
  */
-class SalesNoteDetail
+class SalesBudgetDetail
 {
     /**
      * @var integer
@@ -57,7 +57,7 @@ class SalesNoteDetail
      * Set concept
      *
      * @param string $concept
-     * @return SalesNoteDetail
+     * @return SalesBudgetDetail
      */
     public function setConcept($concept)
     {
@@ -80,7 +80,7 @@ class SalesNoteDetail
      * Set price
      *
      * @param string $price
-     * @return SalesNoteDetail
+     * @return SalesBudgetDetail
      */
     public function setPrice($price)
     {
@@ -103,7 +103,7 @@ class SalesNoteDetail
      * Set quantity
      *
      * @param string $quantity
-     * @return SalesNoteDetail
+     * @return SalesBudgetDetail
      */
     public function setQuantity($quantity)
     {

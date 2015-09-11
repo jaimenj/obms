@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SalesNote.
+ * ShoppingOrder.
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesNoteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ShoppingOrderRepository")
  */
-class SalesNote
+class ShoppingOrder
 {
     /**
      * @var int
@@ -27,6 +27,13 @@ class SalesNote
      * @ORM\Column(type="string", length=255)
      */
     private $reference;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $sellerReference;
 
     /**
      * @var \DateTime
@@ -56,7 +63,7 @@ class SalesNote
      * Set reference
      *
      * @param string $reference
-     * @return SalesNote
+     * @return ShoppingOrder
      */
     public function setReference($reference)
     {
@@ -68,7 +75,7 @@ class SalesNote
     /**
      * Get reference
      *
-     * @return string 
+     * @return string
      */
     public function getReference()
     {
@@ -76,10 +83,33 @@ class SalesNote
     }
 
     /**
+     * Set sellerReference
+     *
+     * @param string $sellerReference
+     * @return ShoppingOrder
+     */
+    public function setSellerReference($sellerReference)
+    {
+        $this->sellerReference = $sellerReference;
+
+        return $this;
+    }
+
+    /**
+     * Get sellerReference
+     *
+     * @return string
+     */
+    public function getSellerReference()
+    {
+        return $this->sellerReference;
+    }
+
+    /**
      * Set date
      *
      * @param \DateTime $date
-     * @return SalesNote
+     * @return ShoppingOrder
      */
     public function setDate($date)
     {
@@ -91,7 +121,7 @@ class SalesNote
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -102,7 +132,7 @@ class SalesNote
      * Set description
      *
      * @param string $description
-     * @return SalesNote
+     * @return ShoppingOrder
      */
     public function setDescription($description)
     {
@@ -114,7 +144,7 @@ class SalesNote
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

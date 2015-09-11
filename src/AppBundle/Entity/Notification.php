@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Notification
 {
     /**
-     * @var int @ORM\Column(name="id", type="integer")
+     * @var int @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -25,7 +25,7 @@ class Notification
     private $title;
 
     /**
-     * @var string @ORM\Column(name="descripcion", type="text")
+     * @var string @ORM\Column(type="text")
      */
     private $description;
 

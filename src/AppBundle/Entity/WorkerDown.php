@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * WorkerDown
+ * WorkerDown.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\WorkerDownRepository")
@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class WorkerDown
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,22 +24,26 @@ class WorkerDown
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initdate", type="date")
+     * @ORM\Column(type="date")
      */
     private $initdate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="finishdate", type="date")
+     * @ORM\Column(type="date")
      */
     private $finishdate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Worker", inversedBy="workerDowns")
+     */
+    private $worker;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -47,9 +51,10 @@ class WorkerDown
     }
 
     /**
-     * Set initdate
+     * Set initdate.
      *
      * @param \DateTime $initdate
+     *
      * @return WorkerDown
      */
     public function setInitdate($initdate)
@@ -60,9 +65,9 @@ class WorkerDown
     }
 
     /**
-     * Get initdate
+     * Get initdate.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getInitdate()
     {
@@ -70,9 +75,10 @@ class WorkerDown
     }
 
     /**
-     * Set finishdate
+     * Set finishdate.
      *
      * @param \DateTime $finishdate
+     *
      * @return WorkerDown
      */
     public function setFinishdate($finishdate)
@@ -83,9 +89,9 @@ class WorkerDown
     }
 
     /**
-     * Get finishdate
+     * Get finishdate.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFinishdate()
     {
