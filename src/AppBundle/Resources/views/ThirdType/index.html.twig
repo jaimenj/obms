@@ -1,0 +1,58 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block mainarea -%}
+
+{{ form_start(formListThirdTypes) }}
+
+<div class="row">
+	<div class="col-md-3">
+		<h1>Third types</h1>
+	</div>
+	<div class="col-md-4">
+		<button class="btn btn-default" type="submit">
+			<i class="fa fa-floppy-o"></i>
+			Save all
+		</button>
+		<a class="btn btn-default" href="{{ path('thirdtype_new') }}">
+			<i class="fa fa-plus"></i>
+			Create new
+		</a>
+	</div>
+	<div class="col-md-5">
+		{{ knp_pagination_render(paginator) }}
+	</div>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>{{ knp_pagination_sortable(paginator, 'Id', 'tt.id') }}</th>
+				<th>{{ knp_pagination_sortable(paginator, 'Name', 'tt.name') }}</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for entity in paginator %}
+			<tr>
+				<td>
+					<a href="{{ path('thirdtype_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
+				</td>
+				<td>{{ form_widget(formListThirdTypes[entity.id ~ 'name'], {value:entity.name}) }}</td>
+				<td>
+					<a class="btn btn-default" href="{{ path('thirdtype_show', { 'id': entity.id }) }}">
+						<i class="fa fa-eye"></i>
+					</a>
+					<a class="btn btn-default" href="{{ path('thirdtype_edit', { 'id': entity.id }) }}">
+						<i class="fa fa-edit"></i>
+					</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{{ form_end(formListThirdTypes) }}
+
+{% endblock %}

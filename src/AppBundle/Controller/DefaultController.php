@@ -16,7 +16,19 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $manager = $this->getDoctrine()->getManager();
+        
+        $counters = array();
+        $counters['nthirds'] = $manager->createQuery(
+            'SELECT COUNT(t) FROM AppBundle:Third t'
+            )->getSingleScalarResult();
+        $counters['nthirdtypes'] = $manager->createQuery(
+            'SELECT COUNT(tt) FROM AppBundle:ThirdType tt'
+            )->getSingleScalarResult();
+
+        return array(
+            'counters' => $counters,
+        );
     }
 
     /**

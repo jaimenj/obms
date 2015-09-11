@@ -1,14 +1,18 @@
 # Online Business Management System
 
 Web application based on Symfony 2.7 LTS for on-line business management.
-This is a simple ERP, or a project of ERP, a project presented as a final studies project.
-It's a too big project and a very ambicious one, I know, but it's been made like a code kata for mantaining myself updated in knowledge.
-Feel free to use, fork, clone, update, contribute, make pull requests, and call me for work if you have money ;)
+This is a simple ERP, or a project of ERP.
+This project was presented as a final project of studies.
+It's a too big project and a very ambicious one, I know, but it's being made like a code kata for mantaining myself updated in knowledge.
+Feel free to use, fork, clone, update, contribute, and please make pull requests of your improvements.
+Call me for work if you have money ;)
 Licensed under the MIT license.
 
 ## Development Requirements
 
-Composer, Bower, PHP, Apache2 and MariaDB. Preferably it will be deployed on a Linux machine.
+Developed with Composer, Bower, PHP, Apache2 and MariaDB.
+It's probably compatible with HHVM, the feedback will be welcomed.
+Compatible with Doctrine compatible databases.
 
 ## Main structure and functionality
 

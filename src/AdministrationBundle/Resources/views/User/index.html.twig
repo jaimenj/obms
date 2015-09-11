@@ -27,10 +27,10 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>Username</th>
-				<th>Email</th>
-				<th>Enabled</th>
+				<th>{{ knp_pagination_sortable(paginator, 'Id', 'u.id') }}</th>
+				<th>{{ knp_pagination_sortable(paginator, 'Username', 'u.username') }}</th>
+				<th>{{ knp_pagination_sortable(paginator, 'Email', 'u.email') }}</th>
+				<th>{{ knp_pagination_sortable(paginator, 'Enabled', 'u.isEnabled') }}</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -42,7 +42,7 @@
 				</td>
 				<td>{{ form_widget(formListUsers[entity.id ~ 'username'], {value:entity.username}) }}</td>
 				<td>{{ form_widget(formListUsers[entity.id ~ 'email'], {value:entity.email}) }}</td>
-				<td>{{ entity.enabled ? 'Yes' : 'No'}}</td>
+				<td>{{ entity.isenabled ? 'Yes' : 'No'}}</td>
 				<td>
 					<a class="btn btn-default" href="{{ path('user_show', { 'id': entity.id }) }}">
 						<i class="fa fa-eye"></i>

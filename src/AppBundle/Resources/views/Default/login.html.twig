@@ -1,6 +1,6 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
-{% block mainarea %}
+{% block mainarealogin %}
 
 <div style="text-align: center;">
 	<a href="{{ path('front_home') }}">
@@ -13,8 +13,8 @@
 	<div class="panel-body text-centered">
 		<h2>Access control</h2>
 
-		<p>Access for administrator:
-			<b>user1</b>, password
+		<p>Access for the main app zone:
+			<b>user</b>, password
 			<b>thepass</b>.</p>
 
 		{% if error %}
@@ -26,7 +26,7 @@
 				<div class="form-group">
 					<label class=" control-label col-lg-3 control-label required" for="form__username">Username</label>
 					<div class="col-lg-9">
-						<input class="form-control" id="username" name="_username" required="required" type="text" value="{{ not last_username ? 'user1' }}"/>
+						<input class="form-control" id="username" name="_username" required="required" type="text" value="{{ not last_username ? 'user' }}"/>
 					</div>
 				</div>
 				<div class="form-group">

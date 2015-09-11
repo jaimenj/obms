@@ -20,23 +20,13 @@
                 <li{{ app.request.get('_route') == 'user' ? ' class="active"' }}>
                     <a href="{{ path('user') }}">Users</a>
                 </li>
-
+				<li{{ app.request.get('_route') == 'administrator' ? ' class="active"' }}>
+					<a href="{{ path('administrator') }}">Administrators</a>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-					<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Security
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li>
-							<a href="{{ path('administrator') }}">Administrators</a>
-						</li>
-
-						<li class="divider" role="separator"></li>
-						<li>
-							<a href="{{ path('administration_logout') }}">Logout</a>
-						</li>
-					</ul>
+				<li>
+					<a href="{{ path('administration_logout') }}"><i class="fa fa-power-off"></i></a>
 				</li>
 			</ul>
 		</div>

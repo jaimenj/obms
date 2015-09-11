@@ -245,7 +245,10 @@ class UserController extends Controller
             $newpassword = $editForm['newpassword']->getData();
             $newpassword2 = $editForm['newpassword2']->getData();
             if ($newpassword == $newpassword2 and $newpassword != '') {
-                $user->setPlainPassword($newpassword);
+                $factory = $this->container->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($user);
+                $password = $encoder->encodePassword($newpassword, $user->getSalt());
+                $user->setPassword($newpassword);
 
                 $this->addFlash('info', 'Password changed.');
             } elseif ($newpassword != '') {

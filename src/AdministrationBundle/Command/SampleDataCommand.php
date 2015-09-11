@@ -9,6 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 use AdministrationBundle\Entity\Administrator;
 use AdministrationBundle\Entity\User;
+use AppBundle\Entity\ThirdType;
+use AppBundle\Entity\Third;
 
 class SampleDataCommand extends ContainerAwareCommand
 {
@@ -52,13 +54,28 @@ class SampleDataCommand extends ContainerAwareCommand
                 $administrator->setPassword($password);
                 $manager->persist($administrator);
 
-                $newuser = new User();
-                $newuser->setUsername('user'.$i);
-                $newuser->setEmail('user'.$i.'@thedomainobms.com');
-                $newuser->setEnabled(true);
-                $newuser->setPlainPassword('thepass');
-                $newuser->addRole('ROLE_USER');
-                $manager->persist($newuser);
+                $newUser = new User();
+                $newUser->setUsername('user'.$i);
+                $newUser->setEmail('user'.$i.'@thedomainobms.com');
+                $encoder = $factory->getEncoder($newUser);
+                $password = $encoder->encodePassword('thepass', $newUser->getSalt());
+                $newUser->setPassword($password);
+                $manager->persist($newUser);
+            }
+
+            for ($i = 0; $i < 20; $i++) {
+                $newThirdType = new ThirdType();
+                $newThirdType->setName('Third type '.$i);
+                $manager->persist($newThirdType);
+
+                $newThird = new Third();
+                $newThird->setFullname('Third '.$i);
+                $newThird->setTelephone('Telephone '.$i);
+                $newThird->setAddress('Adress '.$i);
+                $newThird->setEmail('Email '.$i);
+                $newThird->setWeb('Web '.$i);
+                $newThird->setThirdType($newThirdType);
+                $manager->persist($newThird);
             }
         }
 
@@ -83,6 +100,23 @@ class SampleDataCommand extends ContainerAwareCommand
             if ($user->getUsername() != 'user') {
                 $manager->remove($user);
             }
+        }
+
+        $thirds = $manager->getRepository('AppBundle:Third')->findAll();
+        foreach ($users as $user) {
+            if ($user->getUsername() != 'user') {
+                $manager->remove($user);
+            }
+        }
+
+        $thirdTypes = $manager->getRepository('AppBundle:ThirdType')->findAll();
+        foreach ($thirdTypes as $thirdType) {
+            $manager->remove($thirdType);
+        }
+
+        $thirds = $manager->getRepository('AppBundle:Third')->findAll();
+        foreach ($thirds as $third) {
+            $manager->remove($third);
         }
 
         $manager->flush();
