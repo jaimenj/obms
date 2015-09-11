@@ -28,7 +28,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') in ['third', 'thirdtype'] ? ' in' }}" id="menuThirds" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/third|thirdtype/' ? ' in' }}" id="menuThirds" role="tabpanel">
 						<li class="list-group-item">
 							<a href="{{ path('thirdtype') }}">Types</a>
 						</li>

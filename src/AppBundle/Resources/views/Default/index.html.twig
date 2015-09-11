@@ -1,6 +1,22 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
 {% block mainarea %}
-Here is the home page of the app zone!
-Nowadays it is all to do, don't wait too much right now.
+
+<p>Here is the home page of the app zone!
+Nowadays it is all to do, don't wait too much right now.</p>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">Status</div>
+  <ul class="list-group">
+	<li class="list-group-item">Third types: {{ counters['nthirdtypes'] }}</li>
+	<li class="list-group-item">Thirds: {{ counters['nthirds'] }}</li>
+  </ul>
+  <div class="panel-body">
+    <p>...</p>
+  </div>
+
+</div>
+
 {% endblock %}

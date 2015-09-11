@@ -2,6 +2,8 @@
 
 {% block mainarea -%}
 
+{{ form_start(formListThirdTypes) }}
+
 <div class="row">
 	<div class="col-md-3">
 		<h1>Third types</h1>
@@ -36,7 +38,7 @@
 				<td>
 					<a href="{{ path('thirdtype_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
 				</td>
-				<td>{{ entity.name }}</td>
+				<td>{{ form_widget(formListThirdTypes[entity.id ~ 'name'], {value:entity.name}) }}</td>
 				<td>
 					<a class="btn btn-default" href="{{ path('thirdtype_show', { 'id': entity.id }) }}">
 						<i class="fa fa-eye"></i>
@@ -50,5 +52,7 @@
 		</tbody>
 	</table>
 </div>
+
+{{ form_end(formListThirdTypes) }}
 
 {% endblock %}

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\ThirdType;
 use AppBundle\Form\ThirdTypeType;
+use AppBundle\Form\ListThirdTypesType;
 
 /**
  * ThirdType controller.
@@ -22,10 +23,10 @@ class ThirdTypeController extends Controller
      *
      * @Route("/", name="thirdtype")
      *
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->getDoctrine()->getManager();
 
@@ -36,14 +37,32 @@ class ThirdTypeController extends Controller
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
 
+        $formListThirdTypes = $this->createForm(new ListThirdTypesType($paginator));
+
+        if ($request->getMethod() == 'POST') {
+            $formListThirdTypes->handleRequest($request);
+            if ($formListThirdTypes->isValid()) {
+                foreach ($paginator as $thirdType) {
+                    $thirdType->setName($formListThirdTypes[$thirdType->getId().'name']->getData());
+                    $manager->persist($thirdType);
+                }
+                $manager->flush();
+
+                $this->addFlash('info', 'Data saved.');
+            } else {
+                $this->addFlash('danger', 'ERROR: '.$formListThirdTypes->getErrorsAsString());
+            }
+        }
+
         return array(
             'paginator' => $paginator,
+            'formListThirdTypes' => $formListThirdTypes->createView(),
         );
     }
     /**
      * Creates a new ThirdType entity.
      *
-     * @Route("/", name="thirdtype_create")
+     * @Route("/new", name="thirdtype_create")
      *
      * @Method("POST")
      * @Template("AppBundle:ThirdType:new.html.twig")

@@ -20,9 +20,9 @@ class ListThirdTypesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name')
-        ;
+        foreach ($this->paginator as $thirdType) {
+            $builder->add($thirdType->getId() . 'name');
+        }
     }
 
     /**
