@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Third;
 use AppBundle\Form\ThirdType;
+use AppBundle\Form\ListThirdsType;
 
 /**
  * Third controller.
@@ -22,28 +23,49 @@ class ThirdController extends Controller
      *
      * @Route("/", name="third")
      *
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->getDoctrine()->getManager();
 
         $querybuilder = $manager->createQueryBuilder()
-            ->select('t')
-            ->from('AppBundle:Third', 't');
+            ->select('t, tt')
+            ->from('AppBundle:Third', 't')
+            ->leftJoin('t.thirdType', 'tt');
 
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
 
+        $formListThirds = $this->createForm(new ListThirdsType($paginator));
+
+        if ($request->getMethod() == 'POST') {
+            $formListThirds->handleRequest($request);
+            if ($formListThirds->isValid()) {
+                foreach ($paginator as $third) {
+                    $third->setFullname($formListThirds[$third->getId().'fullname']->getData());
+                    $third->setEmail($formListThirds[$third->getId().'email']->getData());
+                    $third->setThirdType($formListThirds[$third->getId().'thirdType']->getData());
+                    $manager->persist($third);
+                }
+                $manager->flush();
+
+                $this->addFlash('info', 'Data saved.');
+            } else {
+                $this->addFlash('danger', 'ERROR: '.$formListThirds->getErrorsAsString());
+            }
+        }
+
         return array(
             'paginator' => $paginator,
+            'formListThirds' => $formListThirds->createView(),
         );
     }
     /**
      * Creates a new Third entity.
      *
-     * @Route("/", name="third_create")
+     * @Route("/new", name="third_create")
      *
      * @Method("POST")
      * @Template("AppBundle:Third:new.html.twig")
@@ -58,6 +80,8 @@ class ThirdController extends Controller
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($third);
             $manager->flush();
+
+            $this->addFlash('info', 'Third created.');
 
             return $this->redirect($this->generateUrl('third_show', array('id' => $third->getId())));
         }
@@ -203,6 +227,8 @@ class ThirdController extends Controller
         if ($editForm->isValid()) {
             $manager->flush();
 
+            $this->addFlash('info', 'Data saved.');
+
             return $this->redirect($this->generateUrl('third_edit', array('id' => $id)));
         }
 
@@ -234,6 +260,8 @@ class ThirdController extends Controller
 
             $manager->remove($third);
             $manager->flush();
+
+            $this->addFlash('info', 'Third removed.');
         }
 
         return $this->redirect($this->generateUrl('third'));

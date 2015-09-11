@@ -17,11 +17,11 @@ use AppBundle\Form\ThirdTypeType;
  */
 class ThirdTypeController extends Controller
 {
-
     /**
      * Lists all ThirdType entities.
      *
      * @Route("/", name="thirdtype")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -44,6 +44,7 @@ class ThirdTypeController extends Controller
      * Creates a new ThirdType entity.
      *
      * @Route("/", name="thirdtype_create")
+     *
      * @Method("POST")
      * @Template("AppBundle:ThirdType:new.html.twig")
      */
@@ -57,6 +58,8 @@ class ThirdTypeController extends Controller
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($entity);
             $manager->flush();
+
+            $this->addFlash('info', 'Third type created.');
 
             return $this->redirect($this->generateUrl('thirdtype_show', array('id' => $entity->getId())));
         }
@@ -90,6 +93,7 @@ class ThirdTypeController extends Controller
      * Displays a form to create a new ThirdType entity.
      *
      * @Route("/new", name="thirdtype_new")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -108,6 +112,7 @@ class ThirdTypeController extends Controller
      * Finds and displays a ThirdType entity.
      *
      * @Route("/{id}", name="thirdtype_show")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -133,6 +138,7 @@ class ThirdTypeController extends Controller
      * Displays a form to edit an existing ThirdType entity.
      *
      * @Route("/{id}/edit", name="thirdtype_edit")
+     *
      * @Method("GET")
      * @Template()
      */
@@ -157,12 +163,12 @@ class ThirdTypeController extends Controller
     }
 
     /**
-    * Creates a form to edit a ThirdType entity.
-    *
-    * @param ThirdType $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a ThirdType entity.
+     *
+     * @param ThirdType $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(ThirdType $entity)
     {
         $form = $this->createForm(new ThirdTypeType(), $entity, array(
@@ -178,6 +184,7 @@ class ThirdTypeController extends Controller
      * Edits an existing ThirdType entity.
      *
      * @Route("/{id}", name="thirdtype_update")
+     *
      * @Method("PUT")
      * @Template("AppBundle:ThirdType:edit.html.twig")
      */
@@ -198,6 +205,8 @@ class ThirdTypeController extends Controller
         if ($editForm->isValid()) {
             $manager->flush();
 
+            $this->addFlash('info', 'Data saved.');
+
             return $this->redirect($this->generateUrl('thirdtype_edit', array('id' => $id)));
         }
 
@@ -211,6 +220,7 @@ class ThirdTypeController extends Controller
      * Deletes a ThirdType entity.
      *
      * @Route("/{id}", name="thirdtype_delete")
+     *
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -228,6 +238,8 @@ class ThirdTypeController extends Controller
 
             $manager->remove($entity);
             $manager->flush();
+
+            $this->addFlash('info', 'Third type removed.');
         }
 
         return $this->redirect($this->generateUrl('thirdtype'));
