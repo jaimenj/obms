@@ -1,0 +1,13 @@
+{% extends 'AdministrationBundle::layout.html.twig' %}
+
+{% block mainarea -%}
+
+<h1>User creation</h1>
+
+{{ form(form) }}
+
+<a class="btn btn-default" href="{{ path('user') }}">
+	Back to the list
+</a>
+
+{% endblock %}

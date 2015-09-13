@@ -1,6 +1,6 @@
 <?php
 
-namespace AdministrationBundle\Form;
+namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,13 +26,7 @@ class UserType extends AbstractType
                 'mapped' => false,
                 'label' => 'Repeat the new password',
                 'required' => false,
-            ))
-            ->add('isenabled', 'checkbox', array(
-                'label' => 'Is enabled.',
-                'required' => false,
-            ))
-            ->add('businesses')
-        ;
+            ));
     }
 
     /**
@@ -50,6 +44,6 @@ class UserType extends AbstractType
      */
     public function getName()
     {
-        return 'administrationbundle_user';
+        return 'appbundle_user';
     }
 }

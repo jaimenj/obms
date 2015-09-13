@@ -12,17 +12,25 @@
 			<div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
 
 				<div class="panel panel-info">
-					<div class="panel-heading" role="tab" style="padding: 0px;">
+					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
-							<a class="navbar-brand" href="{{ path('app_home') }}"><img src="{{ asset('apple-touch-icon.png') }}"></a>
-							OBMS
+							<a href="{{ path('app_home') }}">OBMS</a>
 						</h4>
 					</div>
 				</div>
-
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-wrench"></i>
+							<a href="{{ path('app_my_profile') }}">
+								My profile</a>
+						</h4>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<i class="fa fa-globe"></i>
 							<a aria-expanded="true" data-parent="#accordion" data-toggle="collapse" href="#menuThirds" role="button">
 								Thirds
 							</a>
@@ -40,6 +48,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-users"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuhhrr" role="button">
 								Human resources
 							</a>
@@ -63,6 +72,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-money"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuSales" role="button">
 								Sales
 							</a>
@@ -73,7 +83,7 @@
 							<a href="#">Notes</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Selling orders</a>
+							<a href="#">Orders</a>
 						</li>
 						<li class="list-group-item">
 							<a href="#">Budgets</a>
@@ -92,6 +102,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-shopping-cart"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuShopping" role="button">
 								Shopping
 							</a>
@@ -99,7 +110,7 @@
 					</div>
 					<ul class="list-group panel-collapse collapse" id="menuShopping" role="tabpanel">
 						<li class="list-group-item">
-							<a href="#">Shopping orders</a>
+							<a href="#">Orders</a>
 						</li>
 						<li class="list-group-item">
 							<a href="#">Notes</a>
@@ -112,6 +123,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-cubes"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuStore" role="button">
 								Storage
 							</a>
@@ -131,7 +143,7 @@
 							<a href="#">Stocks</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Inventories</a>
+							<a href="#">Stock controls</a>
 						</li>
 						<li class="list-group-item">
 							<a href="#">Regularizations</a>
@@ -142,6 +154,7 @@
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuAccounting" role="button">
+								<i class="fa fa-book"></i>
 								Accounting
 							</a>
 						</h4>
@@ -165,6 +178,7 @@
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuProduction" role="button">
+								<i class="fa fa-industry"></i>
 								Production
 							</a>
 						</h4>
@@ -184,6 +198,7 @@
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-truck"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuLogistics" role="button">
 								Logistics
 							</a>
@@ -201,6 +216,7 @@
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-calendar"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuPlanification" role="button">
 								Planification
 							</a>
@@ -218,6 +234,7 @@
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-check-square"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuProcessControl" role="button">
 								Process control
 							</a>
@@ -238,6 +255,7 @@
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-folder-open"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#" role="button">
 								Documents
 							</a>
@@ -248,6 +266,7 @@
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
+							<i class="fa fa-bar-chart"></i>
 							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuIntelligence" role="button">
 								Intelligence
 							</a>
@@ -265,14 +284,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab">
-						<h4 class="panel-title">
-							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#" role="button">
-								My profile</a>
-						</h4>
-					</div>
-				</div>
+
 				<div class="panel panel-danger">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title text-center">

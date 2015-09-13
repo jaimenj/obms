@@ -20,3 +20,7 @@ label.required:before {
 #mainlayout {
 	padding-top: 15px;
 }
+
+.panel-title .fa {
+	min-width: 20px;
+}

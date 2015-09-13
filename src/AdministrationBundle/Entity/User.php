@@ -52,6 +52,11 @@ class User implements UserInterface, \Serializable
      */
     private $salt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Business", mappedBy="users")
+     */
+    private $businesses;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -258,5 +263,38 @@ class User implements UserInterface, \Serializable
     public function getIsEnabled()
     {
         return $this->isEnabled;
+    }
+
+    /**
+     * Add businesses
+     *
+     * @param \AppBundle\Entity\Business $businesses
+     * @return User
+     */
+    public function addBusiness(\AppBundle\Entity\Business $businesses)
+    {
+        $this->businesses[] = $businesses;
+
+        return $this;
+    }
+
+    /**
+     * Remove businesses
+     *
+     * @param \AppBundle\Entity\Business $businesses
+     */
+    public function removeBusiness(\AppBundle\Entity\Business $businesses)
+    {
+        $this->businesses->removeElement($businesses);
+    }
+
+    /**
+     * Get businesses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBusinesses()
+    {
+        return $this->businesses;
     }
 }

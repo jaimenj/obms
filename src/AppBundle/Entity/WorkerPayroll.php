@@ -128,4 +128,27 @@ class WorkerPayroll
     {
         return $this->amount;
     }
+
+    /**
+     * Set worker
+     *
+     * @param \AppBundle\Entity\Worker $worker
+     * @return WorkerPayroll
+     */
+    public function setWorker(\AppBundle\Entity\Worker $worker = null)
+    {
+        $this->worker = $worker;
+
+        return $this;
+    }
+
+    /**
+     * Get worker
+     *
+     * @return \AppBundle\Entity\Worker 
+     */
+    public function getWorker()
+    {
+        return $this->worker;
+    }
 }

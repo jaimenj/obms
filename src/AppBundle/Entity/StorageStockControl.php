@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * StorageInventory
+ * StorageStockControl
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\StorageInventoryRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\StorageStockControlRepository")
  */
-class StorageInventory
+class StorageStockControl
 {
     /**
      * @var integer
@@ -50,7 +50,7 @@ class StorageInventory
      * Set date
      *
      * @param \DateTime $date
-     * @return StorageInventory
+     * @return StorageStockControl
      */
     public function setDate($date)
     {
@@ -73,7 +73,7 @@ class StorageInventory
      * Set quantity
      *
      * @param string $quantity
-     * @return StorageInventory
+     * @return StorageStockControl
      */
     public function setQuantity($quantity)
     {
