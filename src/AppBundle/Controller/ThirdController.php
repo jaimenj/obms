@@ -33,7 +33,9 @@ class ThirdController extends Controller
         $querybuilder = $manager->createQueryBuilder()
             ->select('t, tt')
             ->from('AppBundle:Third', 't')
-            ->leftJoin('t.thirdType', 'tt');
+            ->leftJoin('t.thirdType', 'tt')
+            ->join('t.business', 'b')
+            ->where('b.id = '.$this->getUser()->getCurrentBusiness()->getId());
 
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
@@ -77,6 +79,7 @@ class ThirdController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $third->setBusiness($this->getUser()->getCurrentBusiness());
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($third);
             $manager->flush();

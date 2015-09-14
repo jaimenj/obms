@@ -46,8 +46,8 @@ class BusinessController extends Controller
             if ($formListBusinesses->isValid()) {
                 foreach ($paginator as $business) {
                     $business->setFullname($formListBusinesses[$business->getId().'fullname']->getData());
-                    $business->setEmail($formListBusinesses[$business->getId().'cifnid']->getData());
-                    $business->setThirdType($formListBusinesses[$business->getId().'address']->getData());
+                    $business->setCifnif($formListBusinesses[$business->getId().'cifnif']->getData());
+                    $business->setAddress($formListBusinesses[$business->getId().'address']->getData());
                     $manager->persist($business);
                 }
                 $manager->flush();

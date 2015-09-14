@@ -31,6 +31,7 @@
 				<th>Full name</th>
 				<th>CIFNIF</th>
 				<th>Address</th>
+				<th>More</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -40,9 +41,11 @@
 				<td>
 					<a href="{{ path('business_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
 				</td>
-				<td>{{ entity.fullname }} ({{ entity.users.count }} users asigned)</td>
-				<td>{{ entity.cifnif }}</td>
-				<td>{{ entity.address }}</td>
+				<td>{{ form_widget(formListBusinesses[entity.id ~ 'fullname'], {value:entity.fullname}) }}</td>
+				<td>{{ form_widget(formListBusinesses[entity.id ~ 'cifnif'], {value:entity.cifnif}) }}</td>
+				<td>{{ form_widget(formListBusinesses[entity.id ~ 'address'], {value:entity.address}) }}</td>
+				<td>{{ entity.users.count }}
+					users asigned</td>
 				<td>
 					<a class="btn btn-default" href="{{ path('business_show', { 'id': entity.id }) }}">
 						<i class="fa fa-eye"></i>
@@ -57,6 +60,6 @@
 	</table>
 </div>
 
-{{ form_start(formListBusinesses) }}
+{{ form_end(formListBusinesses) }}
 
 {% endblock %}

@@ -34,6 +34,11 @@ class ThirdType
     private $thirds;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="thirdtypes")
+     */
+    private $business;
+
+    /**
      * Get id.
      *
      * @return int
@@ -117,5 +122,28 @@ class ThirdType
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Set business
+     *
+     * @param \AppBundle\Entity\Business $business
+     * @return ThirdType
+     */
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \AppBundle\Entity\Business 
+     */
+    public function getBusiness()
+    {
+        return $this->business;
     }
 }

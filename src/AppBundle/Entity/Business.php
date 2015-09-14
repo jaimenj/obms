@@ -53,6 +53,16 @@ class Business
     private $usersCurrentBusiness;
 
     /**
+     * @ORM\OneToMany(targetEntity="Third", mappedBy="business")
+     */
+    private $thirds;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ThirdType", mappedBy="business")
+     */
+    private $thirdtypes;
+
+    /**
      * Get id.
      *
      * @return int
@@ -216,5 +226,71 @@ class Business
     public function getUsersCurrentBusiness()
     {
         return $this->usersCurrentBusiness;
+    }
+
+    /**
+     * Add thirds
+     *
+     * @param \AppBundle\Entity\Third $thirds
+     * @return Business
+     */
+    public function addThird(\AppBundle\Entity\Third $thirds)
+    {
+        $this->thirds[] = $thirds;
+
+        return $this;
+    }
+
+    /**
+     * Remove thirds
+     *
+     * @param \AppBundle\Entity\Third $thirds
+     */
+    public function removeThird(\AppBundle\Entity\Third $thirds)
+    {
+        $this->thirds->removeElement($thirds);
+    }
+
+    /**
+     * Get thirds
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getThirds()
+    {
+        return $this->thirds;
+    }
+
+    /**
+     * Add thirdtypes
+     *
+     * @param \AppBundle\Entity\ThirdType $thirdtypes
+     * @return Business
+     */
+    public function addThirdtype(\AppBundle\Entity\ThirdType $thirdtypes)
+    {
+        $this->thirdtypes[] = $thirdtypes;
+
+        return $this;
+    }
+
+    /**
+     * Remove thirdtypes
+     *
+     * @param \AppBundle\Entity\ThirdType $thirdtypes
+     */
+    public function removeThirdtype(\AppBundle\Entity\ThirdType $thirdtypes)
+    {
+        $this->thirdtypes->removeElement($thirdtypes);
+    }
+
+    /**
+     * Get thirdtypes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getThirdtypes()
+    {
+        return $this->thirdtypes;
     }
 }

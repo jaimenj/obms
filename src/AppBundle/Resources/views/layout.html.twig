@@ -55,6 +55,11 @@
 						<li class="list-group-item">
 							<a href="{{ path('third') }}">All</a>
 						</li>
+						{% for thirdtype in app.user.currentBusiness.thirdtypes %}
+						<li class="list-group-item">
+							<a href="{{ path('third') }}">{{ thirdtype }}</a>
+						</li>
+						{% endfor %}
 					</ul>
 				</div>
 				<div class="panel panel-default">

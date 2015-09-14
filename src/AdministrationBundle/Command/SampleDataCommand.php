@@ -75,11 +75,10 @@ class SampleDataCommand extends ContainerAwareCommand
                     $mainuser->setCurrentBusiness($newBusiness);
                 }
                 $manager->persist($newBusiness);
-            }
 
-            for ($i = 0; $i < 20; $i++) {
                 $newThirdType = new ThirdType();
                 $newThirdType->setName('Third type '.$i);
+                $newThirdType->setBusiness($newBusiness);
                 $manager->persist($newThirdType);
 
                 $newThird = new Third();
@@ -89,6 +88,7 @@ class SampleDataCommand extends ContainerAwareCommand
                 $newThird->setEmail('Email '.$i);
                 $newThird->setWeb('Web '.$i);
                 $newThird->setThirdType($newThirdType);
+                $newThird->setBusiness($newBusiness);
                 $manager->persist($newThird);
             }
         }

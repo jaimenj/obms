@@ -32,7 +32,9 @@ class ThirdTypeController extends Controller
 
         $querybuilder = $manager->createQueryBuilder()
             ->select('tt')
-            ->from('AppBundle:ThirdType', 'tt');
+            ->from('AppBundle:ThirdType', 'tt')
+            ->join('tt.business', 'b')
+            ->where('b.id = '.$this->getUser()->getCurrentBusiness()->getId());
 
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
@@ -69,22 +71,23 @@ class ThirdTypeController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new ThirdType();
-        $form = $this->createCreateForm($entity);
+        $thirdType = new ThirdType();
+        $form = $this->createCreateForm($thirdType);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $thirdType->setBusiness($this->getUser()->getCurrentBusiness());
             $manager = $this->getDoctrine()->getManager();
-            $manager->persist($entity);
+            $manager->persist($thirdType);
             $manager->flush();
 
             $this->addFlash('info', 'Third type created.');
 
-            return $this->redirect($this->generateUrl('thirdtype_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('thirdtype_show', array('id' => $thirdType->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $thirdType,
             'form'   => $form->createView(),
         );
     }
@@ -92,13 +95,13 @@ class ThirdTypeController extends Controller
     /**
      * Creates a form to create a ThirdType entity.
      *
-     * @param ThirdType $entity The entity
+     * @param ThirdType $thirdType The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(ThirdType $entity)
+    private function createCreateForm(ThirdType $thirdType)
     {
-        $form = $this->createForm(new ThirdTypeType(), $entity, array(
+        $form = $this->createForm(new ThirdTypeType(), $thirdType, array(
             'action' => $this->generateUrl('thirdtype_create'),
             'method' => 'POST',
         ));
@@ -118,11 +121,11 @@ class ThirdTypeController extends Controller
      */
     public function newAction()
     {
-        $entity = new ThirdType();
-        $form   = $this->createCreateForm($entity);
+        $thirdType = new ThirdType();
+        $form   = $this->createCreateForm($thirdType);
 
         return array(
-            'entity' => $entity,
+            'entity' => $thirdType,
             'form'   => $form->createView(),
         );
     }
@@ -139,16 +142,16 @@ class ThirdTypeController extends Controller
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $entity = $manager->getRepository('AppBundle:ThirdType')->find($id);
+        $thirdType = $manager->getRepository('AppBundle:ThirdType')->find($id);
 
-        if (!$entity) {
+        if (!$thirdType) {
             throw $this->createNotFoundException('Unable to find ThirdType entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $thirdType,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -165,17 +168,17 @@ class ThirdTypeController extends Controller
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $entity = $manager->getRepository('AppBundle:ThirdType')->find($id);
+        $thirdType = $manager->getRepository('AppBundle:ThirdType')->find($id);
 
-        if (!$entity) {
+        if (!$thirdType) {
             throw $this->createNotFoundException('Unable to find ThirdType entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($thirdType);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $thirdType,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -184,14 +187,14 @@ class ThirdTypeController extends Controller
     /**
      * Creates a form to edit a ThirdType entity.
      *
-     * @param ThirdType $entity The entity
+     * @param ThirdType $thirdType The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(ThirdType $entity)
+    private function createEditForm(ThirdType $thirdType)
     {
-        $form = $this->createForm(new ThirdTypeType(), $entity, array(
-            'action' => $this->generateUrl('thirdtype_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ThirdTypeType(), $thirdType, array(
+            'action' => $this->generateUrl('thirdtype_update', array('id' => $thirdType->getId())),
             'method' => 'PUT',
         ));
 
@@ -211,14 +214,14 @@ class ThirdTypeController extends Controller
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $entity = $manager->getRepository('AppBundle:ThirdType')->find($id);
+        $thirdType = $manager->getRepository('AppBundle:ThirdType')->find($id);
 
-        if (!$entity) {
+        if (!$thirdType) {
             throw $this->createNotFoundException('Unable to find ThirdType entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($thirdType);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -230,7 +233,7 @@ class ThirdTypeController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $thirdType,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -249,13 +252,13 @@ class ThirdTypeController extends Controller
 
         if ($form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
-            $entity = $manager->getRepository('AppBundle:ThirdType')->find($id);
+            $thirdType = $manager->getRepository('AppBundle:ThirdType')->find($id);
 
-            if (!$entity) {
+            if (!$thirdType) {
                 throw $this->createNotFoundException('Unable to find ThirdType entity.');
             }
 
-            $manager->remove($entity);
+            $manager->remove($thirdType);
             $manager->flush();
 
             $this->addFlash('info', 'Third type removed.');
