@@ -43,9 +43,14 @@ class Business
     private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\User", inversedBy="businesses")
+     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\User", inversedBy="users")
      */
     private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AdministrationBundle\Entity\User", mappedBy="currentBusiness")
+     */
+    private $usersCurrentBusiness;
 
     /**
      * Get id.
@@ -128,8 +133,9 @@ class Business
     {
         return $this->address;
     }
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -137,9 +143,18 @@ class Business
     }
 
     /**
-     * Add users
+     * String operator.
+     */
+    public function __toString()
+    {
+        return $this->fullname;
+    }
+
+    /**
+     * Add users.
      *
      * @param \AdministrationBundle\Entity\User $users
+     *
      * @return Business
      */
     public function addUser(\AdministrationBundle\Entity\User $users)
@@ -150,7 +165,7 @@ class Business
     }
 
     /**
-     * Remove users
+     * Remove users.
      *
      * @param \AdministrationBundle\Entity\User $users
      */
@@ -160,12 +175,46 @@ class Business
     }
 
     /**
-     * Get users
+     * Get users.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add usersCurrentBusiness.
+     *
+     * @param \AdministrationBundle\Entity\User $usersCurrentBusiness
+     *
+     * @return Business
+     */
+    public function addUsersCurrentBusiness(\AdministrationBundle\Entity\User $usersCurrentBusiness)
+    {
+        $this->usersCurrentBusiness[] = $usersCurrentBusiness;
+
+        return $this;
+    }
+
+    /**
+     * Remove usersCurrentBusiness.
+     *
+     * @param \AdministrationBundle\Entity\User $usersCurrentBusiness
+     */
+    public function removeUsersCurrentBusiness(\AdministrationBundle\Entity\User $usersCurrentBusiness)
+    {
+        $this->usersCurrentBusiness->removeElement($usersCurrentBusiness);
+    }
+
+    /**
+     * Get usersCurrentBusiness.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsersCurrentBusiness()
+    {
+        return $this->usersCurrentBusiness;
     }
 }

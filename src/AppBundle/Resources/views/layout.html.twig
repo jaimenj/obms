@@ -14,7 +14,9 @@
 				<div class="panel panel-info">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
-							<a href="{{ path('app_home') }}">OBMS</a>
+							<a href="{{ path('app_home') }}">OBMS</a><br>
+							<small>{{ app.user }}<br>
+								{{ app.user.currentBusiness == null ? 'No business' : app.user.currentBusiness }}</small>
 						</h4>
 					</div>
 				</div>
@@ -22,10 +24,20 @@
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
 							<i class="fa fa-wrench"></i>
-							<a href="{{ path('app_my_profile') }}">
-								My profile</a>
+							<a aria-expanded="true" data-parent="#accordion" data-toggle="collapse" href="#menuSettings" role="button">
+								Settings
+							</a>
 						</h4>
 					</div>
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/profile|business/' ? ' in' }}" id="menuSettings" role="tabpanel">
+						<li class="list-group-item">
+							<a href="{{ path('app_my_profile') }}">
+								My profile</a>
+						</li>
+						<li class="list-group-item">
+							<a href="{{ path('business') }}">Businesses</a>
+						</li>
+					</ul>
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">

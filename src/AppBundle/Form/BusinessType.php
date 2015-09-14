@@ -10,25 +10,27 @@ class BusinessType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fullname')
-            ->add('cifnif')
-            ->add('address')
-            ->add('users')
-        ;
+            ->add('fullname', 'text', array(
+                'label' => 'Full name',
+            ))
+            ->add('cifnif', 'text', array(
+                'label' => 'CIF/NIF',
+            ))
+            ->add('address');
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Business'
+            'data_class' => 'AppBundle\Entity\Business',
         ));
     }
 

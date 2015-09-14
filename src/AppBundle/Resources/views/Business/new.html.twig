@@ -1,15 +1,13 @@
-{% extends '::base.html.twig' %}
+{% extends 'AppBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Business creation</h1>
+{% block mainarea -%}
 
-    {{ form(form) }}
+<h1>Business creation</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('business') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{{ form(form) }}
+
+<a class="btn btn-default" href="{{ path('business') }}">
+	Back to the list
+</a>
+
 {% endblock %}

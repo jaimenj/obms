@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Business;
 use AppBundle\Form\BusinessType;
+use AppBundle\Form\ListBusinessesType;
 
 /**
  * Business controller.
@@ -17,47 +18,78 @@ use AppBundle\Form\BusinessType;
  */
 class BusinessController extends Controller
 {
-
     /**
      * Lists all Business entities.
      *
      * @Route("/", name="business")
-     * @Method("GET")
+     *
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Business')->findAll();
+        $querybuilder = $manager->createQueryBuilder()
+            ->select('b, b')
+            ->from('AppBundle:Business', 'b')
+            ->join('b.users', 'u')
+            ->where('u.id = '.$this->getUser()->getId());
+
+        $paginator = $this->get('knp_paginator');
+        $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
+
+        $formListBusinesses = $this->createForm(new ListBusinessesType($paginator));
+
+        if ($request->getMethod() == 'POST') {
+            $formListBusinesses->handleRequest($request);
+            if ($formListBusinesses->isValid()) {
+                foreach ($paginator as $business) {
+                    $business->setFullname($formListBusinesses[$business->getId().'fullname']->getData());
+                    $business->setEmail($formListBusinesses[$business->getId().'cifnid']->getData());
+                    $business->setThirdType($formListBusinesses[$business->getId().'address']->getData());
+                    $manager->persist($business);
+                }
+                $manager->flush();
+
+                $this->addFlash('info', 'Data saved.');
+            } else {
+                $this->addFlash('danger', 'ERROR: '.$formListBusinesses->getErrorsAsString());
+            }
+        }
 
         return array(
-            'entities' => $entities,
+            'paginator' => $paginator,
+            'formListBusinesses' => $formListBusinesses->createView(),
         );
     }
     /**
      * Creates a new Business entity.
      *
-     * @Route("/", name="business_create")
+     * @Route("/new", name="business_create")
+     *
      * @Method("POST")
      * @Template("AppBundle:Business:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Business();
-        $form = $this->createCreateForm($entity);
+        $business = new Business();
+        $form = $this->createCreateForm($business);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $manager = $this->getDoctrine()->getManager();
+            $business->addUser($this->getUser());
+            $manager->persist($business);
+            $manager->flush();
 
-            return $this->redirect($this->generateUrl('business_show', array('id' => $entity->getId())));
+            $this->addFlash('info', 'Business created.');
+
+            return $this->redirect($this->generateUrl('business_show', array('id' => $business->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $business,
             'form'   => $form->createView(),
         );
     }
@@ -65,13 +97,13 @@ class BusinessController extends Controller
     /**
      * Creates a form to create a Business entity.
      *
-     * @param Business $entity The entity
+     * @param Business $business The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Business $entity)
+    private function createCreateForm(Business $business)
     {
-        $form = $this->createForm(new BusinessType(), $entity, array(
+        $form = $this->createForm(new BusinessType(), $business, array(
             'action' => $this->generateUrl('business_create'),
             'method' => 'POST',
         ));
@@ -85,16 +117,17 @@ class BusinessController extends Controller
      * Displays a form to create a new Business entity.
      *
      * @Route("/new", name="business_new")
+     *
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Business();
-        $form   = $this->createCreateForm($entity);
+        $business = new Business();
+        $form   = $this->createCreateForm($business);
 
         return array(
-            'entity' => $entity,
+            'entity' => $business,
             'form'   => $form->createView(),
         );
     }
@@ -103,23 +136,24 @@ class BusinessController extends Controller
      * Finds and displays a Business entity.
      *
      * @Route("/{id}", name="business_show")
+     *
      * @Method("GET")
      * @Template()
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Business')->find($id);
+        $business = $manager->getRepository('AppBundle:Business')->find($id);
 
-        if (!$entity) {
+        if (!$business) {
             throw $this->createNotFoundException('Unable to find Business entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $business,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -128,40 +162,41 @@ class BusinessController extends Controller
      * Displays a form to edit an existing Business entity.
      *
      * @Route("/{id}/edit", name="business_edit")
+     *
      * @Method("GET")
      * @Template()
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Business')->find($id);
+        $business = $manager->getRepository('AppBundle:Business')->find($id);
 
-        if (!$entity) {
+        if (!$business) {
             throw $this->createNotFoundException('Unable to find Business entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($business);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $business,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Business entity.
-    *
-    * @param Business $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Business $entity)
+     * Creates a form to edit a Business entity.
+     *
+     * @param Business $business The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Business $business)
     {
-        $form = $this->createForm(new BusinessType(), $entity, array(
-            'action' => $this->generateUrl('business_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new BusinessType(), $business, array(
+            'action' => $this->generateUrl('business_update', array('id' => $business->getId())),
             'method' => 'PUT',
         ));
 
@@ -173,31 +208,34 @@ class BusinessController extends Controller
      * Edits an existing Business entity.
      *
      * @Route("/{id}", name="business_update")
+     *
      * @Method("PUT")
      * @Template("AppBundle:Business:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Business')->find($id);
+        $business = $manager->getRepository('AppBundle:Business')->find($id);
 
-        if (!$entity) {
+        if (!$business) {
             throw $this->createNotFoundException('Unable to find Business entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($business);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+            $manager->flush();
+
+            $this->addFlash('info', 'Data saved.');
 
             return $this->redirect($this->generateUrl('business_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $business,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -206,6 +244,7 @@ class BusinessController extends Controller
      * Deletes a Business entity.
      *
      * @Route("/{id}", name="business_delete")
+     *
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -214,15 +253,17 @@ class BusinessController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Business')->find($id);
+            $manager = $this->getDoctrine()->getManager();
+            $business = $manager->getRepository('AppBundle:Business')->find($id);
 
-            if (!$entity) {
+            if (!$business) {
                 throw $this->createNotFoundException('Unable to find Business entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+            $manager->remove($business);
+            $manager->flush();
+
+            $this->addFlash('info', 'Business deleted.');
         }
 
         return $this->redirect($this->generateUrl('business'));

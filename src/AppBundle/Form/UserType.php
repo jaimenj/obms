@@ -26,7 +26,8 @@ class UserType extends AbstractType
                 'mapped' => false,
                 'label' => 'Repeat the new password',
                 'required' => false,
-            ));
+            ))
+            ->add('currentBusiness');
     }
 
     /**

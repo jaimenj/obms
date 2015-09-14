@@ -11,6 +11,7 @@ use AdministrationBundle\Entity\Administrator;
 use AdministrationBundle\Entity\User;
 use AppBundle\Entity\ThirdType;
 use AppBundle\Entity\Third;
+use AppBundle\Entity\Business;
 
 class SampleDataCommand extends ContainerAwareCommand
 {
@@ -45,6 +46,8 @@ class SampleDataCommand extends ContainerAwareCommand
 
             $output->write('loading data.. ');
 
+            $mainuser = $manager->getRepository('AdministrationBundle:User')->findOneByUsername('user');
+
             for ($i = 1; $i <= 10; $i ++) {
                 $administrator = new Administrator();
                 $administrator->setUsername('administrator'.$i);
@@ -61,6 +64,17 @@ class SampleDataCommand extends ContainerAwareCommand
                 $password = $encoder->encodePassword('thepass', $newUser->getSalt());
                 $newUser->setPassword($password);
                 $manager->persist($newUser);
+
+                $newBusiness = new Business();
+                $newBusiness->setFullname('Business '.$i);
+                $newBusiness->setCifnif('Cifnif '.$i);
+                $newBusiness->setAddress('Address '.$i);
+                $newBusiness->addUser($newUser);
+                $newBusiness->addUser($mainuser);
+                if ($i == 1) {
+                    $mainuser->setCurrentBusiness($newBusiness);
+                }
+                $manager->persist($newBusiness);
             }
 
             for ($i = 0; $i < 20; $i++) {
@@ -117,6 +131,11 @@ class SampleDataCommand extends ContainerAwareCommand
         $thirds = $manager->getRepository('AppBundle:Third')->findAll();
         foreach ($thirds as $third) {
             $manager->remove($third);
+        }
+
+        $businesses = $manager->getRepository('AppBundle:Business')->findAll();
+        foreach ($businesses as $business) {
+            $manager->remove($business);
         }
 
         $manager->flush();

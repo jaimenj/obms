@@ -1,16 +1,15 @@
-{% extends '::base.html.twig' %}
+{% extends 'AppBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Business edit</h1>
+{% block mainarea -%}
 
-    {{ form(edit_form) }}
+<h1>Business edit</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('business') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{{ form(edit_form) }}
+
+<a class="btn btn-default" href="{{ path('business') }}">
+	Back to the list
+</a>
+
+{{ form(delete_form) }}
+
 {% endblock %}
