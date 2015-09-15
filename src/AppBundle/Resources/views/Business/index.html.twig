@@ -53,6 +53,9 @@
 					<a class="btn btn-default" href="{{ path('business_edit', { 'id': entity.id }) }}">
 						<i class="fa fa-edit"></i>
 					</a>
+					<a class="btn btn-default" href="{{ path('business_current', { 'id': entity.id }) }}">
+						<i class="fa fa-star"></i> Set as current
+					</a>
 				</td>
 			</tr>
 			{% endfor %}

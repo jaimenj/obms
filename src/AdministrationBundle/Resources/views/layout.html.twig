@@ -2,50 +2,64 @@
 
 {% block body %}
 
-{% if app.user %}
+<div class="container-fluid" id="mainlayout">
 
-<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="{{ path('administration_home') }}"><img src="{{ asset('apple-touch-icon.png') }}"></a>
+	{% if app.user %}
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{{ path('administration_home') }}"><img src="{{ asset('apple-touch-icon.png') }}"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li{{ app.request.get('_route') == 'user' ? ' class="active"' }}>
+						<a href="{{ path('user') }}">Users</a>
+					</li>
+					<li{{ app.request.get('_route') == 'administrator' ? ' class="active"' }}>
+						<a href="{{ path('administrator') }}">Administrators</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="{{ path('administration_logout') }}">
+							<i class="fa fa-power-off"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav" >
-                <li{{ app.request.get('_route') == 'user' ? ' class="active"' }}>
-                    <a href="{{ path('user') }}">Users</a>
-                </li>
-				<li{{ app.request.get('_route') == 'administrator' ? ' class="active"' }}>
-					<a href="{{ path('administrator') }}">Administrators</a>
-				</li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="{{ path('administration_logout') }}"><i class="fa fa-power-off"></i></a>
-				</li>
-			</ul>
+	</nav>
+
+	{% endif %}
+
+	<div class="row">
+		<div class="col-md-12">
+
+			{% for label, flashes in app.session.flashbag.all %}
+			{% for flash in flashes %}
+			<div class="alert alert-{{ label }}">
+				<button aria-label="Close" class="close" data-dismiss="alert" type="button">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				{{ flash }}
+			</div>
+			{% endfor %}
+			{% endfor %}
+
+			<div class="container-fluid">
+				{% block mainarea %}{% endblock %}
+			</div>
+
 		</div>
 	</div>
-</nav>
 
-{% endif %}
-
-{% for label, flashes in app.session.flashbag.all %}
-	{% for flash in flashes %}
-		<div class="alert alert-{{ label }}">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			{{ flash }}
-		</div>
-	{% endfor %}
-{% endfor %}
-
-<div class="container-fluid">
-	{% block mainarea %}{% endblock %}
 </div>
 
 {% endblock %}

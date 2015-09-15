@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     private function createEditForm(User $user)
     {
-        $form = $this->createForm(new UserType(), $user, array(
+        $form = $this->createForm(new UserType($user), $user, array(
             'action' => $this->generateUrl('my_profile_update'),
             'method' => 'PUT',
         ));

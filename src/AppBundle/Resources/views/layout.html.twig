@@ -39,6 +39,7 @@
 						</li>
 					</ul>
 				</div>
+				{% if app.user.currentBusiness %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -57,7 +58,7 @@
 						</li>
 						{% for thirdtype in app.user.currentBusiness.thirdtypes %}
 						<li class="list-group-item">
-							<a href="{{ path('third') }}">{{ thirdtype }}</a>
+							<a href="{{ path('third', {typeId:thirdtype.id}) }}">{{ thirdtype }}</a>
 						</li>
 						{% endfor %}
 					</ul>
@@ -83,36 +84,6 @@
 						</li>
 						<li class="list-group-item">
 							<a href="#">Downs</a>
-						</li>
-					</ul>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab">
-						<h4 class="panel-title">
-							<i class="fa fa-money"></i>
-							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuSales" role="button">
-								Sales
-							</a>
-						</h4>
-					</div>
-					<ul class="list-group panel-collapse collapse" id="menuSales" role="tabpanel">
-						<li class="list-group-item">
-							<a href="#">Notes</a>
-						</li>
-						<li class="list-group-item">
-							<a href="#">Orders</a>
-						</li>
-						<li class="list-group-item">
-							<a href="#">Budgets</a>
-						</li>
-						<li class="list-group-item">
-							<a href="#">Pre-invoice</a>
-						</li>
-						<li class="list-group-item">
-							<a href="#">Invoice</a>
-						</li>
-						<li class="list-group-item">
-							<a href="#">Amendment invoice</a>
 						</li>
 					</ul>
 				</div>
@@ -164,6 +135,36 @@
 						</li>
 						<li class="list-group-item">
 							<a href="#">Regularizations</a>
+						</li>
+					</ul>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab">
+						<h4 class="panel-title">
+							<i class="fa fa-money"></i>
+							<a class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#menuSales" role="button">
+								Sales
+							</a>
+						</h4>
+					</div>
+					<ul class="list-group panel-collapse collapse" id="menuSales" role="tabpanel">
+						<li class="list-group-item">
+							<a href="#">Notes</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#">Orders</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#">Budgets</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#">Pre-invoice</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#">Invoice</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#">Amendment invoice</a>
 						</li>
 					</ul>
 				</div>
@@ -301,7 +302,7 @@
 						</li>
 					</ul>
 				</div>
-
+				{% endif %}
 				<div class="panel panel-danger">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title text-center">

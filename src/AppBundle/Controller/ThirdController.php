@@ -21,14 +21,15 @@ class ThirdController extends Controller
     /**
      * Lists all Third entities.
      *
-     * @Route("/", name="third")
+     * @Route("/list/{typeId}", name="third")
      *
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $typeId = null)
     {
         $manager = $this->getDoctrine()->getManager();
+        $thirdType = null;
 
         $querybuilder = $manager->createQueryBuilder()
             ->select('t, tt')
@@ -36,6 +37,11 @@ class ThirdController extends Controller
             ->leftJoin('t.thirdType', 'tt')
             ->join('t.business', 'b')
             ->where('b.id = '.$this->getUser()->getCurrentBusiness()->getId());
+
+        if ($typeId) {
+            $thirdType = $manager->getRepository('AppBundle:Thirdtype')->find($typeId);
+            $querybuilder->andWhere('tt.id = '.$typeId);
+        }
 
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
@@ -62,6 +68,7 @@ class ThirdController extends Controller
         return array(
             'paginator' => $paginator,
             'formListThirds' => $formListThirds->createView(),
+            'thirdType' => $thirdType,
         );
     }
     /**

@@ -285,4 +285,29 @@ class BusinessController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Set this business as current business for the user.
+     *
+     * @param int $id
+     *
+     * @Route("/{id}/set/as/current", name="business_current")
+     */
+    public function setAsCurrentAction($id)
+    {
+        $manager = $this->getDoctrine()->getManager();
+
+        $business = $manager->getRepository('AppBundle:Business')->find($id);
+
+        if (!$business) {
+            throw $this->createNotFoundException('Unable to find Business entity.');
+        }
+
+        $user = $this->getUser();
+        $user->setCurrentBusiness($business);
+        $manager->persist($user);
+        $manager->flush();
+
+        return $this->redirect($this->generateUrl('business'));
+    }
 }

@@ -16,3 +16,7 @@ h1 {
 label.required:before {
 	content: "* ";
 }
+
+#mainlayout {
+	padding-top: 15px;
+}
