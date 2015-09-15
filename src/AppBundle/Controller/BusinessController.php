@@ -308,6 +308,8 @@ class BusinessController extends Controller
         $manager->persist($user);
         $manager->flush();
 
+        $this->addFlash('info', 'Changed current business.');
+        
         return $this->redirect($this->generateUrl('business'));
     }
 }

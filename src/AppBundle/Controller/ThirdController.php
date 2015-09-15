@@ -46,7 +46,7 @@ class ThirdController extends Controller
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
 
-        $formListThirds = $this->createForm(new ListThirdsType($paginator));
+        $formListThirds = $this->createForm(new ListThirdsType($paginator, $this->getUser()));
 
         if ($request->getMethod() == 'POST') {
             $formListThirds->handleRequest($request);
@@ -111,7 +111,7 @@ class ThirdController extends Controller
      */
     private function createCreateForm(Third $third)
     {
-        $form = $this->createForm(new ThirdType(), $third, array(
+        $form = $this->createForm(new ThirdType($this->getUser()), $third, array(
             'action' => $this->generateUrl('third_create'),
             'method' => 'POST',
         ));
@@ -203,7 +203,7 @@ class ThirdController extends Controller
      */
     private function createEditForm(Third $third)
     {
-        $form = $this->createForm(new ThirdType(), $third, array(
+        $form = $this->createForm(new ThirdType($this->getUser()), $third, array(
             'action' => $this->generateUrl('third_update', array('id' => $third->getId())),
             'method' => 'PUT',
         ));
