@@ -63,6 +63,12 @@ class User implements UserInterface, \Serializable
      */
     private $currentBusiness;
 
+    /**
+     *
+     * @ORM\Column(type="string")
+     */
+    private $sessionId;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -328,5 +334,28 @@ class User implements UserInterface, \Serializable
     public function getCurrentBusiness()
     {
         return $this->currentBusiness;
+    }
+
+    /**
+     * Set sessionId
+     *
+     * @param string $sessionId
+     * @return User
+     */
+    public function setSessionId($sessionId)
+    {
+        $this->sessionId = $sessionId;
+
+        return $this;
+    }
+
+    /**
+     * Get sessionId
+     *
+     * @return string 
+     */
+    public function getSessionId()
+    {
+        return $this->sessionId;
     }
 }
