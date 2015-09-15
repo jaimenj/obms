@@ -48,6 +48,11 @@ class WorkerPayroll
     private $worker;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="workerPayrolls")
+     */
+    private $business;
+
+    /**
      * Get id.
      *
      * @return int
@@ -145,10 +150,33 @@ class WorkerPayroll
     /**
      * Get worker
      *
-     * @return \AppBundle\Entity\Worker 
+     * @return \AppBundle\Entity\Worker
      */
     public function getWorker()
     {
         return $this->worker;
+    }
+
+    /**
+     * Set business
+     *
+     * @param \AppBundle\Entity\Business $business
+     * @return WorkerPayroll
+     */
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \AppBundle\Entity\Business 
+     */
+    public function getBusiness()
+    {
+        return $this->business;
     }
 }

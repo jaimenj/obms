@@ -58,6 +58,11 @@ class Worker
     private $workerPayrolls;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="workers")
+     */
+    private $business;
+
+    /**
      * Get id.
      *
      * @return int
@@ -174,7 +179,7 @@ class Worker
     /**
      * Get workerDowns
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWorkerDowns()
     {
@@ -207,7 +212,7 @@ class Worker
     /**
      * Get workerHollidays
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWorkerHollidays()
     {
@@ -240,10 +245,33 @@ class Worker
     /**
      * Get workerPayrolls
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWorkerPayrolls()
     {
         return $this->workerPayrolls;
+    }
+
+    /**
+     * Set business
+     *
+     * @param \AppBundle\Entity\Business $business
+     * @return Worker
+     */
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \AppBundle\Entity\Business 
+     */
+    public function getBusiness()
+    {
+        return $this->business;
     }
 }
