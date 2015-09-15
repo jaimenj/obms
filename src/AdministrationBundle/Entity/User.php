@@ -65,7 +65,7 @@ class User implements UserInterface, \Serializable
 
     /**
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $sessionId;
 
@@ -352,7 +352,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get sessionId
      *
-     * @return string 
+     * @return string
      */
     public function getSessionId()
     {
