@@ -41,11 +41,6 @@ class WorkerHolliday
     private $worker;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Business", inversedBy="workerHollidays")
-     */
-    private $business;
-
-    /**
      * Get id.
      *
      * @return int
@@ -104,9 +99,10 @@ class WorkerHolliday
     }
 
     /**
-     * Set worker
+     * Set worker.
      *
      * @param \AppBundle\Entity\Worker $worker
+     *
      * @return WorkerHolliday
      */
     public function setWorker(\AppBundle\Entity\Worker $worker = null)
@@ -117,35 +113,12 @@ class WorkerHolliday
     }
 
     /**
-     * Get worker
+     * Get worker.
      *
      * @return \AppBundle\Entity\Worker
      */
     public function getWorker()
     {
         return $this->worker;
-    }
-
-    /**
-     * Set business
-     *
-     * @param \AppBundle\Entity\Business $business
-     * @return WorkerHolliday
-     */
-    public function setBusiness(\AppBundle\Entity\Business $business = null)
-    {
-        $this->business = $business;
-
-        return $this;
-    }
-
-    /**
-     * Get business
-     *
-     * @return \AppBundle\Entity\Business 
-     */
-    public function getBusiness()
-    {
-        return $this->business;
     }
 }

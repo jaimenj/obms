@@ -12,6 +12,10 @@ use AdministrationBundle\Entity\User;
 use AppBundle\Entity\ThirdType;
 use AppBundle\Entity\Third;
 use AppBundle\Entity\Business;
+use AppBundle\Entity\Worker;
+use AppBundle\Entity\WorkerPayroll;
+use AppBundle\Entity\WorkerHolliday;
+use AppBundle\Entity\WorkerDown;
 
 class SampleDataCommand extends ContainerAwareCommand
 {
@@ -90,6 +94,32 @@ class SampleDataCommand extends ContainerAwareCommand
                 $newThird->setThirdType($newThirdType);
                 $newThird->setBusiness($newBusiness);
                 $manager->persist($newThird);
+
+                $newWorker = new Worker();
+                $newWorker->setFullname('Worker '.$i);
+                $newWorker->setTelephone('Telephone '.$i);
+                $newWorker->setEmail('emailworker'.$i.'@thedomainobms.com');
+                $newWorker->setBusiness($newBusiness);
+                $manager->persist($newWorker);
+
+                $newPayroll = new WorkerPayroll();
+                $newPayroll->setWorker($newWorker);
+                $newPayroll->setYear(2015);
+                $newPayroll->setMonth(9);
+                $newPayroll->setAmount(1000);
+                $manager->persist($newPayroll);
+
+                $newHolliday = new WorkerHolliday();
+                $newHolliday->setWorker($newWorker);
+                $newHolliday->setInitdate(new \DateTime('now'));
+                $newHolliday->setFinishdate(new \DateTime('now'));
+                $manager->persist($newHolliday);
+
+                $newDown = new WorkerDown();
+                $newDown->setWorker($newWorker);
+                $newDown->setInitdate(new \DateTime('now'));
+                $newDown->setFinishdate(new \DateTime('now'));
+                $manager->persist($newDown);
             }
         }
 
@@ -114,23 +144,6 @@ class SampleDataCommand extends ContainerAwareCommand
             if ($user->getUsername() != 'user') {
                 $manager->remove($user);
             }
-        }
-
-        $thirds = $manager->getRepository('AppBundle:Third')->findAll();
-        foreach ($users as $user) {
-            if ($user->getUsername() != 'user') {
-                $manager->remove($user);
-            }
-        }
-
-        $thirdTypes = $manager->getRepository('AppBundle:ThirdType')->findAll();
-        foreach ($thirdTypes as $thirdType) {
-            $manager->remove($thirdType);
-        }
-
-        $thirds = $manager->getRepository('AppBundle:Third')->findAll();
-        foreach ($thirds as $third) {
-            $manager->remove($third);
         }
 
         $businesses = $manager->getRepository('AppBundle:Business')->findAll();

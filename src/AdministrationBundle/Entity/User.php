@@ -54,6 +54,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Business", mappedBy="users")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $businesses;
 

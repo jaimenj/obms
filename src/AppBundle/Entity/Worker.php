@@ -43,17 +43,17 @@ class Worker
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="WorkerDown", mappedBy="worker")
+     * @ORM\OneToMany(targetEntity="WorkerDown", mappedBy="worker", cascade="remove")
      */
     private $workerDowns;
 
     /**
-     * @ORM\OneToMany(targetEntity="WorkerHolliday", mappedBy="worker")
+     * @ORM\OneToMany(targetEntity="WorkerHolliday", mappedBy="worker", cascade="remove")
      */
     private $workerHollidays;
 
     /**
-     * @ORM\OneToMany(targetEntity="WorkerPayroll", mappedBy="worker")
+     * @ORM\OneToMany(targetEntity="WorkerPayroll", mappedBy="worker", cascade="remove")
      */
     private $workerPayrolls;
 
@@ -61,6 +61,10 @@ class Worker
      * @ORM\ManyToOne(targetEntity="Business", inversedBy="workers")
      */
     private $business;
+
+    public function __toString(){
+        return $this->fullname;
+    }
 
     /**
      * Get id.
@@ -268,7 +272,7 @@ class Worker
     /**
      * Get business
      *
-     * @return \AppBundle\Entity\Business 
+     * @return \AppBundle\Entity\Business
      */
     public function getBusiness()
     {

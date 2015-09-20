@@ -53,35 +53,20 @@ class Business
     private $usersCurrentBusiness;
 
     /**
-     * @ORM\OneToMany(targetEntity="Third", mappedBy="business")
+     * @ORM\OneToMany(targetEntity="Third", mappedBy="business", cascade="remove")
      */
     private $thirds;
 
     /**
-     * @ORM\OneToMany(targetEntity="ThirdType", mappedBy="business")
+     * @ORM\OneToMany(targetEntity="ThirdType", mappedBy="business", cascade="remove")
      */
     private $thirdtypes;
 
     /**
-     * @ORM\OneToMany(targetEntity="Worker", mappedBy="business")
+     * @ORM\OneToMany(targetEntity="Worker", mappedBy="business", cascade="remove")
      */
     private $workers;
 
-    /**
-     * @ORM\OneToMany(targetEntity="WorkerDown", mappedBy="business")
-     */
-    private $workerDowns;
-
-    /**
-     * @ORM\OneToMany(targetEntity="WorkerHolliday", mappedBy="business")
-     */
-    private $workerHollidays;
-
-    /**
-     * @ORM\OneToMany(targetEntity="WorkerPayroll", mappedBy="business")
-     */
-    private $workerPayrolls;
-    
     /**
      * Get id.
      *
@@ -249,9 +234,10 @@ class Business
     }
 
     /**
-     * Add thirds
+     * Add thirds.
      *
      * @param \AppBundle\Entity\Third $thirds
+     *
      * @return Business
      */
     public function addThird(\AppBundle\Entity\Third $thirds)
@@ -262,7 +248,7 @@ class Business
     }
 
     /**
-     * Remove thirds
+     * Remove thirds.
      *
      * @param \AppBundle\Entity\Third $thirds
      */
@@ -272,7 +258,7 @@ class Business
     }
 
     /**
-     * Get thirds
+     * Get thirds.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -282,9 +268,10 @@ class Business
     }
 
     /**
-     * Add thirdtypes
+     * Add thirdtypes.
      *
      * @param \AppBundle\Entity\ThirdType $thirdtypes
+     *
      * @return Business
      */
     public function addThirdtype(\AppBundle\Entity\ThirdType $thirdtypes)
@@ -295,7 +282,7 @@ class Business
     }
 
     /**
-     * Remove thirdtypes
+     * Remove thirdtypes.
      *
      * @param \AppBundle\Entity\ThirdType $thirdtypes
      */
@@ -305,7 +292,7 @@ class Business
     }
 
     /**
-     * Get thirdtypes
+     * Get thirdtypes.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -315,9 +302,10 @@ class Business
     }
 
     /**
-     * Add workers
+     * Add workers.
      *
      * @param \AppBundle\Entity\Worker $workers
+     *
      * @return Business
      */
     public function addWorker(\AppBundle\Entity\Worker $workers)
@@ -328,7 +316,7 @@ class Business
     }
 
     /**
-     * Remove workers
+     * Remove workers.
      *
      * @param \AppBundle\Entity\Worker $workers
      */
@@ -338,9 +326,9 @@ class Business
     }
 
     /**
-     * Get workers
+     * Get workers.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWorkers()
     {
@@ -348,9 +336,10 @@ class Business
     }
 
     /**
-     * Add workerDowns
+     * Add workerDowns.
      *
      * @param \AppBundle\Entity\WorkerDown $workerDowns
+     *
      * @return Business
      */
     public function addWorkerDown(\AppBundle\Entity\WorkerDown $workerDowns)
@@ -361,7 +350,7 @@ class Business
     }
 
     /**
-     * Remove workerDowns
+     * Remove workerDowns.
      *
      * @param \AppBundle\Entity\WorkerDown $workerDowns
      */
@@ -371,9 +360,9 @@ class Business
     }
 
     /**
-     * Get workerDowns
+     * Get workerDowns.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWorkerDowns()
     {
@@ -381,9 +370,10 @@ class Business
     }
 
     /**
-     * Add workerHollidays
+     * Add workerHollidays.
      *
      * @param \AppBundle\Entity\WorkerHolliday $workerHollidays
+     *
      * @return Business
      */
     public function addWorkerHolliday(\AppBundle\Entity\WorkerHolliday $workerHollidays)
@@ -394,7 +384,7 @@ class Business
     }
 
     /**
-     * Remove workerHollidays
+     * Remove workerHollidays.
      *
      * @param \AppBundle\Entity\WorkerHolliday $workerHollidays
      */
@@ -404,9 +394,9 @@ class Business
     }
 
     /**
-     * Get workerHollidays
+     * Get workerHollidays.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWorkerHollidays()
     {
@@ -414,9 +404,10 @@ class Business
     }
 
     /**
-     * Add workerPayrolls
+     * Add workerPayrolls.
      *
      * @param \AppBundle\Entity\WorkerPayroll $workerPayrolls
+     *
      * @return Business
      */
     public function addWorkerPayroll(\AppBundle\Entity\WorkerPayroll $workerPayrolls)
@@ -427,7 +418,7 @@ class Business
     }
 
     /**
-     * Remove workerPayrolls
+     * Remove workerPayrolls.
      *
      * @param \AppBundle\Entity\WorkerPayroll $workerPayrolls
      */
@@ -437,9 +428,9 @@ class Business
     }
 
     /**
-     * Get workerPayrolls
+     * Get workerPayrolls.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWorkerPayrolls()
     {

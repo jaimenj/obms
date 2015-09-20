@@ -71,6 +71,7 @@ class ThirdController extends Controller
             'thirdType' => $thirdType,
         );
     }
+
     /**
      * Creates a new Third entity.
      *

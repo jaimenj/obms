@@ -72,18 +72,18 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuhhrr" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/worker/' ? ' in' }}" id="menuhhrr" role="tabpanel">
 						<li class="list-group-item">
-							<a href="#">Workers</a>
+							<a href="{{ path('worker') }}">Workers</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Payrolls</a>
+							<a href="{{ path('workerpayroll') }}">Payrolls</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Hollidays</a>
+							<a href="{{ path('workerholliday') }}">Hollidays</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Downs</a>
+							<a href="{{ path('workerdown') }}">Downs</a>
 						</li>
 					</ul>
 				</div>

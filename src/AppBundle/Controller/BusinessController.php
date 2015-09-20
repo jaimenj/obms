@@ -63,6 +63,7 @@ class BusinessController extends Controller
             'formListBusinesses' => $formListBusinesses->createView(),
         );
     }
+    
     /**
      * Creates a new Business entity.
      *
@@ -309,7 +310,7 @@ class BusinessController extends Controller
         $manager->flush();
 
         $this->addFlash('info', 'Changed current business.');
-        
+
         return $this->redirect($this->generateUrl('business'));
     }
 }
