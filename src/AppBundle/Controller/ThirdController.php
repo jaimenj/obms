@@ -21,24 +21,32 @@ class ThirdController extends Controller
     /**
      * Lists all Third entities.
      *
-     * @Route("/", name="third")
+     * @Route("/list/{typeId}", name="third")
      *
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $typeId = null)
     {
         $manager = $this->getDoctrine()->getManager();
+        $thirdType = null;
 
         $querybuilder = $manager->createQueryBuilder()
             ->select('t, tt')
             ->from('AppBundle:Third', 't')
-            ->leftJoin('t.thirdType', 'tt');
+            ->leftJoin('t.thirdType', 'tt')
+            ->join('t.business', 'b')
+            ->where('b.id = '.$this->getUser()->getCurrentBusiness()->getId());
+
+        if ($typeId) {
+            $thirdType = $manager->getRepository('AppBundle:Thirdtype')->find($typeId);
+            $querybuilder->andWhere('tt.id = '.$typeId);
+        }
 
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
 
-        $formListThirds = $this->createForm(new ListThirdsType($paginator));
+        $formListThirds = $this->createForm(new ListThirdsType($paginator, $this->getUser()));
 
         if ($request->getMethod() == 'POST') {
             $formListThirds->handleRequest($request);
@@ -60,8 +68,10 @@ class ThirdController extends Controller
         return array(
             'paginator' => $paginator,
             'formListThirds' => $formListThirds->createView(),
+            'thirdType' => $thirdType,
         );
     }
+
     /**
      * Creates a new Third entity.
      *
@@ -77,6 +87,7 @@ class ThirdController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $third->setBusiness($this->getUser()->getCurrentBusiness());
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($third);
             $manager->flush();
@@ -101,7 +112,7 @@ class ThirdController extends Controller
      */
     private function createCreateForm(Third $third)
     {
-        $form = $this->createForm(new ThirdType(), $third, array(
+        $form = $this->createForm(new ThirdType($this->getUser()), $third, array(
             'action' => $this->generateUrl('third_create'),
             'method' => 'POST',
         ));
@@ -193,7 +204,7 @@ class ThirdController extends Controller
      */
     private function createEditForm(Third $third)
     {
-        $form = $this->createForm(new ThirdType(), $third, array(
+        $form = $this->createForm(new ThirdType($this->getUser()), $third, array(
             'action' => $this->generateUrl('third_update', array('id' => $third->getId())),
             'method' => 'PUT',
         ));

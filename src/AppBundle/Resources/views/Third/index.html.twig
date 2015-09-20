@@ -6,7 +6,13 @@
 
 <div class="row">
 	<div class="col-md-3">
-		<h1>Thirds</h1>
+		<h1>
+			{% if thirdType %}
+			{{ thirdType }}
+			{% else %}
+			All the thirds
+			{% endif %}
+		</h1>
 	</div>
 	<div class="col-md-4">
 		<button class="btn btn-default" type="submit">
@@ -28,7 +34,7 @@
 		<thead>
 			<tr>
 				<th>{{ knp_pagination_sortable(paginator, 'Id', 't.id') }}</th>
-				<th>{{ knp_pagination_sortable(paginator, 'Fullname', 't.fullname') }}</th>
+				<th>{{ knp_pagination_sortable(paginator, 'Full name', 't.fullname') }}</th>
 				<th>{{ knp_pagination_sortable(paginator, 'Email', 't.email') }}</th>
 				<th>{{ knp_pagination_sortable(paginator, 'Type', 'tt.name') }}</th>
 				<th>Actions</th>

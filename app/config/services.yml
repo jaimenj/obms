@@ -7,3 +7,24 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    # listen for session
+    app.session.listener:
+        class: AppBundle\Listener\SessionListener
+        arguments: ['@security.context', '@service_container', '@router']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # authentication failure event listener
+    app.authentication_failure_event_listener:
+        class: AppBundle\Listener\LoginListener
+        arguments: ['@security.context', '@doctrine', '@service_container']
+        tags:
+            - { name: kernel.event_listener, event: security.authentication.failure, method: onAuthenticationFailure }
+
+    # authentication success event listener
+    app.interactive_login_listener:
+        class: AppBundle\Listener\LoginListener
+        arguments: ['@security.context', '@doctrine', '@service_container']
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onAuthenticationSuccess }

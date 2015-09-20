@@ -38,7 +38,7 @@ class WorkerPayroll
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", scale=2)
      */
     private $amount;
 
@@ -127,5 +127,29 @@ class WorkerPayroll
     public function getAmount()
     {
         return $this->amount;
+    }
+
+    /**
+     * Set worker.
+     *
+     * @param \AppBundle\Entity\Worker $worker
+     *
+     * @return WorkerPayroll
+     */
+    public function setWorker(\AppBundle\Entity\Worker $worker = null)
+    {
+        $this->worker = $worker;
+
+        return $this;
+    }
+
+    /**
+     * Get worker.
+     *
+     * @return \AppBundle\Entity\Worker
+     */
+    public function getWorker()
+    {
+        return $this->worker;
     }
 }

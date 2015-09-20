@@ -43,19 +43,28 @@ class Worker
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="WorkerDown", mappedBy="worker")
+     * @ORM\OneToMany(targetEntity="WorkerDown", mappedBy="worker", cascade="remove")
      */
     private $workerDowns;
 
     /**
-     * @ORM\OneToMany(targetEntity="WorkerHolliday", mappedBy="worker")
+     * @ORM\OneToMany(targetEntity="WorkerHolliday", mappedBy="worker", cascade="remove")
      */
     private $workerHollidays;
 
     /**
-     * @ORM\OneToMany(targetEntity="WorkerPayroll", mappedBy="worker")
+     * @ORM\OneToMany(targetEntity="WorkerPayroll", mappedBy="worker", cascade="remove")
      */
     private $workerPayrolls;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="workers")
+     */
+    private $business;
+
+    public function __toString(){
+        return $this->fullname;
+    }
 
     /**
      * Get id.
@@ -137,5 +146,136 @@ class Worker
     public function getEmail()
     {
         return $this->email;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->workerDowns = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->workerHollidays = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->workerPayrolls = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add workerDowns
+     *
+     * @param \AppBundle\Entity\WorkerDown $workerDowns
+     * @return Worker
+     */
+    public function addWorkerDown(\AppBundle\Entity\WorkerDown $workerDowns)
+    {
+        $this->workerDowns[] = $workerDowns;
+
+        return $this;
+    }
+
+    /**
+     * Remove workerDowns
+     *
+     * @param \AppBundle\Entity\WorkerDown $workerDowns
+     */
+    public function removeWorkerDown(\AppBundle\Entity\WorkerDown $workerDowns)
+    {
+        $this->workerDowns->removeElement($workerDowns);
+    }
+
+    /**
+     * Get workerDowns
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkerDowns()
+    {
+        return $this->workerDowns;
+    }
+
+    /**
+     * Add workerHollidays
+     *
+     * @param \AppBundle\Entity\WorkerHolliday $workerHollidays
+     * @return Worker
+     */
+    public function addWorkerHolliday(\AppBundle\Entity\WorkerHolliday $workerHollidays)
+    {
+        $this->workerHollidays[] = $workerHollidays;
+
+        return $this;
+    }
+
+    /**
+     * Remove workerHollidays
+     *
+     * @param \AppBundle\Entity\WorkerHolliday $workerHollidays
+     */
+    public function removeWorkerHolliday(\AppBundle\Entity\WorkerHolliday $workerHollidays)
+    {
+        $this->workerHollidays->removeElement($workerHollidays);
+    }
+
+    /**
+     * Get workerHollidays
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkerHollidays()
+    {
+        return $this->workerHollidays;
+    }
+
+    /**
+     * Add workerPayrolls
+     *
+     * @param \AppBundle\Entity\WorkerPayroll $workerPayrolls
+     * @return Worker
+     */
+    public function addWorkerPayroll(\AppBundle\Entity\WorkerPayroll $workerPayrolls)
+    {
+        $this->workerPayrolls[] = $workerPayrolls;
+
+        return $this;
+    }
+
+    /**
+     * Remove workerPayrolls
+     *
+     * @param \AppBundle\Entity\WorkerPayroll $workerPayrolls
+     */
+    public function removeWorkerPayroll(\AppBundle\Entity\WorkerPayroll $workerPayrolls)
+    {
+        $this->workerPayrolls->removeElement($workerPayrolls);
+    }
+
+    /**
+     * Get workerPayrolls
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkerPayrolls()
+    {
+        return $this->workerPayrolls;
+    }
+
+    /**
+     * Set business
+     *
+     * @param \AppBundle\Entity\Business $business
+     * @return Worker
+     */
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \AppBundle\Entity\Business
+     */
+    public function getBusiness()
+    {
+        return $this->business;
     }
 }

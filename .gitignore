@@ -13,4 +13,5 @@
 /.project
 /web/lib/
 /.buildpath
-/despliegueRapido.sh
+/despliegueRapidoDesarrollo.sh
+/despliegueRapidoProduccion.sh

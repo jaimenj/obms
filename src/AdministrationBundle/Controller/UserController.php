@@ -248,7 +248,7 @@ class UserController extends Controller
                 $factory = $this->container->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
                 $password = $encoder->encodePassword($newpassword, $user->getSalt());
-                $user->setPassword($newpassword);
+                $user->setPassword($password);
 
                 $this->addFlash('info', 'Password changed.');
             } elseif ($newpassword != '') {

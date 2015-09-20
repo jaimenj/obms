@@ -52,6 +52,24 @@ class User implements UserInterface, \Serializable
      */
     private $salt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Business", mappedBy="users")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $businesses;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Business", inversedBy="usersCurrentBusiness")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    private $currentBusiness;
+
+    /**
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $sessionId;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -66,7 +84,7 @@ class User implements UserInterface, \Serializable
      */
     public function __toString()
     {
-        return $this->nombre;
+        return $this->username;
     }
 
     /**
@@ -215,9 +233,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set isActive
+     * Set isActive.
      *
-     * @param boolean $isActive
+     * @param bool $isActive
+     *
      * @return User
      */
     public function setIsActive($isActive)
@@ -228,9 +247,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get isActive
+     * Get isActive.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsActive()
     {
@@ -238,9 +257,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set isEnabled
+     * Set isEnabled.
      *
-     * @param boolean $isEnabled
+     * @param bool $isEnabled
+     *
      * @return User
      */
     public function setIsEnabled($isEnabled)
@@ -251,12 +271,92 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get isEnabled
+     * Get isEnabled.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsEnabled()
     {
         return $this->isEnabled;
+    }
+
+    /**
+     * Add businesses.
+     *
+     * @param \AppBundle\Entity\Business $businesses
+     *
+     * @return User
+     */
+    public function addBusiness(\AppBundle\Entity\Business $businesses)
+    {
+        $this->businesses[] = $businesses;
+
+        return $this;
+    }
+
+    /**
+     * Remove businesses.
+     *
+     * @param \AppBundle\Entity\Business $businesses
+     */
+    public function removeBusiness(\AppBundle\Entity\Business $businesses)
+    {
+        $this->businesses->removeElement($businesses);
+    }
+
+    /**
+     * Get businesses.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBusinesses()
+    {
+        return $this->businesses;
+    }
+
+    /**
+     * Set currentBusiness
+     *
+     * @param \AppBundle\Entity\Business $currentBusiness
+     * @return User
+     */
+    public function setCurrentBusiness(\AppBundle\Entity\Business $currentBusiness = null)
+    {
+        $this->currentBusiness = $currentBusiness;
+
+        return $this;
+    }
+
+    /**
+     * Get currentBusiness
+     *
+     * @return \AppBundle\Entity\Business
+     */
+    public function getCurrentBusiness()
+    {
+        return $this->currentBusiness;
+    }
+
+    /**
+     * Set sessionId
+     *
+     * @param string $sessionId
+     * @return User
+     */
+    public function setSessionId($sessionId)
+    {
+        $this->sessionId = $sessionId;
+
+        return $this;
+    }
+
+    /**
+     * Get sessionId
+     *
+     * @return string
+     */
+    public function getSessionId()
+    {
+        return $this->sessionId;
     }
 }

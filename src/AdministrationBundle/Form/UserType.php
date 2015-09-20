@@ -31,6 +31,7 @@ class UserType extends AbstractType
                 'label' => 'Is enabled.',
                 'required' => false,
             ))
+            ->add('businesses')
         ;
     }
 
