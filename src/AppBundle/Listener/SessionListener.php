@@ -33,14 +33,15 @@ class SessionListener
         // but it is different than the session id log out the user because there is someone
         // logged in on a different device
         if ($token = $this->securityContext->getToken()) {
-            if ($token->getUser() != 'anon.' and get_class($this->securityContext->getToken()->getUser()) == 'AdministrationBundle\Entity\User') {
-                if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY') || $this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                    if ($token->getUser()->getSessionId() != '') {
-                        if ($token->getUser() && $token->getUser()->getSessionId() !== $this->container->get('session')->getId()) {
+            if ($token->getUser() != 'anon.') {
+                $user = $token->getUser();
+                if (get_class($user) == 'AdministrationBundle\Entity\User') {
+                    if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY') || $this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                        if ($user->getSessionId() != $this->container->get('session')->getId()) {
                             $this->container->get('session')->getFlashBag()->add(
-                            'danger',
-                            'Logged out because your user credentials are being used in other device.'
-                        );
+                                    'danger',
+                                    'Logged out because your user credentials are being used in other device.'
+                                );
                             $this->securityContext->setToken(null);
                             $response = new RedirectResponse($this->router->generate('app_home'));
                             $event->setResponse($response);
