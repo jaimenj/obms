@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\WorkerHolliday;
 use AppBundle\Form\WorkerHollidayType;
+use AppBundle\Form\ListWorkerHollidaysType;
 
 /**
  * WorkerHolliday controller.
@@ -22,23 +23,52 @@ class WorkerHollidayController extends Controller
      *
      * @Route("/", name="workerholliday")
      *
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $entities = $manager->getRepository('AppBundle:WorkerHolliday')->findAll();
+        $querybuilder = $manager->createQueryBuilder()
+            ->select('wh')
+            ->from('AppBundle:WorkerHolliday', 'wh')
+            ->join('wh.worker', 'w')
+            ->join('w.business', 'b')
+            ->where('b.id = '.$this->getUser()->getCurrentBusiness()->getId());
+
+        $paginator = $this->get('knp_paginator');
+        $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
+
+        $formListWorkerHollidays = $this->createForm(new ListWorkerHollidaysType($paginator));
+
+        if ($request->getMethod() == 'POST') {
+            $formListWorkerHollidays->handleRequest($request);
+            if ($formListWorkerHollidays->isValid()) {
+                foreach ($paginator as $workerHolliday) {
+                    $workerHolliday->setInitdate($formListWorkerHollidays[$workerHolliday->getId().'initdate']->getData());
+                    $workerHolliday->setFinishdate($formListWorkerHollidays[$workerHolliday->getId().'finishdate']->getData());
+                    $workerHolliday->setWorker($formListWorkerHollidays[$workerHolliday->getId().'worker']->getData());
+                    $manager->persist($workerHolliday);
+                }
+                $manager->flush();
+
+                $this->addFlash('info', 'Data saved.');
+            } else {
+                $this->addFlash('danger', 'ERROR: '.$formListWorkerHollidays->getErrorsAsString());
+            }
+        }
 
         return array(
-            'entities' => $entities,
+            'paginator' => $paginator,
+            'formListWorkerHollidays' => $formListWorkerHollidays->createView(),
         );
     }
+
     /**
      * Creates a new WorkerHolliday entity.
      *
-     * @Route("/", name="workerholliday_create")
+     * @Route("/new", name="workerholliday_create")
      *
      * @Method("POST")
      * @Template("AppBundle:WorkerHolliday:new.html.twig")
@@ -166,7 +196,7 @@ class WorkerHollidayController extends Controller
      */
     private function createEditForm(WorkerHolliday $workerHolliday)
     {
-        $form = $this->createForm(new WorkerHollidayType(), $workerHolliday, array(
+        $form = $this->createForm(new WorkerHollidayType($this->getUser()), $workerHolliday, array(
             'action' => $this->generateUrl('workerholliday_update', array('id' => $workerHolliday->getId())),
             'method' => 'PUT',
         ));

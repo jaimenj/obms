@@ -40,9 +40,9 @@
 				<td>
 					<a href="{{ path('workerdown_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
 				</td>
-				<td>{% if entity.initdate %}{{ entity.initdate|date('Y-m-d') }}{% endif %}</td>
-				<td>{% if entity.finishdate %}{{ entity.finishdate|date('Y-m-d') }}{% endif %}</td>
-				<td>{{ entity.worker }}</td>
+				<td>{% if entity.initdate %}{{ form_widget(formListWorkerDowns[entity.id ~ 'initdate']) }}{% endif %}</td>
+				<td>{% if entity.finishdate %}{{ form_widget(formListWorkerDowns[entity.id ~ 'finishdate']) }}{% endif %}</td>
+				<td>{{ form_widget(formListWorkerDowns[entity.id ~ 'worker']) }}</td>
 				<td>
 					<a class="btn btn-default" href="{{ path('workerdown_show', { 'id': entity.id }) }}">
 						<i class="fa fa-eye"></i>

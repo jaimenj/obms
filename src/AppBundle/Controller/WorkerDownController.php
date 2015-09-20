@@ -40,30 +40,31 @@ class WorkerDownController extends Controller
         $paginator = $this->get('knp_paginator');
         $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
 
-        $formListWorkers = $this->createForm(new ListWorkerDownsType($paginator, $this->getUser()));
+        $formListWorkerDowns = $this->createForm(new ListWorkerDownsType($paginator));
 
         if ($request->getMethod() == 'POST') {
-            $formListWorkers->handleRequest($request);
-            if ($formListWorkers->isValid()) {
-                foreach ($paginator as $worker) {
-                    $worker->setFullname($formListWorkers[$worker->getId().'initdate']->getData());
-                    $worker->setTelephone($formListWorkers[$worker->getId().'finishdate']->getData());
-                    $worker->setEmail($formListWorkers[$worker->getId().'worker']->getData());
-                    $manager->persist($worker);
+            $formListWorkerDowns->handleRequest($request);
+            if ($formListWorkerDowns->isValid()) {
+                foreach ($paginator as $workerDown) {
+                    $workerDown->setInitdate($formListWorkerDowns[$workerDown->getId().'initdate']->getData());
+                    $workerDown->setFinishdate($formListWorkerDowns[$workerDown->getId().'finishdate']->getData());
+                    $workerDown->setWorker($formListWorkerDowns[$workerDown->getId().'worker']->getData());
+                    $manager->persist($workerDown);
                 }
                 $manager->flush();
 
                 $this->addFlash('info', 'Data saved.');
             } else {
-                $this->addFlash('danger', 'ERROR: '.$formListWorkers->getErrorsAsString());
+                $this->addFlash('danger', 'ERROR: '.$formListWorkerDowns->getErrorsAsString());
             }
         }
 
         return array(
             'paginator' => $paginator,
-            'formListWorkerDowns' => $formListWorkers->createView(),
+            'formListWorkerDowns' => $formListWorkerDowns->createView(),
         );
     }
+
     /**
      * Creates a new WorkerDown entity.
      *
@@ -195,7 +196,7 @@ class WorkerDownController extends Controller
      */
     private function createEditForm(WorkerDown $workerDown)
     {
-        $form = $this->createForm(new WorkerDownType(), $workerDown, array(
+        $form = $this->createForm(new WorkerDownType($this->getUser()), $workerDown, array(
             'action' => $this->generateUrl('workerdown_update', array('id' => $workerDown->getId())),
             'method' => 'PUT',
         ));

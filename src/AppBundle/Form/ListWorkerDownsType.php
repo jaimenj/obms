@@ -10,12 +10,9 @@ class ListWorkerDownsType extends AbstractType
 {
     private $paginator;
 
-    private $user;
-
-    public function __construct($paginator, $user)
+    public function __construct($paginator)
     {
         $this->paginator = $paginator;
-        $this->user = $user;
     }
 
     /**
@@ -24,20 +21,21 @@ class ListWorkerDownsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $user = $this->user;
-
-        foreach ($this->paginator as $workerdown) {
+        foreach ($this->paginator as $workerDown) {
             $builder
-                ->add($workerdown->getId().'initdate')
-                ->add($workerdown->getId().'finishdate')
-                ->add($workerdown->getId().'worker', 'entity', array(
-                    'required' => false,
+                ->add($workerDown->getId().'initdate', 'date', array(
+                    'data' => $workerDown->getInitdate(),
+                ))
+                ->add($workerDown->getId().'finishdate', 'date', array(
+                    'data' => $workerDown->getInitdate(),
+                ))
+                ->add($workerDown->getId().'worker', 'entity', array(
                     'class' => 'AppBundle:Worker',
-                    'data' => $workerdown->getWorker(),
-                    'query_builder' => function (EntityRepository $er) use ($user) {
+                    'data' => $workerDown->getWorker(),
+                    'query_builder' => function (EntityRepository $er) use ($workerDown) {
                         return $er->createQueryBuilder('w')
                             ->join('w.business', 'b')
-                            ->where('b.id = '.$user->getCurrentBusiness()->getId());
+                            ->where('b.id = '.$workerDown->getWorker()->getBusiness()->getId());
                     },
                 ));
         }

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\WorkerPayroll;
 use AppBundle\Form\WorkerPayrollType;
+use AppBundle\Form\ListWorkerPayrollsType;
 
 /**
  * WorkerPayroll controller.
@@ -22,23 +23,53 @@ class WorkerPayrollController extends Controller
      *
      * @Route("/", name="workerpayroll")
      *
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $entities = $manager->getRepository('AppBundle:WorkerPayroll')->findAll();
+        $querybuilder = $manager->createQueryBuilder()
+            ->select('wp')
+            ->from('AppBundle:WorkerPayroll', 'wp')
+            ->join('wp.worker', 'w')
+            ->join('w.business', 'b')
+            ->where('b.id = '.$this->getUser()->getCurrentBusiness()->getId());
+
+        $paginator = $this->get('knp_paginator');
+        $paginator = $paginator->paginate($querybuilder->getQuery(), $this->getRequest()->query->get('page', 1), 10);
+
+        $formListWorkerPayrolls = $this->createForm(new ListWorkerPayrollsType($paginator));
+
+        if ($request->getMethod() == 'POST') {
+            $formListWorkerPayrolls->handleRequest($request);
+            if ($formListWorkerPayrolls->isValid()) {
+                foreach ($paginator as $workerPayrroll) {
+                    $workerPayrroll->setYear($formListWorkerPayrolls[$workerPayrroll->getId().'year']->getData());
+                    $workerPayrroll->setMonth($formListWorkerPayrolls[$workerPayrroll->getId().'month']->getData());
+                    $workerPayrroll->setAmount($formListWorkerPayrolls[$workerPayrroll->getId().'amount']->getData());
+                    $workerPayrroll->setWorker($formListWorkerPayrolls[$workerPayrroll->getId().'worker']->getData());
+                    $manager->persist($workerPayrroll);
+                }
+                $manager->flush();
+
+                $this->addFlash('info', 'Data saved.');
+            } else {
+                $this->addFlash('danger', 'ERROR: '.$formListWorkerPayrolls->getErrorsAsString());
+            }
+        }
 
         return array(
-            'entities' => $entities,
+            'paginator' => $paginator,
+            'formListWorkerPayrolls' => $formListWorkerPayrolls->createView(),
         );
     }
+
     /**
      * Creates a new WorkerPayroll entity.
      *
-     * @Route("/", name="workerpayroll_create")
+     * @Route("/new", name="workerpayroll_create")
      *
      * @Method("POST")
      * @Template("AppBundle:WorkerPayroll:new.html.twig")
@@ -74,7 +105,7 @@ class WorkerPayrollController extends Controller
      */
     private function createCreateForm(WorkerPayroll $workerPayroll)
     {
-        $form = $this->createForm(new WorkerPayrollType(), $workerPayroll, array(
+        $form = $this->createForm(new WorkerPayrollType($this->getUser()), $workerPayroll, array(
             'action' => $this->generateUrl('workerpayroll_create'),
             'method' => 'POST',
         ));
@@ -166,7 +197,7 @@ class WorkerPayrollController extends Controller
      */
     private function createEditForm(WorkerPayroll $workerPayroll)
     {
-        $form = $this->createForm(new WorkerPayrollType(), $workerPayroll, array(
+        $form = $this->createForm(new WorkerPayrollType($this->getUser()), $workerPayroll, array(
             'action' => $this->generateUrl('workerpayroll_update', array('id' => $workerPayroll->getId())),
             'method' => 'PUT',
         ));

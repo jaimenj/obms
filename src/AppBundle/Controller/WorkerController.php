@@ -80,6 +80,7 @@ class WorkerController extends Controller
 
         if ($form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
+            $worker->setBusiness($this->getUser()->getCurrentBusiness());
             $manager->persist($worker);
             $manager->flush();
 

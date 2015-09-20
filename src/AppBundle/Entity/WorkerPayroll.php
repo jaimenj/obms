@@ -38,7 +38,7 @@ class WorkerPayroll
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", scale=2)
      */
     private $amount;
 

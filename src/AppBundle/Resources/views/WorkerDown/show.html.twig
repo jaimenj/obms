@@ -12,12 +12,16 @@
 				<td>{{ entity.id }}</td>
 			</tr>
 			<tr>
-				<th>Initdate</th>
-				<td>{{ entity.initdate|date('Y-m-d H:i:s') }}</td>
+				<th>Init date</th>
+				<td>{{ entity.initdate|date('Y-m-d') }}</td>
 			</tr>
 			<tr>
-				<th>Finishdate</th>
-				<td>{{ entity.finishdate|date('Y-m-d H:i:s') }}</td>
+				<th>Finish date</th>
+				<td>{{ entity.finishdate|date('Y-m-d') }}</td>
+			</tr>
+			<tr>
+				<th>Worker</th>
+				<td>{{ entity.worker }}</td>
 			</tr>
 		</tbody>
 	</table>
