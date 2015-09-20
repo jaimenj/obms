@@ -37,6 +37,7 @@ class UserFix extends AbstractFixture implements OrderedFixtureInterface, Contai
         $encoder = $factory->getEncoder($newuser);
         $password = $encoder->encodePassword('thepass', $newuser->getSalt());
         $newuser->setPassword($password);
+        $newuser->setIsEnabled(true);
 
         $manager->persist($newuser);
         $manager->flush();

@@ -67,6 +67,7 @@ class SampleDataCommand extends ContainerAwareCommand
                 $encoder = $factory->getEncoder($newUser);
                 $password = $encoder->encodePassword('thepass', $newUser->getSalt());
                 $newUser->setPassword($password);
+                $newUser->setIsEnabled(true);
                 $manager->persist($newUser);
 
                 $newBusiness = new Business();
