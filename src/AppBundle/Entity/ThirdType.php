@@ -140,7 +140,7 @@ class ThirdType
     /**
      * Get business
      *
-     * @return \AppBundle\Entity\Business 
+     * @return \AppBundle\Entity\Business
      */
     public function getBusiness()
     {

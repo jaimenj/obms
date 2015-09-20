@@ -43,7 +43,7 @@ class Business
     private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\User", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\User", inversedBy="businesses", cascade={"persist"})
      */
     private $users;
 
@@ -172,9 +172,9 @@ class Business
      *
      * @return Business
      */
-    public function addUser(\AdministrationBundle\Entity\User $users)
+    public function addUser(\AdministrationBundle\Entity\User $user)
     {
-        $this->users[] = $users;
+        $this->users[] = $user;
 
         return $this;
     }
@@ -184,9 +184,9 @@ class Business
      *
      * @param \AdministrationBundle\Entity\User $users
      */
-    public function removeUser(\AdministrationBundle\Entity\User $users)
+    public function removeUser(\AdministrationBundle\Entity\User $user)
     {
-        $this->users->removeElement($users);
+        $this->users->removeElement($user);
     }
 
     /**

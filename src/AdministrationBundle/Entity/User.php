@@ -53,7 +53,7 @@ class User implements UserInterface, \Serializable
     private $salt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Business", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Business", mappedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $businesses;
@@ -65,7 +65,6 @@ class User implements UserInterface, \Serializable
     private $currentBusiness;
 
     /**
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $sessionId;
@@ -287,9 +286,10 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function addBusiness(\AppBundle\Entity\Business $businesses)
+    public function addBusiness(\AppBundle\Entity\Business $business)
     {
-        $this->businesses[] = $businesses;
+        $this->businesses[] = $business;
+        $business->addUser($this);
 
         return $this;
     }
@@ -299,9 +299,10 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\Business $businesses
      */
-    public function removeBusiness(\AppBundle\Entity\Business $businesses)
+    public function removeBusiness(\AppBundle\Entity\Business $business)
     {
-        $this->businesses->removeElement($businesses);
+        $this->businesses->removeElement($business);
+        $business->removeUser($this);
     }
 
     /**
@@ -315,9 +316,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set currentBusiness
+     * Set currentBusiness.
      *
      * @param \AppBundle\Entity\Business $currentBusiness
+     *
      * @return User
      */
     public function setCurrentBusiness(\AppBundle\Entity\Business $currentBusiness = null)
@@ -328,7 +330,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get currentBusiness
+     * Get currentBusiness.
      *
      * @return \AppBundle\Entity\Business
      */
@@ -338,9 +340,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set sessionId
+     * Set sessionId.
      *
      * @param string $sessionId
+     *
      * @return User
      */
     public function setSessionId($sessionId)
@@ -351,7 +354,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get sessionId
+     * Get sessionId.
      *
      * @return string
      */

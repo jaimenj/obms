@@ -118,7 +118,7 @@ class UserController extends Controller
      */
     private function createCreateForm(User $user)
     {
-        $form = $this->createForm(new UserType(), $user, array(
+        $form = $this->createForm(new UserType($user), $user, array(
             'action' => $this->generateUrl('user_create'),
             'method' => 'POST',
         ));
@@ -210,7 +210,7 @@ class UserController extends Controller
      */
     private function createEditForm(User $user)
     {
-        $form = $this->createForm(new UserType(), $user, array(
+        $form = $this->createForm(new UserType($user), $user, array(
             'action' => $this->generateUrl('user_update', array('id' => $user->getId())),
             'method' => 'PUT',
         ));
