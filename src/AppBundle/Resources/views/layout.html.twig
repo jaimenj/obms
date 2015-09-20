@@ -40,6 +40,7 @@
 					</ul>
 				</div>
 				{% if app.user.currentBusiness %}
+				{% if app.user.thirdsEnabled %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -63,6 +64,7 @@
 						{% endfor %}
 					</ul>
 				</div>
+				{% endif %}
 				{% if app.user.hhrrEnabled %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">

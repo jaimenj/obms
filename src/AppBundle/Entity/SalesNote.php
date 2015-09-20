@@ -43,6 +43,16 @@ class SalesNote
     private $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="salesNotes")
+     */
+    private $business;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesNoteDetail", mappedBy="salesNote", cascade="remove")
+     */
+    private $salesNoteDetails;
+
+    /**
      * Get id.
      *
      * @return int
@@ -68,7 +78,7 @@ class SalesNote
     /**
      * Get reference
      *
-     * @return string 
+     * @return string
      */
     public function getReference()
     {
@@ -91,7 +101,7 @@ class SalesNote
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -114,7 +124,7 @@ class SalesNote
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

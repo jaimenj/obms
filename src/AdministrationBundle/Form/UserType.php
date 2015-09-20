@@ -54,6 +54,10 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ))
+            ->add('thirdsEnabled', 'checkbox', array(
+                'label' => 'Thirds enabled.',
+                'required' => false,
+            ))
             ->add('hhrrEnabled', 'checkbox', array(
                 'label' => 'Human resources enabled.',
                 'required' => false,

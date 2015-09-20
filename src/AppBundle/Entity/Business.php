@@ -68,6 +68,11 @@ class Business
     private $workers;
 
     /**
+     * @ORM\OneToMany(targetEntity="SalesNote", mappedBy="business", cascade="remove")
+     */
+    private $salesNotes;
+
+    /**
      * Get id.
      *
      * @return int

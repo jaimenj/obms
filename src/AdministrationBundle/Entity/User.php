@@ -72,6 +72,11 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="boolean")
      */
+    private $thirdsEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $hhrrEnabled = false;
 
     /**
@@ -419,6 +424,30 @@ class User implements UserInterface, \Serializable
     public function getSessionId()
     {
         return $this->sessionId;
+    }
+
+    /**
+     * Set thirdsEnabled.
+     *
+     * @param bool $thirdsEnabled
+     *
+     * @return User
+     */
+    public function setThirdsEnabled($thirdsEnabled)
+    {
+        $this->thirdsEnabled = $thirdsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get thirdsEnabled.
+     *
+     * @return bool
+     */
+    public function getThirdsEnabled()
+    {
+        return $this->thirdsEnabled;
     }
 
     /**
