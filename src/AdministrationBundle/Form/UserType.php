@@ -54,6 +54,50 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ))
+            ->add('hhrrEnabled', 'checkbox', array(
+                'label' => 'Human resources enabled.',
+                'required' => false,
+            ))
+            ->add('shoppingEnabled', 'checkbox', array(
+                'label' => 'Shopping enabled.',
+                'required' => false,
+            ))
+            ->add('storageEnabled', 'checkbox', array(
+                'label' => 'Storage enabled.',
+                'required' => false,
+            ))
+            ->add('salesEnabled', 'checkbox', array(
+                'label' => 'Sales enabled.',
+                'required' => false,
+            ))
+            ->add('accountingEnabled', 'checkbox', array(
+                'label' => 'Accounting enabled.',
+                'required' => false,
+            ))
+            ->add('productionEnabled', 'checkbox', array(
+                'label' => 'Production enabled.',
+                'required' => false,
+            ))
+            ->add('logisticsEnabled', 'checkbox', array(
+                'label' => 'Logistics enabled.',
+                'required' => false,
+            ))
+            ->add('planificationEnabled', 'checkbox', array(
+                'label' => 'Planification enabled.',
+                'required' => false,
+            ))
+            ->add('processControlEnabled', 'checkbox', array(
+                'label' => 'Process control enabled.',
+                'required' => false,
+            ))
+            ->add('documentsEnabled', 'checkbox', array(
+                'label' => 'Documents enabled.',
+                'required' => false,
+            ))
+            ->add('intelligenceEnabled', 'checkbox', array(
+                'label' => 'Intelligence enabled.',
+                'required' => false,
+            ))
         ;
     }
 

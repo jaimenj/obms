@@ -69,6 +69,64 @@ class User implements UserInterface, \Serializable
      */
     private $sessionId;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hhrrEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $shoppingEnabled  = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $storageEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $salesEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $accountingEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $productionEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $logisticsEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $planificationEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $processControlEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $documentsEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $intelligenceEnabled = false;
+
+    /**
+     * Default constructor.
+     */
     public function __construct()
     {
         $this->isActive = true;
@@ -361,5 +419,269 @@ class User implements UserInterface, \Serializable
     public function getSessionId()
     {
         return $this->sessionId;
+    }
+
+    /**
+     * Set hhrrEnabled.
+     *
+     * @param bool $hhrrEnabled
+     *
+     * @return User
+     */
+    public function setHhrrEnabled($hhrrEnabled)
+    {
+        $this->hhrrEnabled = $hhrrEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get hhrrEnabled.
+     *
+     * @return bool
+     */
+    public function getHhrrEnabled()
+    {
+        return $this->hhrrEnabled;
+    }
+
+    /**
+     * Set shoppingEnabled.
+     *
+     * @param bool $shoppingEnabled
+     *
+     * @return User
+     */
+    public function setShoppingEnabled($shoppingEnabled)
+    {
+        $this->shoppingEnabled = $shoppingEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get shoppingEnabled.
+     *
+     * @return bool
+     */
+    public function getShoppingEnabled()
+    {
+        return $this->shoppingEnabled;
+    }
+
+    /**
+     * Set storageEnabled.
+     *
+     * @param bool $storageEnabled
+     *
+     * @return User
+     */
+    public function setStorageEnabled($storageEnabled)
+    {
+        $this->storageEnabled = $storageEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get storageEnabled.
+     *
+     * @return bool
+     */
+    public function getStorageEnabled()
+    {
+        return $this->storageEnabled;
+    }
+
+    /**
+     * Set salesEnabled.
+     *
+     * @param bool $salesEnabled
+     *
+     * @return User
+     */
+    public function setSalesEnabled($salesEnabled)
+    {
+        $this->salesEnabled = $salesEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get salesEnabled.
+     *
+     * @return bool
+     */
+    public function getSalesEnabled()
+    {
+        return $this->salesEnabled;
+    }
+
+    /**
+     * Set accountingEnabled.
+     *
+     * @param bool $accountingEnabled
+     *
+     * @return User
+     */
+    public function setAccountingEnabled($accountingEnabled)
+    {
+        $this->accountingEnabled = $accountingEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get accountingEnabled.
+     *
+     * @return bool
+     */
+    public function getAccountingEnabled()
+    {
+        return $this->accountingEnabled;
+    }
+
+    /**
+     * Set productionEnabled.
+     *
+     * @param bool $productionEnabled
+     *
+     * @return User
+     */
+    public function setProductionEnabled($productionEnabled)
+    {
+        $this->productionEnabled = $productionEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get productionEnabled.
+     *
+     * @return bool
+     */
+    public function getProductionEnabled()
+    {
+        return $this->productionEnabled;
+    }
+
+    /**
+     * Set logisticsEnabled.
+     *
+     * @param bool $logisticsEnabled
+     *
+     * @return User
+     */
+    public function setLogisticsEnabled($logisticsEnabled)
+    {
+        $this->logisticsEnabled = $logisticsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get logisticsEnabled.
+     *
+     * @return bool
+     */
+    public function getLogisticsEnabled()
+    {
+        return $this->logisticsEnabled;
+    }
+
+    /**
+     * Set planificationEnabled.
+     *
+     * @param bool $planificationEnabled
+     *
+     * @return User
+     */
+    public function setPlanificationEnabled($planificationEnabled)
+    {
+        $this->planificationEnabled = $planificationEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get planificationEnabled.
+     *
+     * @return bool
+     */
+    public function getPlanificationEnabled()
+    {
+        return $this->planificationEnabled;
+    }
+
+    /**
+     * Set processControlEnabled.
+     *
+     * @param bool $processControlEnabled
+     *
+     * @return User
+     */
+    public function setProcessControlEnabled($processControlEnabled)
+    {
+        $this->processControlEnabled = $processControlEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get processControlEnabled.
+     *
+     * @return bool
+     */
+    public function getProcessControlEnabled()
+    {
+        return $this->processControlEnabled;
+    }
+
+    /**
+     * Set documentsEnabled.
+     *
+     * @param bool $documentsEnabled
+     *
+     * @return User
+     */
+    public function setDocumentsEnabled($documentsEnabled)
+    {
+        $this->documentsEnabled = $documentsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get documentsEnabled.
+     *
+     * @return bool
+     */
+    public function getDocumentsEnabled()
+    {
+        return $this->documentsEnabled;
+    }
+
+    /**
+     * Set intelligenceEnabled.
+     *
+     * @param bool $intelligenceEnabled
+     *
+     * @return User
+     */
+    public function setIntelligenceEnabled($intelligenceEnabled)
+    {
+        $this->intelligenceEnabled = $intelligenceEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get intelligenceEnabled.
+     *
+     * @return bool
+     */
+    public function getIntelligenceEnabled()
+    {
+        return $this->intelligenceEnabled;
     }
 }
