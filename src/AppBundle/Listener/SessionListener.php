@@ -35,7 +35,16 @@ class SessionListener
         if ($token = $this->securityContext->getToken()) {
             if ($token->getUser() != 'anon.') {
                 $user = $token->getUser();
+
                 if (get_class($user) == 'AdministrationBundle\Entity\User') {
+                    if (!$user->getIsEnabled()) {
+                        $this->container->get('session')->getFlashBag()->add(
+                                'danger',
+                                'You cannot log in because you are disabled.'
+                            );
+                        $this->securityContext->setToken(null);
+                    }
+
                     if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY') || $this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
                         if ($user->getSessionId() != $this->container->get('session')->getId()) {
                             $this->container->get('session')->getFlashBag()->add(
