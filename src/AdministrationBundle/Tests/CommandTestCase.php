@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace BackBundle\Tests;
+namespace AdministrationBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;

@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Notification.
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="BackBundle\Entity\NotificationRepository")
+ * @ORM\Entity(repositoryClass="AdministrationBundle\Entity\NotificationRepository")
  */
 class Notification
 {
@@ -77,7 +77,7 @@ class Notification
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -100,7 +100,7 @@ class Notification
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -123,7 +123,7 @@ class Notification
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {

@@ -28,7 +28,7 @@ class NotificationController extends FOSRestController //implements ClassResourc
     {
         $manager = $this->getDoctrine()->getEntityManager();
 
-        $notifications = $manager->getRepository('BackBundle:Notification')->findAll();
+        $notifications = $manager->getRepository('AppBundle:Notification')->findAll();
 
         //$view = $this->view ( $notificaciones, 200 )->setTemplate ( "MyBundle:Users:getUsers.html.twig" )->setTemplateVar ( 'users' );
 

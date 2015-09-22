@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace BackBundle\Tests;
+namespace AdministrationBundle\Tests;
 
 /**
   * Clase que prueba un comando de consola.
