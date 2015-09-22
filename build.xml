@@ -2,8 +2,6 @@
 <project default="build" name="OBMS">
 	<property name="basedir" value="."/>
 	<property name="source" value="./src"/>
-	<property name="phpDoxBaseDir"
-		value="../../.."/>
 	<property name="ignore" value="build"/>
 
 	<target
@@ -241,7 +239,7 @@
 		<exec
 			executable="${basedir}/bin/phpmd.phar">
 			<arg
-				line="./src xml ${basedir}/ci/phpmd.xml --reportfile ${basedir}/build/logs/pmd.xml"/>
+				line="./src xml ${basedir}/app/phpmd.xml --reportfile ${basedir}/build/logs/pmd.xml"/>
 		</exec>
 	</target>
 
