@@ -7,6 +7,8 @@ It's a too big project and a very ambicious one, I know, but it's being made lik
 Feel free to use, fork, clone, update, contribute, and please make pull requests of your improvements ;)
 Licensed under the MIT license.
 
+![AppBusinesses](https://raw.githubusercontent.com/obms/obms/master/web/img/AppBusinesses.png)
+
 ## Development Requirements
 
 Developed with Composer, Bower, PHP, Apache2 and MariaDB.
@@ -59,6 +61,22 @@ Execute for tests:
 It needs phpunit command.
 
 Very important: Do not execute in production environment. It will delete original data stored in linked database in development/test environment.
+
+[Code coverage of PHP automated tests](http://obmscoverage.jnjsite.com/) (nightly build)
+
+## Contributions
+
+Feel free to contribute. You can fork the repository, make your own improvements and later do push requests to this repository.
+
+There is a branch for each piece that has been divided the web application.
+
+If you don't know what to do you can browse the code and have more ideas here.
+
+Please pass the tests before pushing.
+
+[Documentation](http://obmsdoc.jnjsite.com/) (nightly build)
+
+[Browse for code style improvements](http://obmscode.jnjsite.com/) (nightly build)
 
 ## More
 
