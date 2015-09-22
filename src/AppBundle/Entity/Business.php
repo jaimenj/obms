@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of The OBMS project: https://github.com/obms/obms
+ *
+ * Copyright (c) Jaime Niñoles-Manzanera Jimeno.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -43,7 +52,7 @@ class Business
     private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\User", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="AdministrationBundle\Entity\User", inversedBy="businesses", cascade={"persist"})
      */
     private $users;
 
@@ -66,6 +75,11 @@ class Business
      * @ORM\OneToMany(targetEntity="Worker", mappedBy="business", cascade="remove")
      */
     private $workers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesNote", mappedBy="business", cascade="remove")
+     */
+    private $salesNotes;
 
     /**
      * Get id.
@@ -172,9 +186,9 @@ class Business
      *
      * @return Business
      */
-    public function addUser(\AdministrationBundle\Entity\User $users)
+    public function addUser(\AdministrationBundle\Entity\User $user)
     {
-        $this->users[] = $users;
+        $this->users[] = $user;
 
         return $this;
     }
@@ -184,9 +198,9 @@ class Business
      *
      * @param \AdministrationBundle\Entity\User $users
      */
-    public function removeUser(\AdministrationBundle\Entity\User $users)
+    public function removeUser(\AdministrationBundle\Entity\User $user)
     {
-        $this->users->removeElement($users);
+        $this->users->removeElement($user);
     }
 
     /**

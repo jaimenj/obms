@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of The OBMS project: https://github.com/obms/obms
+ *
+ * Copyright (c) Jaime Niñoles-Manzanera Jimeno.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -43,6 +52,16 @@ class SalesNote
     private $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="salesNotes")
+     */
+    private $business;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesNoteDetail", mappedBy="salesNote", cascade="remove")
+     */
+    private $salesNoteDetails;
+
+    /**
      * Get id.
      *
      * @return int
@@ -68,7 +87,7 @@ class SalesNote
     /**
      * Get reference
      *
-     * @return string 
+     * @return string
      */
     public function getReference()
     {
@@ -91,7 +110,7 @@ class SalesNote
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -114,7 +133,7 @@ class SalesNote
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

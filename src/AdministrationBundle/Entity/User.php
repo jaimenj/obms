@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of The OBMS project: https://github.com/obms/obms
+ *
+ * Copyright (c) Jaime Niñoles-Manzanera Jimeno.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -53,7 +62,7 @@ class User implements UserInterface, \Serializable
     private $salt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Business", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Business", mappedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $businesses;
@@ -65,11 +74,73 @@ class User implements UserInterface, \Serializable
     private $currentBusiness;
 
     /**
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $sessionId;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $thirdsEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hhrrEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $shoppingEnabled  = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $storageEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $salesEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $accountingEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $productionEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $logisticsEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $planificationEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $processControlEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $documentsEnabled = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $intelligenceEnabled = false;
+
+    /**
+     * Default constructor.
+     */
     public function __construct()
     {
         $this->isActive = true;
@@ -287,9 +358,10 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function addBusiness(\AppBundle\Entity\Business $businesses)
+    public function addBusiness(\AppBundle\Entity\Business $business)
     {
-        $this->businesses[] = $businesses;
+        $this->businesses[] = $business;
+        $business->addUser($this);
 
         return $this;
     }
@@ -299,9 +371,10 @@ class User implements UserInterface, \Serializable
      *
      * @param \AppBundle\Entity\Business $businesses
      */
-    public function removeBusiness(\AppBundle\Entity\Business $businesses)
+    public function removeBusiness(\AppBundle\Entity\Business $business)
     {
-        $this->businesses->removeElement($businesses);
+        $this->businesses->removeElement($business);
+        $business->removeUser($this);
     }
 
     /**
@@ -315,9 +388,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set currentBusiness
+     * Set currentBusiness.
      *
      * @param \AppBundle\Entity\Business $currentBusiness
+     *
      * @return User
      */
     public function setCurrentBusiness(\AppBundle\Entity\Business $currentBusiness = null)
@@ -328,7 +402,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get currentBusiness
+     * Get currentBusiness.
      *
      * @return \AppBundle\Entity\Business
      */
@@ -338,9 +412,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set sessionId
+     * Set sessionId.
      *
      * @param string $sessionId
+     *
      * @return User
      */
     public function setSessionId($sessionId)
@@ -351,12 +426,300 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get sessionId
+     * Get sessionId.
      *
      * @return string
      */
     public function getSessionId()
     {
         return $this->sessionId;
+    }
+
+    /**
+     * Set thirdsEnabled.
+     *
+     * @param bool $thirdsEnabled
+     *
+     * @return User
+     */
+    public function setThirdsEnabled($thirdsEnabled)
+    {
+        $this->thirdsEnabled = $thirdsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get thirdsEnabled.
+     *
+     * @return bool
+     */
+    public function getThirdsEnabled()
+    {
+        return $this->thirdsEnabled;
+    }
+
+    /**
+     * Set hhrrEnabled.
+     *
+     * @param bool $hhrrEnabled
+     *
+     * @return User
+     */
+    public function setHhrrEnabled($hhrrEnabled)
+    {
+        $this->hhrrEnabled = $hhrrEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get hhrrEnabled.
+     *
+     * @return bool
+     */
+    public function getHhrrEnabled()
+    {
+        return $this->hhrrEnabled;
+    }
+
+    /**
+     * Set shoppingEnabled.
+     *
+     * @param bool $shoppingEnabled
+     *
+     * @return User
+     */
+    public function setShoppingEnabled($shoppingEnabled)
+    {
+        $this->shoppingEnabled = $shoppingEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get shoppingEnabled.
+     *
+     * @return bool
+     */
+    public function getShoppingEnabled()
+    {
+        return $this->shoppingEnabled;
+    }
+
+    /**
+     * Set storageEnabled.
+     *
+     * @param bool $storageEnabled
+     *
+     * @return User
+     */
+    public function setStorageEnabled($storageEnabled)
+    {
+        $this->storageEnabled = $storageEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get storageEnabled.
+     *
+     * @return bool
+     */
+    public function getStorageEnabled()
+    {
+        return $this->storageEnabled;
+    }
+
+    /**
+     * Set salesEnabled.
+     *
+     * @param bool $salesEnabled
+     *
+     * @return User
+     */
+    public function setSalesEnabled($salesEnabled)
+    {
+        $this->salesEnabled = $salesEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get salesEnabled.
+     *
+     * @return bool
+     */
+    public function getSalesEnabled()
+    {
+        return $this->salesEnabled;
+    }
+
+    /**
+     * Set accountingEnabled.
+     *
+     * @param bool $accountingEnabled
+     *
+     * @return User
+     */
+    public function setAccountingEnabled($accountingEnabled)
+    {
+        $this->accountingEnabled = $accountingEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get accountingEnabled.
+     *
+     * @return bool
+     */
+    public function getAccountingEnabled()
+    {
+        return $this->accountingEnabled;
+    }
+
+    /**
+     * Set productionEnabled.
+     *
+     * @param bool $productionEnabled
+     *
+     * @return User
+     */
+    public function setProductionEnabled($productionEnabled)
+    {
+        $this->productionEnabled = $productionEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get productionEnabled.
+     *
+     * @return bool
+     */
+    public function getProductionEnabled()
+    {
+        return $this->productionEnabled;
+    }
+
+    /**
+     * Set logisticsEnabled.
+     *
+     * @param bool $logisticsEnabled
+     *
+     * @return User
+     */
+    public function setLogisticsEnabled($logisticsEnabled)
+    {
+        $this->logisticsEnabled = $logisticsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get logisticsEnabled.
+     *
+     * @return bool
+     */
+    public function getLogisticsEnabled()
+    {
+        return $this->logisticsEnabled;
+    }
+
+    /**
+     * Set planificationEnabled.
+     *
+     * @param bool $planificationEnabled
+     *
+     * @return User
+     */
+    public function setPlanificationEnabled($planificationEnabled)
+    {
+        $this->planificationEnabled = $planificationEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get planificationEnabled.
+     *
+     * @return bool
+     */
+    public function getPlanificationEnabled()
+    {
+        return $this->planificationEnabled;
+    }
+
+    /**
+     * Set processControlEnabled.
+     *
+     * @param bool $processControlEnabled
+     *
+     * @return User
+     */
+    public function setProcessControlEnabled($processControlEnabled)
+    {
+        $this->processControlEnabled = $processControlEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get processControlEnabled.
+     *
+     * @return bool
+     */
+    public function getProcessControlEnabled()
+    {
+        return $this->processControlEnabled;
+    }
+
+    /**
+     * Set documentsEnabled.
+     *
+     * @param bool $documentsEnabled
+     *
+     * @return User
+     */
+    public function setDocumentsEnabled($documentsEnabled)
+    {
+        $this->documentsEnabled = $documentsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get documentsEnabled.
+     *
+     * @return bool
+     */
+    public function getDocumentsEnabled()
+    {
+        return $this->documentsEnabled;
+    }
+
+    /**
+     * Set intelligenceEnabled.
+     *
+     * @param bool $intelligenceEnabled
+     *
+     * @return User
+     */
+    public function setIntelligenceEnabled($intelligenceEnabled)
+    {
+        $this->intelligenceEnabled = $intelligenceEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Get intelligenceEnabled.
+     *
+     * @return bool
+     */
+    public function getIntelligenceEnabled()
+    {
+        return $this->intelligenceEnabled;
     }
 }

@@ -40,6 +40,7 @@
 					</ul>
 				</div>
 				{% if app.user.currentBusiness %}
+				{% if app.user.thirdsEnabled %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -63,6 +64,8 @@
 						{% endfor %}
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.hhrrEnabled %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -87,6 +90,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.shoppingEnabled %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -108,6 +113,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.storageEnabled %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -138,6 +145,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.salesEnabled %}
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -168,6 +177,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.accountingEnabled %}
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -192,6 +203,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.productionEnabled %}
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -213,6 +226,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.logisticsEnabled %}
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -231,6 +246,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.planificationEnabled %}
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -249,6 +266,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.processControlEnabled %}
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -270,6 +289,8 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
+				{% if app.user.documentsEnabled %}
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -281,6 +302,8 @@
 					</div>
 
 				</div>
+				{% endif %}
+				{% if app.user.intelligenceEnabled %}
 				<div class="panel panel-warning">
 					<div class="panel-heading" role="tab">
 						<h4 class="panel-title">
@@ -302,6 +325,7 @@
 						</li>
 					</ul>
 				</div>
+				{% endif %}
 				{% endif %}
 				<div class="panel panel-danger">
 					<div class="panel-heading" role="tab">

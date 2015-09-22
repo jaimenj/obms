@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of The OBMS project: https://github.com/obms/obms
+ *
+ * Copyright (c) Jaime Niñoles-Manzanera Jimeno.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ApiBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -19,7 +28,7 @@ class NotificationController extends FOSRestController //implements ClassResourc
     {
         $manager = $this->getDoctrine()->getEntityManager();
 
-        $notifications = $manager->getRepository('BackBundle:Notification')->findAll();
+        $notifications = $manager->getRepository('AppBundle:Notification')->findAll();
 
         //$view = $this->view ( $notificaciones, 200 )->setTemplate ( "MyBundle:Users:getUsers.html.twig" )->setTemplateVar ( 'users' );
 

@@ -27,6 +27,7 @@ security:
             logout:
                 path:   /administration/logout
                 target: /
+                invalidate_session: false
             anonymous:    true
         app:
             pattern:    ^/app
@@ -40,6 +41,7 @@ security:
             logout:
                 path:   /app/logout
                 target: /
+                invalidate_session: false
             anonymous:    true
         default:
             anonymous: ~

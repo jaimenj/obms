@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of The OBMS project: https://github.com/obms/obms
+ *
+ * Copyright (c) Jaime Niñoles-Manzanera Jimeno.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AdministrationBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -37,6 +46,7 @@ class UserFix extends AbstractFixture implements OrderedFixtureInterface, Contai
         $encoder = $factory->getEncoder($newuser);
         $password = $encoder->encodePassword('thepass', $newuser->getSalt());
         $newuser->setPassword($password);
+        $newuser->setIsEnabled(true);
 
         $manager->persist($newuser);
         $manager->flush();
