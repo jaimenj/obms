@@ -337,7 +337,7 @@
 		name="phpunit">
 		<exec executable="${basedir}/bin/phpunit.phar">
 			<arg value="-c"/>
-			<arg path="app/phpunit.xml"/>
+			<arg path="app/phpunit.xml.dist"/>
 			<arg value="--coverage-html"/>
 			<arg path="build/coverage/"/>
 		</exec>
