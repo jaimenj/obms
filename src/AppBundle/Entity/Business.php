@@ -82,6 +82,21 @@ class Business
     private $salesNotes;
 
     /**
+     * @ORM\OneToMany(targetEntity="SalesOrder", mappedBy="business", cascade="remove")
+     */
+    private $salesOrders;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesBudget", mappedBy="business", cascade="remove")
+     */
+    private $salesBudgets;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesAmendmentInvoice", mappedBy="business", cascade="remove")
+     */
+    private $salesAmendmentInvoices;
+
+    /**
      * Get id.
      *
      * @return int

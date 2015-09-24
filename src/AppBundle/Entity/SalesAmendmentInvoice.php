@@ -45,6 +45,21 @@ class SalesAmendmentInvoice
     private $date;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="salesAmendmentInvoices")
+     */
+    private $business;
+
+    /**
+     * @ORM\OneToOne(targetEntity="SalesInvoice", inversedBy="salesAmendmentInvoice")
+     */
+    private $salesInvoice;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesAmendmentInvoiceDetail", mappedBy="salesAmendmentInvoice", cascade="remove")
+     */
+    private $salesAmendmentInvoiceDetails;
+
+    /**
      * Get id.
      *
      * @return int

@@ -51,6 +51,35 @@ class SalesBudget
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="salesBudgets")
+     */
+    private $business;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesNoteDetail", mappedBy="salesBudget", cascade="remove")
+     */
+    private $salesBudgetDetails;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesNote", mappedBy="salesBudget", cascade="remove")
+     */
+    private $salesNotes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesOrder", mappedBy="salesBudget", cascade="remove")
+     */
+    private $salesOrders;
+
+    /**
+     * @ORM\OneToOne(targetEntity="SalesPreinvoice", inversedBy="salesBudget")
+     */
+    private $salesPreinvoice;
+
+    /**
+     * @ORM\OneToOne(targetEntity="SalesInvoice", inversedBy="salesBudget")
+     */
+    private $salesInvoice;
 
     /**
      * Get id

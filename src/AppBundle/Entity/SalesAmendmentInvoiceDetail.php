@@ -1,30 +1,21 @@
 <?php
 
-/**
- * This file is part of The OBMS project: https://github.com/obms/obms
- *
- * Copyright (c) Jaime Niñoles-Manzanera Jimeno.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SalesOrderDetail
+ * SalesAmendmentInvoiceDetail
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesOrderDetailRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesAmendmentInvoiceDetailRepository")
  */
-class SalesOrderDetail
+class SalesAmendmentInvoiceDetail
 {
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -33,28 +24,28 @@ class SalesOrderDetail
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="concept", type="string", length=255)
      */
     private $concept;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(name="price", type="decimal")
      */
     private $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(name="quantity", type="decimal")
      */
     private $quantity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SalesOrder", inversedBy="salesOrderDetails")
+     * @ORM\ManyToOne(targetEntity="salesAmendmentInvoice", inversedBy="salesAmendmentInvoiceDetails")
      */
-    private $salesOrder;
+    private $salesAmendmentInvoice;
 
     /**
      * Get id
@@ -70,7 +61,7 @@ class SalesOrderDetail
      * Set concept
      *
      * @param string $concept
-     * @return SalesOrderDetail
+     * @return SalesAmendmentInvoiceDetail
      */
     public function setConcept($concept)
     {
@@ -93,7 +84,7 @@ class SalesOrderDetail
      * Set price
      *
      * @param string $price
-     * @return SalesOrderDetail
+     * @return SalesAmendmentInvoiceDetail
      */
     public function setPrice($price)
     {
@@ -116,7 +107,7 @@ class SalesOrderDetail
      * Set quantity
      *
      * @param string $quantity
-     * @return SalesOrderDetail
+     * @return SalesAmendmentInvoiceDetail
      */
     public function setQuantity($quantity)
     {

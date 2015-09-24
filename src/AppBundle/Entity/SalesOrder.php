@@ -52,6 +52,21 @@ class SalesOrder
     private $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="salesOrders")
+     */
+    private $business;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesOrderDetail", mappedBy="salesOrder", cascade="remove")
+     */
+    private $salesOrderDetails;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SalesBudget", inversedBy="salesOrders")
+     */
+    private $salesBudget;
+
+    /**
      * Get id.
      *
      * @return int

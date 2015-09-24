@@ -45,6 +45,11 @@ class SalesPreinvoice
     private $date;
 
     /**
+     * @ORM\OneToOne(targetEntity="SalesBudget", inversedBy="salesPreinvoice")
+     */
+    private $salesBudget;
+
+    /**
      * Get id.
      *
      * @return int
