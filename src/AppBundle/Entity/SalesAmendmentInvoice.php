@@ -50,7 +50,7 @@ class SalesAmendmentInvoice
     private $business;
 
     /**
-     * @ORM\OneToOne(targetEntity="SalesInvoice", inversedBy="salesAmendmentInvoice")
+     * @ORM\OneToOne(targetEntity="SalesInvoice", mappedBy="salesAmendmentInvoice")
      */
     private $salesInvoice;
 

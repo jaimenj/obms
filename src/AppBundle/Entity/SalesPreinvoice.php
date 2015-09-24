@@ -45,7 +45,7 @@ class SalesPreinvoice
     private $date;
 
     /**
-     * @ORM\OneToOne(targetEntity="SalesBudget", inversedBy="salesPreinvoice")
+     * @ORM\OneToOne(targetEntity="SalesBudget", mappedBy="salesPreinvoice")
      */
     private $salesBudget;
 

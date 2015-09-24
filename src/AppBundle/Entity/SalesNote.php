@@ -64,7 +64,7 @@ class SalesNote
     /**
      * @ORM\ManyToOne(targetEntity="SalesBudget", inversedBy="salesNotes")
      */
-    private $salesBudgets;
+    private $salesBudget;
 
     /**
      * Get id.

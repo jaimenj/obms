@@ -45,15 +45,15 @@ class SalesInvoice
     private $date;
 
     /**
-     * @ORM\OneToOne(targetEntity="SalesBudget", inversedBy="salesInvoice")
+     * @ORM\OneToOne(targetEntity="SalesBudget", mappedBy="salesInvoice")
      */
     private $salesBudget;
 
     /**
-     * @ORM\OneToOne(targetEntity="salesAmendmentInvoice", inversedBy="salesInvoice")
+     * @ORM\OneToOne(targetEntity="SalesAmendmentInvoice", inversedBy="salesInvoice")
      */
     private $salesAmendmentInvoice;
-    
+
     /**
      * Get id
      *

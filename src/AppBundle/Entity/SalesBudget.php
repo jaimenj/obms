@@ -57,7 +57,7 @@ class SalesBudget
     private $business;
 
     /**
-     * @ORM\OneToMany(targetEntity="SalesNoteDetail", mappedBy="salesBudget", cascade="remove")
+     * @ORM\OneToMany(targetEntity="SalesBudgetDetail", mappedBy="salesBudget", cascade="remove")
      */
     private $salesBudgetDetails;
 
