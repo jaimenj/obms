@@ -134,4 +134,27 @@ class SalesNoteDetail
     {
         return $this->quantity;
     }
+
+    /**
+     * Set salesNote
+     *
+     * @param \AppBundle\Entity\SalesNote $salesNote
+     * @return SalesNoteDetail
+     */
+    public function setSalesNote(\AppBundle\Entity\SalesNote $salesNote = null)
+    {
+        $this->salesNote = $salesNote;
+
+        return $this;
+    }
+
+    /**
+     * Get salesNote
+     *
+     * @return \AppBundle\Entity\SalesNote 
+     */
+    public function getSalesNote()
+    {
+        return $this->salesNote;
+    }
 }

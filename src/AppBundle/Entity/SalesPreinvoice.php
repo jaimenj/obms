@@ -106,4 +106,27 @@ class SalesPreinvoice
     {
         return $this->date;
     }
+
+    /**
+     * Set salesBudget
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudget
+     * @return SalesPreinvoice
+     */
+    public function setSalesBudget(\AppBundle\Entity\SalesBudget $salesBudget = null)
+    {
+        $this->salesBudget = $salesBudget;
+
+        return $this;
+    }
+
+    /**
+     * Get salesBudget
+     *
+     * @return \AppBundle\Entity\SalesBudget 
+     */
+    public function getSalesBudget()
+    {
+        return $this->salesBudget;
+    }
 }

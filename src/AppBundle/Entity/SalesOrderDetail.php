@@ -134,4 +134,27 @@ class SalesOrderDetail
     {
         return $this->quantity;
     }
+
+    /**
+     * Set salesOrder
+     *
+     * @param \AppBundle\Entity\SalesOrder $salesOrder
+     * @return SalesOrderDetail
+     */
+    public function setSalesOrder(\AppBundle\Entity\SalesOrder $salesOrder = null)
+    {
+        $this->salesOrder = $salesOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get salesOrder
+     *
+     * @return \AppBundle\Entity\SalesOrder 
+     */
+    public function getSalesOrder()
+    {
+        return $this->salesOrder;
+    }
 }

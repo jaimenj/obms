@@ -147,4 +147,90 @@ class SalesOrder
     {
         return $this->description;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->salesOrderDetails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set business
+     *
+     * @param \AppBundle\Entity\Business $business
+     * @return SalesOrder
+     */
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \AppBundle\Entity\Business 
+     */
+    public function getBusiness()
+    {
+        return $this->business;
+    }
+
+    /**
+     * Add salesOrderDetails
+     *
+     * @param \AppBundle\Entity\SalesOrderDetail $salesOrderDetails
+     * @return SalesOrder
+     */
+    public function addSalesOrderDetail(\AppBundle\Entity\SalesOrderDetail $salesOrderDetails)
+    {
+        $this->salesOrderDetails[] = $salesOrderDetails;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesOrderDetails
+     *
+     * @param \AppBundle\Entity\SalesOrderDetail $salesOrderDetails
+     */
+    public function removeSalesOrderDetail(\AppBundle\Entity\SalesOrderDetail $salesOrderDetails)
+    {
+        $this->salesOrderDetails->removeElement($salesOrderDetails);
+    }
+
+    /**
+     * Get salesOrderDetails
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalesOrderDetails()
+    {
+        return $this->salesOrderDetails;
+    }
+
+    /**
+     * Set salesBudget
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudget
+     * @return SalesOrder
+     */
+    public function setSalesBudget(\AppBundle\Entity\SalesBudget $salesBudget = null)
+    {
+        $this->salesBudget = $salesBudget;
+
+        return $this;
+    }
+
+    /**
+     * Get salesBudget
+     *
+     * @return \AppBundle\Entity\SalesBudget 
+     */
+    public function getSalesBudget()
+    {
+        return $this->salesBudget;
+    }
 }

@@ -144,4 +144,90 @@ class SalesNote
     {
         return $this->description;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->salesNoteDetails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set business
+     *
+     * @param \AppBundle\Entity\Business $business
+     * @return SalesNote
+     */
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \AppBundle\Entity\Business 
+     */
+    public function getBusiness()
+    {
+        return $this->business;
+    }
+
+    /**
+     * Add salesNoteDetails
+     *
+     * @param \AppBundle\Entity\SalesNoteDetail $salesNoteDetails
+     * @return SalesNote
+     */
+    public function addSalesNoteDetail(\AppBundle\Entity\SalesNoteDetail $salesNoteDetails)
+    {
+        $this->salesNoteDetails[] = $salesNoteDetails;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesNoteDetails
+     *
+     * @param \AppBundle\Entity\SalesNoteDetail $salesNoteDetails
+     */
+    public function removeSalesNoteDetail(\AppBundle\Entity\SalesNoteDetail $salesNoteDetails)
+    {
+        $this->salesNoteDetails->removeElement($salesNoteDetails);
+    }
+
+    /**
+     * Get salesNoteDetails
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalesNoteDetails()
+    {
+        return $this->salesNoteDetails;
+    }
+
+    /**
+     * Set salesBudget
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudget
+     * @return SalesNote
+     */
+    public function setSalesBudget(\AppBundle\Entity\SalesBudget $salesBudget = null)
+    {
+        $this->salesBudget = $salesBudget;
+
+        return $this;
+    }
+
+    /**
+     * Get salesBudget
+     *
+     * @return \AppBundle\Entity\SalesBudget 
+     */
+    public function getSalesBudget()
+    {
+        return $this->salesBudget;
+    }
 }

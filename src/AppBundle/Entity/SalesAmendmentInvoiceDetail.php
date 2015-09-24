@@ -125,4 +125,27 @@ class SalesAmendmentInvoiceDetail
     {
         return $this->quantity;
     }
+
+    /**
+     * Set salesAmendmentInvoice
+     *
+     * @param \AppBundle\Entity\salesAmendmentInvoice $salesAmendmentInvoice
+     * @return SalesAmendmentInvoiceDetail
+     */
+    public function setSalesAmendmentInvoice(\AppBundle\Entity\salesAmendmentInvoice $salesAmendmentInvoice = null)
+    {
+        $this->salesAmendmentInvoice = $salesAmendmentInvoice;
+
+        return $this;
+    }
+
+    /**
+     * Get salesAmendmentInvoice
+     *
+     * @return \AppBundle\Entity\salesAmendmentInvoice 
+     */
+    public function getSalesAmendmentInvoice()
+    {
+        return $this->salesAmendmentInvoice;
+    }
 }
