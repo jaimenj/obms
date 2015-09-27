@@ -1,15 +1,13 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
 {% block mainarea -%}
-    <h1>SalesNote creation</h1>
 
-    {{ form(form) }}
+<h1>Sales note creation</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('salesnote') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{{ form(form) }}
+
+<a class="btn btn-default" href="{{ path('salesnote') }}">
+	Back to the list
+</a>
+
 {% endblock %}
