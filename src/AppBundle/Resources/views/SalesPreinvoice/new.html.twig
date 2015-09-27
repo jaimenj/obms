@@ -1,0 +1,13 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block mainarea -%}
+
+<h1>Sales preinvoice creation</h1>
+
+{{ form(form) }}
+
+<a class="btn btn-default" href="{{ path('salespreinvoice') }}">
+	Back to the list
+</a>
+
+{% endblock %}

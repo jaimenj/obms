@@ -14,17 +14,17 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * SalesNoteDetail
+ * SalesAmendmentInvoiceDetail
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesNoteDetailRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\SalesAmendmentInvoiceDetailRepository")
  */
-class SalesNoteDetail
+class SalesAmendmentInvoiceDetail
 {
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -33,28 +33,28 @@ class SalesNoteDetail
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="concept", type="string", length=255)
      */
     private $concept;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(name="price", type="decimal")
      */
     private $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(name="quantity", type="decimal")
      */
     private $quantity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SalesNote", inversedBy="salesNoteDetails")
+     * @ORM\ManyToOne(targetEntity="salesAmendmentInvoice", inversedBy="salesAmendmentInvoiceDetails")
      */
-    private $salesNote;
+    private $salesAmendmentInvoice;
 
     /**
      * Get id
@@ -70,7 +70,7 @@ class SalesNoteDetail
      * Set concept
      *
      * @param string $concept
-     * @return SalesNoteDetail
+     * @return SalesAmendmentInvoiceDetail
      */
     public function setConcept($concept)
     {
@@ -93,7 +93,7 @@ class SalesNoteDetail
      * Set price
      *
      * @param string $price
-     * @return SalesNoteDetail
+     * @return SalesAmendmentInvoiceDetail
      */
     public function setPrice($price)
     {
@@ -116,7 +116,7 @@ class SalesNoteDetail
      * Set quantity
      *
      * @param string $quantity
-     * @return SalesNoteDetail
+     * @return SalesAmendmentInvoiceDetail
      */
     public function setQuantity($quantity)
     {
@@ -136,25 +136,25 @@ class SalesNoteDetail
     }
 
     /**
-     * Set salesNote
+     * Set salesAmendmentInvoice
      *
-     * @param \AppBundle\Entity\SalesNote $salesNote
-     * @return SalesNoteDetail
+     * @param \AppBundle\Entity\salesAmendmentInvoice $salesAmendmentInvoice
+     * @return SalesAmendmentInvoiceDetail
      */
-    public function setSalesNote(\AppBundle\Entity\SalesNote $salesNote = null)
+    public function setSalesAmendmentInvoice(\AppBundle\Entity\salesAmendmentInvoice $salesAmendmentInvoice = null)
     {
-        $this->salesNote = $salesNote;
+        $this->salesAmendmentInvoice = $salesAmendmentInvoice;
 
         return $this;
     }
 
     /**
-     * Get salesNote
+     * Get salesAmendmentInvoice
      *
-     * @return \AppBundle\Entity\SalesNote 
+     * @return \AppBundle\Entity\salesAmendmentInvoice 
      */
-    public function getSalesNote()
+    public function getSalesAmendmentInvoice()
     {
-        return $this->salesNote;
+        return $this->salesAmendmentInvoice;
     }
 }

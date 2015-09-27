@@ -51,6 +51,10 @@ class SalesBudgetDetail
      */
     private $quantity;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="SalesBudget", inversedBy="salesBudgetDetails")
+     */
+    private $salesBudget;
 
     /**
      * Get id
@@ -129,5 +133,28 @@ class SalesBudgetDetail
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * Set salesBudget
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudget
+     * @return SalesBudgetDetail
+     */
+    public function setSalesBudget(\AppBundle\Entity\SalesBudget $salesBudget = null)
+    {
+        $this->salesBudget = $salesBudget;
+
+        return $this;
+    }
+
+    /**
+     * Get salesBudget
+     *
+     * @return \AppBundle\Entity\SalesBudget 
+     */
+    public function getSalesBudget()
+    {
+        return $this->salesBudget;
     }
 }

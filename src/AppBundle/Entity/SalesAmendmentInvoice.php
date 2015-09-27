@@ -45,6 +45,21 @@ class SalesAmendmentInvoice
     private $date;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Business", inversedBy="salesAmendmentInvoices")
+     */
+    private $business;
+
+    /**
+     * @ORM\OneToOne(targetEntity="SalesInvoice", mappedBy="salesAmendmentInvoice")
+     */
+    private $salesInvoice;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesAmendmentInvoiceDetail", mappedBy="salesAmendmentInvoice", cascade="remove")
+     */
+    private $salesAmendmentInvoiceDetails;
+
+    /**
      * Get id.
      *
      * @return int
@@ -100,5 +115,91 @@ class SalesAmendmentInvoice
     public function getDate()
     {
         return $this->date;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->salesAmendmentInvoiceDetails = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set business
+     *
+     * @param \AppBundle\Entity\Business $business
+     * @return SalesAmendmentInvoice
+     */
+    public function setBusiness(\AppBundle\Entity\Business $business = null)
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    /**
+     * Get business
+     *
+     * @return \AppBundle\Entity\Business 
+     */
+    public function getBusiness()
+    {
+        return $this->business;
+    }
+
+    /**
+     * Set salesInvoice
+     *
+     * @param \AppBundle\Entity\SalesInvoice $salesInvoice
+     * @return SalesAmendmentInvoice
+     */
+    public function setSalesInvoice(\AppBundle\Entity\SalesInvoice $salesInvoice = null)
+    {
+        $this->salesInvoice = $salesInvoice;
+
+        return $this;
+    }
+
+    /**
+     * Get salesInvoice
+     *
+     * @return \AppBundle\Entity\SalesInvoice 
+     */
+    public function getSalesInvoice()
+    {
+        return $this->salesInvoice;
+    }
+
+    /**
+     * Add salesAmendmentInvoiceDetails
+     *
+     * @param \AppBundle\Entity\SalesAmendmentInvoiceDetail $salesAmendmentInvoiceDetails
+     * @return SalesAmendmentInvoice
+     */
+    public function addSalesAmendmentInvoiceDetail(\AppBundle\Entity\SalesAmendmentInvoiceDetail $salesAmendmentInvoiceDetails)
+    {
+        $this->salesAmendmentInvoiceDetails[] = $salesAmendmentInvoiceDetails;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesAmendmentInvoiceDetails
+     *
+     * @param \AppBundle\Entity\SalesAmendmentInvoiceDetail $salesAmendmentInvoiceDetails
+     */
+    public function removeSalesAmendmentInvoiceDetail(\AppBundle\Entity\SalesAmendmentInvoiceDetail $salesAmendmentInvoiceDetails)
+    {
+        $this->salesAmendmentInvoiceDetails->removeElement($salesAmendmentInvoiceDetails);
+    }
+
+    /**
+     * Get salesAmendmentInvoiceDetails
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalesAmendmentInvoiceDetails()
+    {
+        return $this->salesAmendmentInvoiceDetails;
     }
 }

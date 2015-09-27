@@ -82,6 +82,21 @@ class Business
     private $salesNotes;
 
     /**
+     * @ORM\OneToMany(targetEntity="SalesOrder", mappedBy="business", cascade="remove")
+     */
+    private $salesOrders;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesBudget", mappedBy="business", cascade="remove")
+     */
+    private $salesBudgets;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SalesAmendmentInvoice", mappedBy="business", cascade="remove")
+     */
+    private $salesAmendmentInvoices;
+
+    /**
      * Get id.
      *
      * @return int
@@ -449,5 +464,137 @@ class Business
     public function getWorkerPayrolls()
     {
         return $this->workerPayrolls;
+    }
+
+    /**
+     * Add salesNotes
+     *
+     * @param \AppBundle\Entity\SalesNote $salesNotes
+     * @return Business
+     */
+    public function addSalesNote(\AppBundle\Entity\SalesNote $salesNotes)
+    {
+        $this->salesNotes[] = $salesNotes;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesNotes
+     *
+     * @param \AppBundle\Entity\SalesNote $salesNotes
+     */
+    public function removeSalesNote(\AppBundle\Entity\SalesNote $salesNotes)
+    {
+        $this->salesNotes->removeElement($salesNotes);
+    }
+
+    /**
+     * Get salesNotes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalesNotes()
+    {
+        return $this->salesNotes;
+    }
+
+    /**
+     * Add salesOrders
+     *
+     * @param \AppBundle\Entity\SalesOrder $salesOrders
+     * @return Business
+     */
+    public function addSalesOrder(\AppBundle\Entity\SalesOrder $salesOrders)
+    {
+        $this->salesOrders[] = $salesOrders;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesOrders
+     *
+     * @param \AppBundle\Entity\SalesOrder $salesOrders
+     */
+    public function removeSalesOrder(\AppBundle\Entity\SalesOrder $salesOrders)
+    {
+        $this->salesOrders->removeElement($salesOrders);
+    }
+
+    /**
+     * Get salesOrders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalesOrders()
+    {
+        return $this->salesOrders;
+    }
+
+    /**
+     * Add salesBudgets
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudgets
+     * @return Business
+     */
+    public function addSalesBudget(\AppBundle\Entity\SalesBudget $salesBudgets)
+    {
+        $this->salesBudgets[] = $salesBudgets;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesBudgets
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudgets
+     */
+    public function removeSalesBudget(\AppBundle\Entity\SalesBudget $salesBudgets)
+    {
+        $this->salesBudgets->removeElement($salesBudgets);
+    }
+
+    /**
+     * Get salesBudgets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalesBudgets()
+    {
+        return $this->salesBudgets;
+    }
+
+    /**
+     * Add salesAmendmentInvoices
+     *
+     * @param \AppBundle\Entity\SalesAmendmentInvoice $salesAmendmentInvoices
+     * @return Business
+     */
+    public function addSalesAmendmentInvoice(\AppBundle\Entity\SalesAmendmentInvoice $salesAmendmentInvoices)
+    {
+        $this->salesAmendmentInvoices[] = $salesAmendmentInvoices;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesAmendmentInvoices
+     *
+     * @param \AppBundle\Entity\SalesAmendmentInvoice $salesAmendmentInvoices
+     */
+    public function removeSalesAmendmentInvoice(\AppBundle\Entity\SalesAmendmentInvoice $salesAmendmentInvoices)
+    {
+        $this->salesAmendmentInvoices->removeElement($salesAmendmentInvoices);
+    }
+
+    /**
+     * Get salesAmendmentInvoices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalesAmendmentInvoices()
+    {
+        return $this->salesAmendmentInvoices;
     }
 }

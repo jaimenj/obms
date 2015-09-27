@@ -44,6 +44,15 @@ class SalesInvoice
      */
     private $date;
 
+    /**
+     * @ORM\OneToOne(targetEntity="SalesBudget", mappedBy="salesInvoice")
+     */
+    private $salesBudget;
+
+    /**
+     * @ORM\OneToOne(targetEntity="SalesAmendmentInvoice", inversedBy="salesInvoice")
+     */
+    private $salesAmendmentInvoice;
 
     /**
      * Get id
@@ -99,5 +108,51 @@ class SalesInvoice
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set salesBudget
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudget
+     * @return SalesInvoice
+     */
+    public function setSalesBudget(\AppBundle\Entity\SalesBudget $salesBudget = null)
+    {
+        $this->salesBudget = $salesBudget;
+
+        return $this;
+    }
+
+    /**
+     * Get salesBudget
+     *
+     * @return \AppBundle\Entity\SalesBudget 
+     */
+    public function getSalesBudget()
+    {
+        return $this->salesBudget;
+    }
+
+    /**
+     * Set salesAmendmentInvoice
+     *
+     * @param \AppBundle\Entity\SalesAmendmentInvoice $salesAmendmentInvoice
+     * @return SalesInvoice
+     */
+    public function setSalesAmendmentInvoice(\AppBundle\Entity\SalesAmendmentInvoice $salesAmendmentInvoice = null)
+    {
+        $this->salesAmendmentInvoice = $salesAmendmentInvoice;
+
+        return $this;
+    }
+
+    /**
+     * Get salesAmendmentInvoice
+     *
+     * @return \AppBundle\Entity\SalesAmendmentInvoice 
+     */
+    public function getSalesAmendmentInvoice()
+    {
+        return $this->salesAmendmentInvoice;
     }
 }

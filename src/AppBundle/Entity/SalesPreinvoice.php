@@ -45,6 +45,11 @@ class SalesPreinvoice
     private $date;
 
     /**
+     * @ORM\OneToOne(targetEntity="SalesBudget", mappedBy="salesPreinvoice")
+     */
+    private $salesBudget;
+
+    /**
      * Get id.
      *
      * @return int
@@ -100,5 +105,28 @@ class SalesPreinvoice
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set salesBudget
+     *
+     * @param \AppBundle\Entity\SalesBudget $salesBudget
+     * @return SalesPreinvoice
+     */
+    public function setSalesBudget(\AppBundle\Entity\SalesBudget $salesBudget = null)
+    {
+        $this->salesBudget = $salesBudget;
+
+        return $this;
+    }
+
+    /**
+     * Get salesBudget
+     *
+     * @return \AppBundle\Entity\SalesBudget 
+     */
+    public function getSalesBudget()
+    {
+        return $this->salesBudget;
     }
 }

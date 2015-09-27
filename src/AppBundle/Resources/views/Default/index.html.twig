@@ -2,21 +2,110 @@
 
 {% block mainarea %}
 
-<p>Here is the home page of the app zone!
-Nowadays it is all to do, don't wait too much right now.</p>
+<p>Here is the home page of the app zone! Nowadays it is all to do, don't wait too much right now.</p>
 
+<div class="row">
+	<div class="col-lg-2 col-md-3">
 
+		<div class="panel panel-default">
+			<div class="panel-heading">Status</div>
+			<ul class="list-group">
+				<li class="list-group-item">Businesses:
+					{{ app.user.businesses.count }}</li>
 
-<div class="panel panel-default">
-  <div class="panel-heading">Status</div>
-  <ul class="list-group">
-	<li class="list-group-item">Third types: {{ counters['nthirdtypes'] }}</li>
-	<li class="list-group-item">Thirds: {{ counters['nthirds'] }}</li>
-  </ul>
-  <div class="panel-body">
-    <p>...</p>
-  </div>
+			</ul>
+		</div>
 
+		<div class="panel panel-default">
+			<div class="panel-heading">Thirds</div>
+			<ul class="list-group">
+				<li class="list-group-item">Third types:
+					{{ counters['nthirdtypes'] }}</li>
+				<li class="list-group-item">Thirds:
+					{{ counters['nthirds'] }}</li>
+			</ul>
+		</div>
+
+	</div>
+	<div class="col-lg-2 col-md-3">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Human resources</div>
+			<ul class="list-group">
+				<li class="list-group-item">Workers:
+					{{ null }}</li>
+
+				<li class="list-group-item">Payrolls:
+					{{ null }}</li>
+
+				<li class="list-group-item">Hollidays:
+					{{ null }}</li>
+
+				<li class="list-group-item">Downs:
+					{{ null }}</li>
+			</ul>
+		</div>
+
+	</div>
+	<div class="col-lg-2 col-md-3">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Shopping</div>
+			<ul class="list-group">
+				<li class="list-group-item">Orders:
+					{{ null }}</li>
+				<li class="list-group-item">Notes:
+					{{ null }}</li>
+				<li class="list-group-item">Invoices:
+					{{ null }}</li>
+			</ul>
+		</div>
+
+	</div>
+	<div class="col-lg-2 col-md-3">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Storage</div>
+			<ul class="list-group">
+				<li class="list-group-item">Products:
+					{{ null }}</li>
+				<li class="list-group-item">Families:
+					{{ null }}</li>
+				<li class="list-group-item">Stores:
+					{{ null }}</li>
+				<li class="list-group-item">Stocks:
+					{{ null }}</li>
+				<li class="list-group-item">Stock controls:
+					{{ null }}</li>
+				<li class="list-group-item">Regularizations:
+					{{ null }}</li>
+			</ul>
+		</div>
+
+	</div>
+	<div class="col-lg-2 col-md-3">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Sales</div>
+			<ul class="list-group">
+				<li class="list-group-item">Notes:
+					{{ null }}</li>
+				<li class="list-group-item">Orders:
+					{{ null }}</li>
+				<li class="list-group-item">Budgets:
+					{{ null }}</li>
+				<li class="list-group-item">Pre-invoices:
+					{{ null }}</li>
+				<li class="list-group-item">Invoices:
+					{{ null }}</li>
+				<li class="list-group-item">Amendment invoices:
+					{{ null }}</li>
+			</ul>
+		</div>
+
+	</div>
+	<div class="col-lg-2 col-md-3"></div>
+	<div class="col-lg-2 col-md-3"></div>
 </div>
 
 {% endblock %}

@@ -101,7 +101,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuShopping" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/shopping/' ? ' in' }}" id="menuShopping" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Orders</a>
 						</li>
@@ -124,7 +124,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuStore" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/storage/' ? ' in' }}" id="menuStore" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Products</a>
 						</li>
@@ -156,24 +156,24 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuSales" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/sales/' ? ' in' }}" id="menuSales" role="tabpanel">
 						<li class="list-group-item">
-							<a href="#">Notes</a>
+							<a href="{{ path('salesnote') }}">Notes</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Orders</a>
+							<a href="{{ path('salesorder') }}">Orders</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Budgets</a>
+							<a href="{{ path('salesbudget') }}">Budgets</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Pre-invoice</a>
+							<a href="{{ path('salespreinvoice') }}">Pre-invoice</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Invoice</a>
+							<a href="{{ path('salesinvoice') }}">Invoice</a>
 						</li>
 						<li class="list-group-item">
-							<a href="#">Amendment invoice</a>
+							<a href="{{ path('salesamendmentinvoice') }}">Amendment invoice</a>
 						</li>
 					</ul>
 				</div>
@@ -188,7 +188,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuAccounting" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/accouting/' ? ' in' }}" id="menuAccounting" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Journal</a>
 						</li>
@@ -214,7 +214,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuProduction" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/production/' ? ' in' }}" id="menuProduction" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Materials</a>
 						</li>
@@ -237,7 +237,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuLogistics" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/logistics/' ? ' in' }}" id="menuLogistics" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Agency</a>
 						</li>
@@ -257,7 +257,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuPlanification" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/planification/' ? ' in' }}" id="menuPlanification" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Projects</a>
 						</li>
@@ -277,7 +277,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuProcessControl" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/processcontrol/' ? ' in' }}" id="menuProcessControl" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Processes</a>
 						</li>
@@ -313,7 +313,7 @@
 							</a>
 						</h4>
 					</div>
-					<ul class="list-group panel-collapse collapse" id="menuIntelligence" role="tabpanel">
+					<ul class="list-group panel-collapse collapse{{ app.request.get('_route') matches '/intelligence/' ? ' in' }}" id="menuIntelligence" role="tabpanel">
 						<li class="list-group-item">
 							<a href="#">Thirds</a>
 						</li>

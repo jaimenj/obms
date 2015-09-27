@@ -1,0 +1,46 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block mainarea -%}
+
+<h1>Sales invoices</h1>
+
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Reference</th>
+				<th>Date</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+			<tr>
+				<td>
+					<a href="{{ path('salesinvoice_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
+				</td>
+				<td>{{ entity.reference }}</td>
+				<td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
+				<td>
+
+					<a class="btn btn-default" href="{{ path('salesinvoice_show', { 'id': entity.id }) }}">
+						<i class="fa fa-eye"></i>
+					</a>
+
+					<a class="btn btn-default" href="{{ path('salesinvoice_edit', { 'id': entity.id }) }}">
+						<i class="fa fa-edit"></i>
+					</a>
+
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+<a class="btn btn-default" href="{{ path('salesinvoice_new') }}">
+	Create a new entry
+</a>
+
+{% endblock %}

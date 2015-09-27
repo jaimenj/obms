@@ -26,13 +26,13 @@
 				<div class="form-group">
 					<label class=" control-label col-lg-3 control-label required" for="form__username">Username</label>
 					<div class="col-lg-9">
-						<input class="form-control" id="username" name="_username" required="required" type="text" value="{{ not last_username ? 'user' }}"/>
+						<input class="form-control" id="username" name="_username" required="required" type="text" value="{{ app.environment != 'prod' ? 'user' }}"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class=" control-label col-lg-3 control-label required" for="form__password">Password</label>
 					<div class="col-lg-9">
-						<input class="form-control" id="password" name="_password" required="required" type="password" value="thepass"/>
+						<input class="form-control" id="password" name="_password" required="required" type="password" value="{{ app.environment != 'prod' ? 'thepass' }}"/>
 					</div>
 				</div>
 				<div>

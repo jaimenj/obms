@@ -1,0 +1,13 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block mainarea -%}
+
+<h1>Sales budget creation</h1>
+
+{{ form(form) }}
+
+<a class="btn btn-default" href="{{ path('salesbudget') }}">
+	Back to the list
+</a>
+
+{% endblock %}
