@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MainBundle\Tests\Controller;
+namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -20,7 +20,7 @@ class AppControllerTest extends WebTestCase
         exec('php app/console doctrine:fixtures:load --no-interaction --env=test');
         exec('php app/console sample:data --env=test');
     }
-    
+
     public function testIndex()
     {
         $client = static::createClient(array(), array(

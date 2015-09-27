@@ -26,7 +26,7 @@ class NotificationRepository extends \Doctrine\ORM\EntityRepository {
 	public function findAll() {
 		$manager = $this->getEntityManager ();
 
-		$dql = "SELECT n FROM BackBundle:Notificacion n ORDER BY n.fecha asc";
+		$dql = "SELECT n FROM AdministrationBundle:Notificacion n ORDER BY n.fecha asc";
 		$result = $manager->createQuery ( $dql )->getResult ();
 
 		return $result;
