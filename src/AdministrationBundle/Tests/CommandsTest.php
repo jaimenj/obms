@@ -18,6 +18,11 @@ namespace AdministrationBundle\Tests;
   */
  class CommandsTest extends CommandTestCase
  {
+     public function setUp()
+     {
+         exec('php app/console doctrine:fixtures:load --no-interaction --env=test');
+     }
+
      public function testDefaultDoesNotInstall()
      {
          $client = self::createClient();
