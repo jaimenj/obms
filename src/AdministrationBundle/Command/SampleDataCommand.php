@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of The OBMS project: https://github.com/obms/obms
+ * This file is part of The OBMS project: https://github.com/obms/obms.
  *
  * Copyright (c) Jaime Niñoles-Manzanera Jimeno.
  *
@@ -25,6 +25,16 @@ use AppBundle\Entity\Worker;
 use AppBundle\Entity\WorkerPayroll;
 use AppBundle\Entity\WorkerHolliday;
 use AppBundle\Entity\WorkerDown;
+use AppBundle\Entity\SalesNote;
+use AppBundle\Entity\SalesNoteDetail;
+use AppBundle\Entity\SalesOrder;
+use AppBundle\Entity\SalesOrderDetail;
+use AppBundle\Entity\SalesBudget;
+use AppBundle\Entity\SalesBudgetDetail;
+use AppBundle\Entity\SalesPreinvoice;
+use AppBundle\Entity\SalesInvoice;
+use AppBundle\Entity\SalesAmendmentInvoice;
+use AppBundle\Entity\SalesAmendmentInvoiceDetail;
 
 class SampleDataCommand extends ContainerAwareCommand
 {
@@ -39,13 +49,45 @@ class SampleDataCommand extends ContainerAwareCommand
     {
         $argument = $input->getArgument('argument');
 
-        $loremipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in tempor risus. Morbi urna purus, consectetur in varius a, volutpat vel massa. Curabitur sit amet nibh porttitor, ornare nulla at, faucibus sem. In mollis semper massa, non tempor leo tristique in. Donec commodo justo scelerisque, elementum lectus gravida, aliquet neque. Morbi at mi tellus. Suspendisse elementum, felis a aliquet vehicula, nibh tellus ultricies dui, ac sagittis dui dui vel ante. Mauris eu accumsan velit. Aenean at ultricies massa, a dignissim dui. Suspendisse ut lectus fermentum, interdum lectus non, bibendum turpis.';
-        $loremipsum .= 'Phasellus suscipit blandit mauris in ultrices. Sed est ipsum, aliquam a ultrices ut, finibus vel nisi. Nulla imperdiet quam vel magna consectetur, nec pharetra metus cursus. Suspendisse mollis id ligula scelerisque hendrerit. Nunc dignissim eleifend mollis. Maecenas sed pulvinar neque. Suspendisse sed mauris dictum, ultricies justo nec, lobortis risus. Nam tellus massa, varius fringilla iaculis ac, mattis vitae est. Duis dictum mauris non nisl tristique aliquet.';
-        $loremipsum .= 'Aenean at mattis urna, eu lacinia velit. Maecenas malesuada eget tortor sed feugiat. Vestibulum at diam orci. Nulla sem ipsum, mattis a tellus eget, mollis tempus arcu. Duis viverra augue eget nunc semper, sed viverra mauris elementum. Nullam et quam neque. Sed sodales porta eros vitae eleifend.';
-        $loremipsum .= 'Vivamus id tortor vitae nibh dictum volutpat. Integer auctor dolor sit amet hendrerit tincidunt. Cras finibus congue urna lobortis rutrum. Ut feugiat elit ac diam efficitur, ac feugiat tortor sollicitudin. Vestibulum in odio eget mi suscipit sollicitudin et bibendum urna. Nulla quis ipsum maximus, vulputate magna eu, ultricies nibh. Nam blandit massa eget arcu mollis, vel congue augue malesuada. Pellentesque sit amet elementum dolor, nec gravida sapien. Etiam egestas lorem quis tellus vulputate placerat quis fringilla est. Donec eu lectus ac enim iaculis fermentum. Vestibulum ante felis, commodo id ullamcorper pretium, pharetra tristique odio. Nulla facilisi. Pellentesque ut nisi sollicitudin, convallis augue id, gravida risus. Quisque at convallis est. Donec ut urna pulvinar, finibus tortor vel, aliquam eros. Suspendisse consectetur convallis enim, vel dapibus lacus congue vel.';
-        $loremipsum .= 'Integer volutpat turpis sed leo accumsan tempor. Integer eget venenatis purus. Nunc malesuada pulvinar semper. Proin eu nibh ligula. Proin lorem nulla, eleifend ut leo a, aliquam cursus orci. Nam est dui, rutrum sit amet nisl nec, fringilla rhoncus turpis. Cras porta fermentum ornare. Proin non porttitor nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut nec lacus semper, sagittis sapien ac, consequat sem.';
+        $loremipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in tempor risus. '
+        .'Morbi urna purus, consectetur in varius a, volutpat vel massa. Curabitur sit amet nibh porttitor, '
+        .'ornare nulla at, faucibus sem. In mollis semper massa, non tempor leo tristique in. Donec commodo '
+        .'justo scelerisque, elementum lectus gravida, aliquet neque. Morbi at mi tellus. Suspendisse '
+        .'elementum, felis a aliquet vehicula, nibh tellus ultricies dui, ac sagittis dui dui vel ante. '
+        .'Mauris eu accumsan velit. Aenean at ultricies massa, a dignissim dui. Suspendisse ut lectus '
+        .'fermentum, interdum lectus non, bibendum turpis.';
+        $loremipsum .= 'Phasellus suscipit blandit mauris in ultrices. Sed est ipsum, aliquam a ultrices ut, '
+        .'finibus vel nisi. Nulla imperdiet quam vel magna consectetur, nec pharetra metus cursus. Suspendisse '
+        .'mollis id ligula scelerisque hendrerit. Nunc dignissim eleifend mollis. Maecenas sed pulvinar neque. '
+        .'Suspendisse sed mauris dictum, ultricies justo nec, lobortis risus. Nam tellus massa, varius '
+        .'fringilla iaculis ac, mattis vitae est. Duis dictum mauris non nisl tristique aliquet.';
+        $loremipsum .= 'Aenean at mattis urna, eu lacinia velit. Maecenas malesuada eget tortor sed feugiat. '
+        .'Vestibulum at diam orci. Nulla sem ipsum, mattis a tellus eget, mollis tempus arcu. Duis viverra '
+        .'augue eget nunc semper, sed viverra mauris elementum. Nullam et quam neque. Sed sodales porta eros '
+        .'vitae eleifend.';
+        $loremipsum .= 'Vivamus id tortor vitae nibh dictum volutpat. Integer auctor dolor sit amet hendrerit '
+        .'tincidunt. Cras finibus congue urna lobortis rutrum. Ut feugiat elit ac diam efficitur, ac feugiat '
+        .'tortor sollicitudin. Vestibulum in odio eget mi suscipit sollicitudin et bibendum urna. Nulla quis '
+        .'ipsum maximus, vulputate magna eu, ultricies nibh. Nam blandit massa eget arcu mollis, vel congue '
+        .'augue malesuada. Pellentesque sit amet elementum dolor, nec gravida sapien. Etiam egestas lorem quis '
+        .'tellus vulputate placerat quis fringilla est. Donec eu lectus ac enim iaculis fermentum. Vestibulum '
+        .'ante felis, commodo id ullamcorper pretium, pharetra tristique odio. Nulla facilisi. Pellentesque ut '
+        .'nisi sollicitudin, convallis augue id, gravida risus. Quisque at convallis est. Donec ut urna '
+        .'pulvinar, finibus tortor vel, aliquam eros. Suspendisse consectetur convallis enim, vel dapibus '
+        .'lacus congue vel.';
+        $loremipsum .= 'Integer volutpat turpis sed leo accumsan tempor. Integer eget venenatis purus. Nunc '
+        .'malesuada pulvinar semper. Proin eu nibh ligula. Proin lorem nulla, eleifend ut leo a, aliquam cursus '
+        .'orci. Nam est dui, rutrum sit amet nisl nec, fringilla rhoncus turpis. Cras porta fermentum ornare. '
+        .'Proin non porttitor nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per '
+        .'inceptos himenaeos. Ut nec lacus semper, sagittis sapien ac, consequat sem.';
 
-        $loremipsumshort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in tempor risus. Morbi urna purus, consectetur in varius a, volutpat vel massa. Curabitur sit amet nibh porttitor, ornare nulla at, faucibus sem. In mollis semper massa, non tempor leo tristique in. Donec commodo justo scelerisque, elementum lectus gravida, aliquet neque. Morbi at mi tellus. Suspendisse elementum, felis a aliquet vehicula, nibh tellus ultricies dui, ac sagittis dui dui vel ante. Mauris eu accumsan velit. Aenean at ultricies massa, a dignissim dui. Suspendisse ut lectus fermentum, interdum lectus non, bibendum turpis.';
+        $loremipsumshort = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in tempor risus. '
+        .'Morbi urna purus, consectetur in varius a, volutpat vel massa. Curabitur sit amet nibh porttitor, '
+        .'ornare nulla at, faucibus sem. In mollis semper massa, non tempor leo tristique in. Donec commodo '
+        .'justo scelerisque, elementum lectus gravida, aliquet neque. Morbi at mi tellus. Suspendisse elementum, '
+        .'felis a aliquet vehicula, nibh tellus ultricies dui, ac sagittis dui dui vel ante. Mauris eu accumsan '
+        .'velit. Aenean at ultricies massa, a dignissim dui. Suspendisse ut lectus fermentum, interdum lectus '
+        .'non, bibendum turpis.';
 
         $manager = $this->getContainer()->get('doctrine')->getManager();
 
@@ -90,6 +132,7 @@ class SampleDataCommand extends ContainerAwareCommand
                 }
                 $manager->persist($newBusiness);
 
+                // THIRDS //////////////////////////////////////////////////////////////////////
                 $newThirdType = new ThirdType();
                 $newThirdType->setName('Third type '.$i);
                 $newThirdType->setBusiness($newBusiness);
@@ -105,6 +148,7 @@ class SampleDataCommand extends ContainerAwareCommand
                 $newThird->setBusiness($newBusiness);
                 $manager->persist($newThird);
 
+                // HUMAN RESOURCES //////////////////////////////////////////////////////////////////////
                 $newWorker = new Worker();
                 $newWorker->setFullname('Worker '.$i);
                 $newWorker->setTelephone('Telephone '.$i);
@@ -130,6 +174,93 @@ class SampleDataCommand extends ContainerAwareCommand
                 $newDown->setInitdate(new \DateTime('now'));
                 $newDown->setFinishdate(new \DateTime('now'));
                 $manager->persist($newDown);
+
+                // SHOPPING //////////////////////////////////////////////////////////////////////
+                // STORAGE //////////////////////////////////////////////////////////////////////
+                // SALES //////////////////////////////////////////////////////////////////////
+                $newSalesNote = new SalesNote();
+                $newSalesNote->setDate(new \DateTime('now'));
+                $newSalesNote->setBusiness($newBusiness);
+                $newSalesNote->setReference('N'.$i);
+                $newSalesNote->setDescription('Description '.$i);
+                $manager->persist($newSalesNote);
+
+                for ($j = 1; $j <= 3; $j++) {
+                    $newSalesNoteDetail = new SalesNoteDetail();
+                    $newSalesNoteDetail->setPrice($i + $j/100);
+                    $newSalesNoteDetail->setConcept('Concept '.$i);
+                    $newSalesNoteDetail->setQuantity($j);
+                    $newSalesNoteDetail->setSalesNote($newSalesNote);
+                    $manager->persist($newSalesNoteDetail);
+                }
+
+                $newSalesOrder = new SalesOrder();
+                $newSalesOrder->setDate(new \DateTime('now'));
+                $newSalesOrder->setBusiness($newBusiness);
+                $newSalesOrder->setReference('O'.$i);
+                $newSalesOrder->setDescription('Description '.$i);
+                $manager->persist($newSalesOrder);
+
+                for ($j = 1; $j <= 3; $j++) {
+                    $newSalesOrderDetail = new SalesOrderDetail();
+                    $newSalesOrderDetail->setPrice($i + $j/100);
+                    $newSalesOrderDetail->setConcept('Concept '.$i);
+                    $newSalesOrderDetail->setQuantity($j);
+                    $newSalesOrderDetail->setSalesOrder($newSalesOrder);
+                    $manager->persist($newSalesOrderDetail);
+                }
+
+                $newSalesBudget = new SalesBudget();
+                $newSalesBudget->setDate(new \DateTime('now'));
+                $newSalesBudget->setBusiness($newBusiness);
+                $newSalesBudget->setReference('B'.$i);
+                $newSalesBudget->setDescription('Description '.$i);
+                $manager->persist($newSalesBudget);
+
+                for ($j = 1; $j <= 3; $j++) {
+                    $newSalesBudgetDetail = new SalesBudgetDetail();
+                    $newSalesBudgetDetail->setPrice($i + $j/100);
+                    $newSalesBudgetDetail->setConcept('Concept '.$i);
+                    $newSalesBudgetDetail->setQuantity($j);
+                    $newSalesBudgetDetail->setSalesBudget($newSalesBudget);
+                    $manager->persist($newSalesBudgetDetail);
+                }
+
+                $newSalesPreinvoice = new SalesPreinvoice();
+                $newSalesPreinvoice->setDate(new \DateTime('now'));
+                $newSalesPreinvoice->setSalesBudget($newSalesBudget);
+                $newSalesPreinvoice->setReference('PI'.$i);
+                $manager->persist($newSalesPreinvoice);
+
+                $newSalesInvoice = new SalesInvoice();
+                $newSalesInvoice->setDate(new \DateTime('now'));
+                $newSalesInvoice->setSalesBudget($newSalesBudget);
+                $newSalesInvoice->setReference('I'.$i);
+                $manager->persist($newSalesInvoice);
+
+                $newSalesAmendmentInvoice = new SalesAmendmentInvoice();
+                $newSalesAmendmentInvoice->setDate(new \DateTime('now'));
+                $newSalesAmendmentInvoice->setBusiness($newBusiness);
+                $newSalesAmendmentInvoice->setSalesInvoice($newSalesInvoice);
+                $newSalesAmendmentInvoice->setReference('R'.$i);
+                $manager->persist($newSalesAmendmentInvoice);
+
+                for ($j = 1; $j <= 3; $j++) {
+                    $newSalesAmendmentInvoiceDetail = new SalesAmendmentInvoiceDetail();
+                    $newSalesAmendmentInvoiceDetail->setPrice($i + $j/100);
+                    $newSalesAmendmentInvoiceDetail->setConcept('Concept '.$i);
+                    $newSalesAmendmentInvoiceDetail->setQuantity($j);
+                    $newSalesAmendmentInvoiceDetail->setSalesAmendmentInvoice($newSalesAmendmentInvoice);
+                    $manager->persist($newSalesAmendmentInvoiceDetail);
+                }
+
+                // ACCOUNTING //////////////////////////////////////////////////////////////////////
+                // PRODUCTION //////////////////////////////////////////////////////////////////////
+                // LOGISTICS //////////////////////////////////////////////////////////////////////
+                // PLANIFICATION //////////////////////////////////////////////////////////////////////
+                // PROCESS CONTROL //////////////////////////////////////////////////////////////////////
+                // DOCUMENTS //////////////////////////////////////////////////////////////////////
+                // INTELLIGENCE //////////////////////////////////////////////////////////////////////
             }
         }
 
