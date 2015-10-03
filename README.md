@@ -11,9 +11,7 @@ Licensed under the MIT license.
 
 ## Development Requirements
 
-Developed with Composer, Bower, PHP, Apache2 and MariaDB.
-It's probably compatible with HHVM, the feedback will be welcomed.
-Compatible with Doctrine compatible databases.
+Developed with Composer, Bower, PHP, Apache2 and Doctrine compatible database.
 
 ## Main structure and functionality
 
@@ -35,28 +33,56 @@ REST API development.
 Here is where access to the application is managed. Administrators may create
 other administrator, as well as users.
 
-## Installation
+## Manual installation
 
 You need to install globally Composer and Bower for libraries management, both client and server libraries.
+You also need Apache2, PHP, Mysql or other compatible database with Doctrine databases.
 
-Clone it, and execute this:
+Later clone and deploy in your local machine, execute this:
 
-	$ git clone git@github.com:obms/obms.git
-	$ composer install --prefer-dist
-	$ bower update
-	$ php app/console doctrine:database:create
-	$ php app/console doctrine:schema:create
-	$ php app/console doctrine:fixtures:load
+    $ git clone git@github.com:obms/obms.git
+    $ composer install --prefer-dist
+    $ bower update
+    $ php app/console doctrine:database:create
+    $ php app/console doctrine:schema:create
+    $ php app/console doctrine:fixtures:load
 
 You can arbitrarily execute this for local development, it will create sample data deleting the old:
 
-	$ php app/console sample:data
+    $ php app/console sample:data
+
+## Automatic installation with Vagrant
+
+You need Vagrant and VirtualBox in your machine. Execute:
+
+    $ vagrant up
+
+And connect to:
+
+    [http://127.0.0.1:8888/app_dev.php](http://127.0.0.1:8888/app_dev.php) with HTTP with the browser.
+    [https://127.0.0.1:8889/app_dev.php](https://127.0.0.1:8889/app_dev.php) with HTTPS with the browser.
+    [127.0.0.1:8890](127.0.0.1:8890) directly to MySQL compatible database (like connecting to localhost:3306).
+
+Connect to the machine using:
+
+    $ vagrant ssh
+
+You can do the same like in your server being into your virtual server created with Vagrant.
+
+This will install a VirtualBox machine with Linux, Apache2, PHP, Mysql and all others tools needed for development
+into the virtual machine. When you finish working you can execute this from command line to clear you local host
+machine:
+
+    $ vagrant destroy
+
+All traces of the project will be deleted unless this directory with sources, and your machine will be untouched by
+this project.
 
 ## Tests
 
 Execute for tests:
 
-	$ phpunit -c app/
+    $ phpunit -c app/
 
 It needs phpunit command.
 

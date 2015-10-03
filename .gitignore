@@ -16,3 +16,4 @@
 /despliegueRapidoDesarrollo.sh
 /despliegueRapidoProduccion.sh
 /cache.properties
+/.vagrant
