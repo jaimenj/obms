@@ -3,8 +3,11 @@
 apache_config_file="/etc/apache2/envvars"
 apache_vhost_file="/etc/apache2/sites-available/vagrant_vhost.conf"
 php_config_file="/etc/php5/apache2/php.ini"
+phpcli_config_file="/etc/php5/cli/php.ini"
+composer_config_file"/home/vagrant/.composer/config.json"
 xdebug_config_file="/etc/php5/mods-available/xdebug.ini"
-mysql_config_file="/etc/mysql/my.cnf"
+postgres_conf_file="/etc/postgresql/9.3/main/postgresql.conf"
+postgres_pg_hba_file="/etc/postgresql/9.3/main/pg_hba.conf"
 default_apache_index="/var/www/html/index.html"
 symfony_parameters_file="/vagrant/app/config/parameters.yml"
 
@@ -29,7 +32,7 @@ EOI
     tools_go
     apache_go
     php_go
-    mysql_go
+    postgres_go
     composer_go
     bower_go
     project_config_go
@@ -41,7 +44,7 @@ EOI
 # Machine up and ready to program!
 # Connect to HTTP here: http://127.0.0.1:8888/app_dev.php
 # Connect to HTTPS here: https://127.0.0.1:8889/app_dev.php
-# Connect to MySQL here: 127.0.0.1:8890
+# Connect to Postgres here: 127.0.0.1:8890 (postgres:postgres authentication)
 ################################################################################
 # ATENTION: Put the right values for:
 #     app/config/parameters.yml
@@ -114,9 +117,11 @@ EOI
 }
 
 php_go() {
-    apt-get -y install php5 php5-curl php5-mysql php5-sqlite php5-xdebug
+    apt-get -y install php5 php5-curl php5-pgsql php5-sqlite php5-xdebug
     sed -i "s/display_startup_errors = Off/display_startup_errors = On/g" ${php_config_file}
     sed -i "s/display_errors = Off/display_errors = On/g" ${php_config_file}
+    sed -i "s/max_execution_time = 30/max_execution_time = 300/g" ${phpcli_config_file}
+    sed -i "s/max_input_time = 60/max_input_time = 600/g" ${phpcli_config_file}
 
     cat <<EOI > ${xdebug_config_file}
 zend_extension=xdebug.so
@@ -129,20 +134,26 @@ EOI
     service apache2 reload
 }
 
-mysql_go() {
-    # Install MySQL
-    echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
-    echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-    apt-get -y install mysql-client mysql-server
+postgres_go() {
+    apt-get -y install postgresql
 
-    sed -i "s/bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" ${mysql_config_file}
+    sudo -u postgres psql<<EOI
+\password postgres
+postgres
+postgres
+\q
+EOI
 
-    # Allow root access from any host
-    echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION" | mysql -u root --password=root
-    echo "GRANT PROXY ON ''@'' TO 'root'@'%' WITH GRANT OPTION" | mysql -u root --password=root
+sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" ${postgres_conf_file}
 
-    service mysql restart
-    update-rc.d apache2 enable
+    cat <<EOI > ${postgres_pg_hba_file}
+local   all             all                                     md5
+host    all             all             127.0.0.1/32            md5
+host    all             all             10.0.2.2/32             md5
+host    all             all             ::1/128                 md5
+EOI
+
+    service postgresql restart
 }
 
 composer_go() {
@@ -150,6 +161,16 @@ composer_go() {
     mv composer.phar /usr/local/bin/composer
     chown root:root /usr/local/bin/composer
     chmod 755 /usr/local/bin/composer
+
+    cat <<EOI > ${composer_config_file}
+{
+    "config": {
+        "process-timeout":      600,
+        "preferred-install":    "dist",
+        "github-protocols":     ["https"]
+    }
+}
+EOI
 }
 
 bower_go() {
@@ -165,12 +186,12 @@ project_config_go() {
 
     cat <<EOI > ${symfony_parameters_file}
 parameters:
-    database_driver: pdo_mysql
+    database_driver: pdo_pgsql
     database_host: 127.0.0.1
-    database_port: 3306
+    database_port: 5432
     database_name: obms
-    database_user: root
-    database_password: root
+    database_user: postgres
+    database_password: postgres
     mailer_transport: smtp
     mailer_host: mail.yoursite.com
     mailer_user: web@yoursite.com

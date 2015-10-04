@@ -36,7 +36,7 @@ other administrator, as well as users.
 ## Manual installation
 
 You need to install globally Composer and Bower for libraries management, both client and server libraries.
-You also need Apache2, PHP, Mysql or other compatible database with Doctrine databases.
+You also need Apache2, PHP, Postgres or other compatible database with Doctrine databases.
 
 Later clone and deploy in your local machine, execute this:
 
@@ -53,25 +53,35 @@ You can arbitrarily execute this for local development, it will create sample da
 
 ## Automatic installation with Vagrant
 
-You need Vagrant and VirtualBox in your machine. Execute:
+You need Vagrant and VirtualBox in your machine and 2 or more free RAM in development. Just execute:
 
     $ vagrant up
 
-And connect to:
+And wait 15-20 minutes the machine to configure itself. You will have a full development machine with
+all installed ready to collaborate in the project.
+If all have been done correctly, you can connect to:
 
     [http://127.0.0.1:8888/app_dev.php](http://127.0.0.1:8888/app_dev.php) with HTTP with the browser.
     [https://127.0.0.1:8889/app_dev.php](https://127.0.0.1:8889/app_dev.php) with HTTPS with the browser.
-    [127.0.0.1:8890](127.0.0.1:8890) directly to MySQL compatible database (like connecting to localhost:3306).
+    [127.0.0.1:8890](127.0.0.1:8890) directly to Postgres (like connecting to localhost:5432).
 
-Connect to the machine using:
+Or connect to the machine using SSH executing:
 
     $ vagrant ssh
 
-You can do the same like in your server being into your virtual server created with Vagrant.
+Remeber to execute all command line commands into the virtual machine not into your local machine.
+To stop the machine execute:
 
-This will install a VirtualBox machine with Linux, Apache2, PHP, Mysql and all others tools needed for development
-into the virtual machine. When you finish working you can execute this from command line to clear you local host
-machine:
+    $ vagrant halt
+
+When continue working on it execute again:
+
+    $ vagrant up
+
+You will have installed a VirtualBox machine with Linux, Apache2, PHP, Postgres and all others tools and configs
+needed for development into the virtual machine.
+When you finish working you can execute this from command line to clear
+you local host machine:
 
     $ vagrant destroy
 

@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User, entity for managing user accounts that can access to the hole app system.
  *
- * @ORM\Table()
+ * @ORM\Table(name="obmsuser")
  * @ORM\Entity(repositoryClass="AdministrationBundle\Entity\UserRepository")
  * @UniqueEntity("email", message="Other user has the same email.")
  */

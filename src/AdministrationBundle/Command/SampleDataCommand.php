@@ -281,9 +281,11 @@ class SampleDataCommand extends ContainerAwareCommand
         }
 
         $users = $manager->getRepository('AdministrationBundle:User')->findAll();
-        foreach ($users as $user) {
-            if ($user->getUsername() != 'user') {
-                $manager->remove($user);
+        if ($users) {
+            foreach ($users as $user) {
+                if ($user->getUsername() != 'user') {
+                    $manager->remove($user);
+                }
             }
         }
 
