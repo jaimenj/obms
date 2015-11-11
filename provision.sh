@@ -8,6 +8,7 @@ composer_config_file"/home/vagrant/.composer/config.json"
 xdebug_config_file="/etc/php5/mods-available/xdebug.ini"
 postgres_conf_file="/etc/postgresql/9.3/main/postgresql.conf"
 postgres_pg_hba_file="/etc/postgresql/9.3/main/pg_hba.conf"
+mysql_conf_file="/etc/mysql/my.cnf"
 default_apache_index="/var/www/html/index.html"
 symfony_parameters_file="/vagrant/app/config/parameters.yml"
 
@@ -33,6 +34,7 @@ EOI
     apache_go
     php_go
     postgres_go
+    mariadb_go
     composer_go
     bower_go
     project_config_go
@@ -44,7 +46,8 @@ EOI
 # Machine up and ready to program!
 # Connect to HTTP here: http://127.0.0.1:8888/app_dev.php
 # Connect to HTTPS here: https://127.0.0.1:8889/app_dev.php
-# Connect to Postgres here: 127.0.0.1:8890 (postgres:postgres authentication)
+# Connect to Mariadb here: 127.0.0.1:8890 (root:root authentication)
+# Connect to Postgres here: 127.0.0.1:8891 (postgres:postgres authentication)
 ################################################################################
 # ATENTION: Put the right values for:
 #     app/config/parameters.yml
@@ -66,7 +69,7 @@ network_go() {
 }
 
 tools_go() {
-    apt-get -y install build-essential binutils-doc git npm nodejs
+    apt-get -y install build-essential binutils-doc git npm nodejs htop ant
 }
 
 apache_go() {
@@ -117,7 +120,7 @@ EOI
 }
 
 php_go() {
-    apt-get -y install php5 php5-curl php5-pgsql php5-sqlite php5-xdebug
+    apt-get -y install php5 php5-curl php5-pgsql php5-sqlite php5-xdebug php5-mysql
     sed -i "s/display_startup_errors = Off/display_startup_errors = On/g" ${php_config_file}
     sed -i "s/display_errors = Off/display_errors = On/g" ${php_config_file}
     sed -i "s/max_execution_time = 30/max_execution_time = 300/g" ${phpcli_config_file}
@@ -156,6 +159,24 @@ EOI
     service postgresql restart
 }
 
+mariadb_go() {
+    apt-get install software-properties-common -y
+    apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+    add-apt-repository 'deb http://ftp.kaist.ac.kr/mariadb/repo/10.0/ubuntu trusty main'
+    apt-get update
+    debconf-set-selections <<< "maria-db-server mysql-server/root_password password root"
+	debconf-set-selections <<< "maria-db-server mysql-server/root_password_again password root"
+    apt-get install -y mariadb-server
+
+    sed -i "s/bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" ${mysql_config_file}
+
+    echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION" | mysql -u root --password=root
+    echo "GRANT PROXY ON ''@'' TO 'root'@'%' WITH GRANT OPTION" | mysql -u root --password=root
+
+    service mysql restart
+    #update-rc.d apache2 enable
+}
+
 composer_go() {
     php -r "readfile('https://getcomposer.org/installer');" | php
     mv composer.phar /usr/local/bin/composer
@@ -175,7 +196,7 @@ EOI
 
 bower_go() {
     npm install -g bower
-    #ln -s /usr/bin/nodejs /usr/bin/node
+    ln -s /usr/bin/nodejs /usr/bin/node
 }
 
 project_config_go() {
@@ -188,10 +209,10 @@ project_config_go() {
 parameters:
     database_driver: pdo_pgsql
     database_host: 127.0.0.1
-    database_port: 5432
-    database_name: obms
-    database_user: postgres
-    database_password: postgres
+    database_port: 3306
+    database_name: obmsdev
+    database_user: root
+    database_password: root
     mailer_transport: smtp
     mailer_host: mail.yoursite.com
     mailer_user: web@yoursite.com

@@ -36,7 +36,7 @@ other administrator, as well as users.
 ## Manual installation
 
 You need to install globally Composer and Bower for libraries management, both client and server libraries.
-You also need Apache2, PHP, Postgres or other compatible database with Doctrine databases.
+You also need Apache2, PHP, Postgres, Mariadb or other compatible database with Doctrine databases.
 
 Later clone and deploy in your local machine, execute this:
 
@@ -61,9 +61,10 @@ And wait 15-20 minutes the machine to configure itself. You will have a full dev
 all installed ready to collaborate in the project.
 If all have been done correctly, you can connect to:
 
-    [http://127.0.0.1:8888/app_dev.php](http://127.0.0.1:8888/app_dev.php) with HTTP with the browser.
-    [https://127.0.0.1:8889/app_dev.php](https://127.0.0.1:8889/app_dev.php) with HTTPS with the browser.
-    [127.0.0.1:8890](127.0.0.1:8890) directly to Postgres (like connecting to localhost:5432).
+[http://127.0.0.1:8888/app_dev.php](http://127.0.0.1:8888/app_dev.php) with HTTP with the browser.
+[https://127.0.0.1:8889/app_dev.php](https://127.0.0.1:8889/app_dev.php) with HTTPS with the browser.
+[127.0.0.1:8890](127.0.0.1:8890) to Mariadb.
+[127.0.0.1:8891](127.0.0.1:8891) to Postgres.
 
 Or connect to the machine using SSH executing:
 

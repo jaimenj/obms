@@ -180,12 +180,12 @@
 		<exec executable="bash">
 			<arg value="-c"/>
 			<arg
-				value="wget https://phar.phpunit.de/phpunit.phar"/>
+				value="wget https://phar.phpunit.de/phpunit-old.phar"/>
 		</exec>
 		<chmod
-			file="${basedir}/phpunit.phar"
+			file="${basedir}/phpunit-old.phar"
 			perm="+x"/>
-		<move file="${basedir}/phpunit.phar"
+		<move file="${basedir}/phpunit-old.phar"
 			tofile="${basedir}/bin/phpunit.phar"/>
 
 	</target>
